@@ -109,8 +109,19 @@ def divisor_count(n: int) -> int:
     return total
 
 
+def goldbach_singular_factor(n: int) -> float:
+    """Return the n-dependent Hardy-Littlewood Goldbach singular factor shape."""
+    if n < 1:
+        raise ValueError("singular factor is defined for positive integers")
+
+    factor_value = 1.0
+    for prime in factor_counter(n):
+        if prime > 2:
+            factor_value *= (prime - 1) / (prime - 2)
+    return factor_value
+
+
 def prime_gaps(limit: int) -> list[int]:
     """Return gaps between consecutive primes <= limit."""
     primes = sieve(limit)
     return [b - a for a, b in zip(primes, primes[1:])]
-

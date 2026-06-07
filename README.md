@@ -1,12 +1,14 @@
 # Emanation From 1
 
-This repository is a research sandbox for the **Origin Reframe**:
+This repository is an evidence-gathering research sandbox for the **Origin Reframe**:
 
 > Numbers are not primarily positions on a number line. They are degrees of differentiation from `1`.
 
 The working question is simple and strange in the best way:
 
-**What changes when factorization, prime behavior, and conjectural number theory are studied as traces back to `1` rather than motion outward on a line?**
+**Does studying factorization, prime behavior, and conjectural number theory as traces back to `1` reveal reproducible structure that survives controls?**
+
+The repo is allowed to find support, ambiguity, or failure. Counterexamples and null results are part of the work.
 
 ## Source Documents
 
@@ -22,6 +24,10 @@ This repo treats LJPW language as a hypothesis-generating frame, not as a substi
 - **Formal status:** classical conjectures remain open unless a conventional proof is supplied.
 - **Semantic status:** LJPW interpretations can suggest where to look, what to measure, and how to compare patterns.
 - **Empirical status:** scripts in this repo should produce reproducible scans, tables, and counterexample searches.
+- **Verification rule:** AI-chat output is not evidence. Repo claims must be locally reproduced, source-verified, or explicitly labeled as hypothesis.
+
+See `docs/VERIFICATION_POLICY.md` before adding interpretive claims.
+See `docs/EVIDENCE_LEDGER.md` for the current evidence balance.
 
 ## Current Operational Definitions
 
@@ -46,6 +52,18 @@ Run a larger custom scan:
 python experiments\initial_scan.py --gilbreath-primes 1024 --goldbach-limit 50000 --twin-limit 50000
 ```
 
+Run Gilbreath control-sequence tests:
+
+```powershell
+python experiments\gilbreath_controls.py
+```
+
+Run a Goldbach/origin-metric correlation scan:
+
+```powershell
+python experiments\goldbach_origin_correlations.py
+```
+
 Run the test suite:
 
 ```powershell
@@ -60,10 +78,18 @@ No third-party Python packages are required.
 docs/
   THE_ORIGIN_REFRAME.md
   LJPW_FRAMEWORK_V8.6.2_COMPLETE_UNIFIED_PLUS.md
+  EVIDENCE_LEDGER.md
+  EXPERIMENT_BACKLOG.md
+  GILBREATH_TEST_PLAN.md
   RESEARCH_PROGRAM.md
+  VERIFICATION_POLICY.md
 experiments/
+  gilbreath_controls.py
+  goldbach_origin_correlations.py
   initial_scan.py
 reports/
+  GILBREATH_CONTROL_EXPERIMENTS.md
+  GOLDBACH_ORIGIN_CORRELATIONS.md
   INITIAL_EXPERIMENTS.md
 src/
   emanation_from_1/
@@ -80,6 +106,7 @@ tests/
 2. **Gilbreath Differentiation:** build absolute-difference rows from the prime sequence and search for first-column failures.
 3. **Goldbach Pairing:** scan even numbers for prime-pair decompositions as a Love/Justice pairing model.
 4. **Twin Prime Bridges:** track minimal prime gaps as the `2` bridge recurs through the prime stream.
+5. **Origin Metric Tests:** check whether factor-depth and return-path metrics add explanatory power beyond conventional baselines.
 
 ## Next Directions
 

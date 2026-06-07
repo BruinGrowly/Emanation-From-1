@@ -1,0 +1,60 @@
+# Gilbreath Test Plan
+
+## Formal Object Under Test
+
+Given an initial sequence:
+
+```text
+row[0] = initial sequence
+row[k + 1][i] = abs(row[k][i + 1] - row[k][i])
+```
+
+The finite test used here checks whether every generated row after the initial row begins with `1`.
+
+For the prime sequence, this is a finite prefix test only. Passing a prefix is not a proof of Gilbreath's conjecture.
+
+## Source-Checked Background
+
+- Encyclopedia of Mathematics defines the conjecture using iterated absolute differences and says Odlyzko verified it for primes up to `10^13`: <https://encyclopediaofmath.org/wiki/Gilbreath_conjecture>
+- Zachary Chase's random analogue is published in *Mathematische Annalen* and proves a precise random-sequence analogue under stated conditions: <https://link.springer.com/article/10.1007/s00208-023-02579-w>
+- arXiv record for Chase preprint: <https://arxiv.org/abs/2005.00530>
+
+These are source-background facts, not computations reproduced by this repo.
+
+## Local Tests
+
+### T1: Prime Prefix
+
+Generate the first `N` primes and check all finite difference rows.
+
+```powershell
+python experiments\initial_scan.py --gilbreath-primes 1024
+```
+
+### T2: Non-Prime Controls
+
+Compare the prime prefix with deterministic non-prime sequences.
+
+```powershell
+python experiments\gilbreath_controls.py
+```
+
+Current controls:
+
+- Consecutive odd numbers after `2, 3`.
+- Odd arithmetic sequence with gap `6` after `2, 3`.
+- Seeded random odd sequences with bounded even gaps.
+
+### T3: Failure Search
+
+Controls are required because first-column `1` behavior is not assumed to be prime-specific. A useful experiment should include both passing and failing non-prime sequences.
+
+## Interpretive Boundary
+
+Allowed hypothesis:
+
+> First-column `1` behavior can be studied as a boundary-return pattern under repeated absolute differencing.
+
+Not allowed as a result:
+
+> Gilbreath proves that all numbers emanate from `1`.

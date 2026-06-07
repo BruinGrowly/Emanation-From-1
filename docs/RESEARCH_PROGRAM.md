@@ -2,11 +2,23 @@
 
 ## Foundational Claim
 
-`THE_ORIGIN_REFRAME.md` reframes mathematics around `1` as the origin, not around a linear sequence starting at `0`. In this repo, that claim becomes an experimental program:
+`THE_ORIGIN_REFRAME.md` reframes mathematics around `1` as the origin, not around a linear sequence starting at `0`. In this repo, that claim becomes an evidence-gathering program:
 
 > Every integer can be studied by how it differentiates from, and can be traced back to, `1`.
 
-The purpose is not to replace conventional number theory. The purpose is to generate measurable structure from the Origin Frame and test whether that structure illuminates known prime phenomena.
+The purpose is not to replace conventional number theory. The purpose is to generate measurable structure from the Origin Frame and test whether that structure illuminates known prime phenomena better than ordinary baselines or controls.
+
+The repo's central question:
+
+> Does the Origin Reframe produce reproducible measurements, predictions, or discriminating tests that would be unlikely if it were only poetic relabeling?
+
+## Null Hypothesis
+
+The null hypothesis stays active throughout the project:
+
+> Apparent Origin Frame patterns are artifacts of standard arithmetic, sequence construction, operation choice, or post-hoc interpretation.
+
+Evidence only counts as weight for the Origin Reframe when it survives relevant controls.
 
 ## Guardrails
 
@@ -14,6 +26,8 @@ The purpose is not to replace conventional number theory. The purpose is to gene
 - LJPW semantic claims should be labeled separately from conventional mathematical claims.
 - Any proposed theorem needs a formal proof appendix before the repo calls it proved.
 - Counterexamples are valuable. They clarify the frame.
+- AI-chat output is hypothesis material only. It should not be quoted as evidence.
+- Ordinary explanations get first right of refusal. If a standard baseline explains the result, record that.
 
 ## Vocabulary Map
 
@@ -88,6 +102,16 @@ Candidate metrics:
 
 The first goal is descriptive: find patterns worth proving or falsifying.
 
+### H6: Origin Metrics Add Signal Beyond Size Baselines
+
+Many number-theoretic quantities scale mostly with size. A useful Origin metric should explain something after accounting for ordinary size proxies such as `n`, `log(n)`, or density heuristics.
+
+Experimentally:
+
+- Compare Goldbach witness counts with `n / log(n)^2`.
+- Compare residual or normalized witness density against `emanation_depth`, `divisor_count`, `radical_ratio`, and `phi_attenuation`.
+- Record neutral or negative results.
+
 ## Experiment Log
 
 The initial generated report lives at:
@@ -105,3 +129,11 @@ Use custom limits with:
 ```powershell
 python experiments\initial_scan.py --gilbreath-primes 1024 --goldbach-limit 50000 --twin-limit 50000
 ```
+
+Current evidence balance:
+
+- `docs/EVIDENCE_LEDGER.md`
+
+Planned tests:
+
+- `docs/EXPERIMENT_BACKLOG.md`
