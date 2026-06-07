@@ -83,6 +83,16 @@ This asks whether finite Gilbreath behavior depends on the order of prime gaps r
 python experiments\gilbreath_gap_shuffle.py
 ```
 
+### T7: Prefix Scaling And Block Shuffle
+
+Test several prime-prefix lengths and compare against controls that preserve local gap order inside shuffled blocks.
+
+```powershell
+python experiments\gilbreath_prefix_block_shuffle.py
+```
+
+This is stronger than full gap shuffling because larger block sizes preserve more short-range prime-gap dependency.
+
 ## Interpretive Boundary
 
 Allowed hypothesis:

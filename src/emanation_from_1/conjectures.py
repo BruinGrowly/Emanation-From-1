@@ -47,6 +47,20 @@ class DifferenceRowSummary:
     is_certificate: bool
 
 
+@dataclass(frozen=True)
+class CertifiedLockScan:
+    """Streaming scan for first failure or first certified lock."""
+
+    length: int
+    rows_scanned: int
+    certified_lock_row: int | None
+    first_failure: tuple[int, int] | None
+
+    @property
+    def certified(self) -> bool:
+        return self.certified_lock_row is not None
+
+
 def absolute_difference_row(row: list[int]) -> list[int]:
     """Return the absolute differences of adjacent entries."""
     return [abs(right - left) for left, right in zip(row, row[1:])]
@@ -89,6 +103,37 @@ def first_certificate_row(rows: list[list[int]], start: int = 1) -> int | None:
         if is_certificate_row(row):
             return index
     return None
+
+
+def certified_lock_scan(initial: list[int]) -> CertifiedLockScan:
+    """Stream rows until first boundary failure or first certificate row."""
+    if len(initial) < 2:
+        raise ValueError("initial sequence must have at least two values")
+
+    row = initial
+    for row_index in range(1, len(initial)):
+        row = absolute_difference_row(row)
+        if row[0] != 1:
+            return CertifiedLockScan(
+                length=len(initial),
+                rows_scanned=row_index,
+                certified_lock_row=None,
+                first_failure=(row_index, row[0]),
+            )
+        if is_certificate_row(row):
+            return CertifiedLockScan(
+                length=len(initial),
+                rows_scanned=row_index,
+                certified_lock_row=row_index,
+                first_failure=None,
+            )
+
+    return CertifiedLockScan(
+        length=len(initial),
+        rows_scanned=len(initial) - 1,
+        certified_lock_row=None,
+        first_failure=None,
+    )
 
 
 def difference_row_summaries(rows: list[list[int]]) -> list[DifferenceRowSummary]:
@@ -214,6 +259,29 @@ def shuffled_tail_gap_sequence(initial: list[int], seed: int) -> list[int]:
     tail = gaps[1:]
     rng.shuffle(tail)
     return sequence_from_gaps(initial[0], [gaps[0], *tail])
+
+
+def block_shuffled_tail_gap_sequence(
+    initial: list[int],
+    block_size: int,
+    seed: int,
+) -> list[int]:
+    """Shuffle prime-gap blocks after preserving the first gap."""
+    if len(initial) < 2:
+        raise ValueError("initial sequence must have at least two values")
+    if block_size < 1:
+        raise ValueError("block_size must be >= 1")
+
+    gaps = [right - left for left, right in zip(initial, initial[1:])]
+    if len(gaps) <= 1:
+        return initial[:]
+
+    tail = gaps[1:]
+    blocks = [tail[index : index + block_size] for index in range(0, len(tail), block_size)]
+    rng = Random(seed)
+    rng.shuffle(blocks)
+    shuffled_tail = [gap for block in blocks for gap in block]
+    return sequence_from_gaps(initial[0], [gaps[0], *shuffled_tail])
 
 
 def gilbreath_row_metrics(prime_count: int, max_rows: int = 16) -> list[dict[str, float | int]]:

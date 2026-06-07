@@ -8,7 +8,9 @@ if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
 from emanation_from_1.conjectures import (
+    block_shuffled_tail_gap_sequence,
     boundary_return_check,
+    certified_lock_scan,
     consecutive_odd_sequence,
     difference_rows,
     first_certificate_row,
@@ -80,9 +82,27 @@ class NumberTheoryTests(unittest.TestCase):
         gap_six_rows = difference_rows(odd_arithmetic_after_boundary(16, gap=6))
         self.assertIsNone(first_certificate_row(gap_six_rows))
 
+        odd_scan = certified_lock_scan(consecutive_odd_sequence(16))
+        self.assertEqual(odd_scan.certified_lock_row, 1)
+        self.assertIsNone(odd_scan.first_failure)
+
+        gap_six_scan = certified_lock_scan(odd_arithmetic_after_boundary(16, gap=6))
+        self.assertIsNone(gap_six_scan.certified_lock_row)
+        self.assertEqual(gap_six_scan.first_failure, (2, 5))
+
     def test_shuffled_tail_gap_sequence(self) -> None:
         initial = [2, 3, 5, 11, 13, 17]
         shuffled = shuffled_tail_gap_sequence(initial, seed=42)
+        self.assertEqual(shuffled[:2], [2, 3])
+
+        initial_gaps = [right - left for left, right in zip(initial, initial[1:])]
+        shuffled_gaps = [right - left for left, right in zip(shuffled, shuffled[1:])]
+        self.assertEqual(shuffled_gaps[0], initial_gaps[0])
+        self.assertEqual(sorted(shuffled_gaps[1:]), sorted(initial_gaps[1:]))
+
+    def test_block_shuffled_tail_gap_sequence(self) -> None:
+        initial = [2, 3, 5, 11, 13, 17, 23, 29]
+        shuffled = block_shuffled_tail_gap_sequence(initial, block_size=2, seed=7)
         self.assertEqual(shuffled[:2], [2, 3])
 
         initial_gaps = [right - left for left, right in zip(initial, initial[1:])]

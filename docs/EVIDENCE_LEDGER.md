@@ -28,6 +28,8 @@ The target is not confirmation. The target is evidence quality.
 | E8 | Prime prefixes reached certified Gilbreath lock rows before any first-column failure: row `20` for `256` primes and row `23` for `512` primes. | `LOCAL` | `SUPPORTIVE` | This is a finite candidate signal: prime gap order preserved boundary return until certificate lock. |
 | E9 | Shuffling the exact prime-gap multiset while preserving the first gap produced low certified-lock rates: `3/200` for `256` primes and `2/100` for `512` primes. | `LOCAL` | `SUPPORTIVE` | This suggests prime-gap order matters, not just the multiset of gap sizes. Needs comparison against stronger prime-gap dependency models. |
 | E10 | Consecutive odd numbers reach a trivial certificate at row `1`. | `LOCAL` | `CONSTRAINING` | Boundary-return behavior is not unique to primes; controls must exclude simple construction artifacts. |
+| E11 | Prime-prefix certified locks persisted across tested prefix sizes: `64 -> 10`, `128 -> 15`, `256 -> 20`, `512 -> 23`, `1024 -> 35`, `2048 -> 35`, `4096 -> 52`. | `LOCAL` | `SUPPORTIVE` | The lock row grows slowly across tested scales and no first-column failure was observed before lock. |
+| E12 | Block-shuffled prime-gap controls stayed low-rate even when preserving local gap order in blocks. For `2048` primes, blocks `1..64` had `0/20` locks and block `128` had `1/20`; for `4096`, blocks `1..128` had `0/20`. | `LOCAL` | `SUPPORTIVE` | This is stronger than full shuffling: local prime-gap order alone did not recover the prime-prefix lock behavior in these finite tests. |
 
 ## What Would Increase Weight
 
@@ -45,4 +47,4 @@ The target is not confirmation. The target is evidence quality.
 
 ## Current Bottom Line
 
-The Origin Reframe is operationalized but not established. Current local evidence is mixed. The Goldbach witness test weighs against treating simple factor-depth metrics as distinctive Origin evidence, because the conventional singular-factor baseline absorbs most of that signal. The Gilbreath gap-order tests are currently the strongest candidate-supportive evidence: prime prefixes preserve the boundary `1` until certificate lock far more reliably than shuffled versions of their own gap multiset in the tested ranges.
+The Origin Reframe is operationalized but not established. Current local evidence is mixed. The Goldbach witness test weighs against treating simple factor-depth metrics as distinctive Origin evidence, because the conventional singular-factor baseline absorbs most of that signal. The Gilbreath gap-order tests are currently the strongest candidate-supportive evidence: prime prefixes preserve the boundary `1` until certificate lock across tested scales, while shuffled and block-shuffled versions of their own gap multiset usually fail near row `2` before reaching lock.

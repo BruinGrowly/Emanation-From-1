@@ -32,6 +32,10 @@ python experiments\gilbreath_deep_dive.py
 python experiments\gilbreath_gap_shuffle.py
 ```
 
+```powershell
+python experiments\gilbreath_prefix_block_shuffle.py
+```
+
 ### B2: Goldbach Witness Correlations
 
 Question:
