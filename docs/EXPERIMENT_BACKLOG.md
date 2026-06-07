@@ -36,6 +36,10 @@ python experiments\gilbreath_gap_shuffle.py
 python experiments\gilbreath_prefix_block_shuffle.py
 ```
 
+```powershell
+python experiments\gilbreath_markov_gap_model.py
+```
+
 ### B2: Goldbach Witness Correlations
 
 Question:

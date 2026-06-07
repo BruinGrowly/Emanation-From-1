@@ -16,6 +16,7 @@ from emanation_from_1.conjectures import (
     first_certificate_row,
     gilbreath_check,
     goldbach_pairs,
+    markov_gap_sequence,
     odd_arithmetic_after_boundary,
     random_odd_small_gap_sequence,
     row_certificate_defects,
@@ -109,6 +110,17 @@ class NumberTheoryTests(unittest.TestCase):
         shuffled_gaps = [right - left for left, right in zip(shuffled, shuffled[1:])]
         self.assertEqual(shuffled_gaps[0], initial_gaps[0])
         self.assertEqual(sorted(shuffled_gaps[1:]), sorted(initial_gaps[1:]))
+
+    def test_markov_gap_sequence(self) -> None:
+        initial = [2, 3, 5, 11, 13, 17, 23, 29]
+        generated = markov_gap_sequence(initial, seed=11)
+        self.assertEqual(len(generated), len(initial))
+        self.assertEqual(generated[:2], [2, 3])
+
+        initial_gaps = {right - left for left, right in zip(initial, initial[1:])}
+        generated_gaps = [right - left for left, right in zip(generated, generated[1:])]
+        self.assertEqual(generated_gaps[0], 1)
+        self.assertTrue(set(generated_gaps).issubset(initial_gaps))
 
     def test_pearson_correlation(self) -> None:
         self.assertAlmostEqual(

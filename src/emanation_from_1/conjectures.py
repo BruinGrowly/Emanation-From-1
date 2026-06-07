@@ -284,6 +284,29 @@ def block_shuffled_tail_gap_sequence(
     return sequence_from_gaps(initial[0], [gaps[0], *shuffled_tail])
 
 
+def markov_gap_sequence(initial: list[int], seed: int) -> list[int]:
+    """Generate a sequence from empirical one-step gap transitions."""
+    if len(initial) < 2:
+        raise ValueError("initial sequence must have at least two values")
+
+    gaps = [right - left for left, right in zip(initial, initial[1:])]
+    transitions: dict[int, list[int]] = {}
+    for current_gap, next_gap in zip(gaps, gaps[1:]):
+        transitions.setdefault(current_gap, []).append(next_gap)
+
+    rng = Random(seed)
+    generated_gaps = [gaps[0]]
+    current_gap = gaps[0]
+
+    while len(generated_gaps) < len(gaps):
+        choices = transitions.get(current_gap, gaps[1:] or gaps)
+        next_gap = rng.choice(choices)
+        generated_gaps.append(next_gap)
+        current_gap = next_gap
+
+    return sequence_from_gaps(initial[0], generated_gaps)
+
+
 def gilbreath_row_metrics(prime_count: int, max_rows: int = 16) -> list[dict[str, float | int]]:
     """Return compact metrics for the first Gilbreath rows."""
     rows = gilbreath_rows(prime_count)

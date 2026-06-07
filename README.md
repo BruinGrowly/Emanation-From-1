@@ -82,6 +82,12 @@ Run prefix scaling plus block-shuffled prime-gap controls:
 python experiments\gilbreath_prefix_block_shuffle.py
 ```
 
+Run first-order Markov prime-gap controls:
+
+```powershell
+python experiments\gilbreath_markov_gap_model.py
+```
+
 Run a Goldbach/origin-metric correlation scan:
 
 ```powershell
@@ -111,6 +117,7 @@ experiments/
   gilbreath_controls.py
   gilbreath_deep_dive.py
   gilbreath_gap_shuffle.py
+  gilbreath_markov_gap_model.py
   gilbreath_prefix_block_shuffle.py
   gilbreath_random_sweep.py
   goldbach_origin_correlations.py
@@ -119,6 +126,7 @@ reports/
   GILBREATH_CONTROL_EXPERIMENTS.md
   GILBREATH_DEEP_DIVE.md
   GILBREATH_GAP_SHUFFLE.md
+  GILBREATH_MARKOV_GAP_MODEL.md
   GILBREATH_PREFIX_BLOCK_SHUFFLE.md
   GILBREATH_RANDOM_SWEEP.md
   GOLDBACH_ORIGIN_CORRELATIONS.md

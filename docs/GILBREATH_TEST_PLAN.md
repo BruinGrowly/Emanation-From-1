@@ -93,6 +93,16 @@ python experiments\gilbreath_prefix_block_shuffle.py
 
 This is stronger than full gap shuffling because larger block sizes preserve more short-range prime-gap dependency.
 
+### T8: First-Order Markov Gap Model
+
+Generate controls from the empirical one-step transition map of prime gaps in each prefix.
+
+```powershell
+python experiments\gilbreath_markov_gap_model.py
+```
+
+This asks whether local gap-transition statistics explain the certified-lock behavior.
+
 ## Interpretive Boundary
 
 Allowed hypothesis:
