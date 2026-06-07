@@ -1,0 +1,14 @@
+[project]
+name = "emanation-from-1"
+version = "0.1.0"
+description = "Origin-frame number theory experiments around factorization, primes, and Gilbreath-style differentiation."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = []
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
