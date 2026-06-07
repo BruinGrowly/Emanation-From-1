@@ -25,6 +25,9 @@ The target is not confirmation. The target is evidence quality.
 | E5 | Seeded random small-gap controls mostly failed at the default short local length. | `LOCAL` | `NEUTRAL` | Needs broader parameter sweep before interpretation. |
 | E6 | In the default Goldbach scan through `10000`, size-normalized witness density correlates with distinct factor depth (`r = 0.7110`) and divisor count (`r = 0.7071`). | `LOCAL` | `CONSTRAINING` | Factor structure matters after a simple size baseline. |
 | E7 | After applying the conventional singular-factor baseline, the strongest Origin-metric residual correlation in the default Goldbach scan is small (`phi_attenuation`, `r = 0.1355`). | `LOCAL` | `CHALLENGING` | This weakens H6 for Goldbach witnesses: the factor-depth signal appears mostly explainable by conventional arithmetic structure. |
+| E8 | Prime prefixes reached certified Gilbreath lock rows before any first-column failure: row `20` for `256` primes and row `23` for `512` primes. | `LOCAL` | `SUPPORTIVE` | This is a finite candidate signal: prime gap order preserved boundary return until certificate lock. |
+| E9 | Shuffling the exact prime-gap multiset while preserving the first gap produced low certified-lock rates: `3/200` for `256` primes and `2/100` for `512` primes. | `LOCAL` | `SUPPORTIVE` | This suggests prime-gap order matters, not just the multiset of gap sizes. Needs comparison against stronger prime-gap dependency models. |
+| E10 | Consecutive odd numbers reach a trivial certificate at row `1`. | `LOCAL` | `CONSTRAINING` | Boundary-return behavior is not unique to primes; controls must exclude simple construction artifacts. |
 
 ## What Would Increase Weight
 
@@ -42,4 +45,4 @@ The target is not confirmation. The target is evidence quality.
 
 ## Current Bottom Line
 
-The Origin Reframe is operationalized but not established. Current local evidence is mostly constraining: it gives better questions and sharper controls, not proof. The Goldbach witness test currently weighs against treating simple factor-depth metrics as distinctive Origin evidence, because the conventional singular-factor baseline absorbs most of that signal.
+The Origin Reframe is operationalized but not established. Current local evidence is mixed. The Goldbach witness test weighs against treating simple factor-depth metrics as distinctive Origin evidence, because the conventional singular-factor baseline absorbs most of that signal. The Gilbreath gap-order tests are currently the strongest candidate-supportive evidence: prime prefixes preserve the boundary `1` until certificate lock far more reliably than shuffled versions of their own gap multiset in the tested ranges.

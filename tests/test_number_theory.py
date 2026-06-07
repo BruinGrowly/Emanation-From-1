@@ -10,10 +10,14 @@ if str(SRC) not in sys.path:
 from emanation_from_1.conjectures import (
     boundary_return_check,
     consecutive_odd_sequence,
+    difference_rows,
+    first_certificate_row,
     gilbreath_check,
     goldbach_pairs,
     odd_arithmetic_after_boundary,
     random_odd_small_gap_sequence,
+    row_certificate_defects,
+    shuffled_tail_gap_sequence,
 )
 from emanation_from_1.number_theory import (
     divisor_count,
@@ -64,6 +68,27 @@ class NumberTheoryTests(unittest.TestCase):
             seed=1000,
         )
         self.assertEqual(random_sequence[:4], [2, 3, 11, 13])
+
+    def test_gilbreath_certificate_rows(self) -> None:
+        self.assertEqual(row_certificate_defects([1, 0, 2, 2]), 0)
+        self.assertEqual(row_certificate_defects([1, 1, 2]), 1)
+        self.assertEqual(row_certificate_defects([3, 0, 2]), 1)
+
+        odd_rows = difference_rows(consecutive_odd_sequence(16))
+        self.assertEqual(first_certificate_row(odd_rows), 1)
+
+        gap_six_rows = difference_rows(odd_arithmetic_after_boundary(16, gap=6))
+        self.assertIsNone(first_certificate_row(gap_six_rows))
+
+    def test_shuffled_tail_gap_sequence(self) -> None:
+        initial = [2, 3, 5, 11, 13, 17]
+        shuffled = shuffled_tail_gap_sequence(initial, seed=42)
+        self.assertEqual(shuffled[:2], [2, 3])
+
+        initial_gaps = [right - left for left, right in zip(initial, initial[1:])]
+        shuffled_gaps = [right - left for left, right in zip(shuffled, shuffled[1:])]
+        self.assertEqual(shuffled_gaps[0], initial_gaps[0])
+        self.assertEqual(sorted(shuffled_gaps[1:]), sorted(initial_gaps[1:]))
 
     def test_pearson_correlation(self) -> None:
         self.assertAlmostEqual(

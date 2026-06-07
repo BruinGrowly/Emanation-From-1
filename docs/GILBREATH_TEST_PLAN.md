@@ -49,6 +49,40 @@ Current controls:
 
 Controls are required because first-column `1` behavior is not assumed to be prime-specific. A useful experiment should include both passing and failing non-prime sequences.
 
+### T4: Certificate Rows
+
+A finite difference triangle has a certificate row when a generated row begins with `1` and every later value in that row is either `0` or `2`.
+
+```text
+[1, 0, 2, 2, 0, ...]
+```
+
+This matters because the next first value must be `1`, and differencing the tail keeps producing only `0` and `2`.
+
+Run:
+
+```powershell
+python experiments\gilbreath_deep_dive.py
+```
+
+### T5: Random Control Sweep
+
+Measure how often seeded random small-gap controls preserve the boundary `1` until a certificate row.
+
+```powershell
+python experiments\gilbreath_random_sweep.py
+```
+
+### T6: Prime-Gap Shuffle
+
+Keep the prime-gap multiset fixed, preserve the first gap `1`, and shuffle all later gaps.
+
+This asks whether finite Gilbreath behavior depends on the order of prime gaps rather than only their sizes.
+
+```powershell
+python experiments\gilbreath_gap_shuffle.py
+```
+
 ## Interpretive Boundary
 
 Allowed hypothesis:

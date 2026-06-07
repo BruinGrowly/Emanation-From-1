@@ -34,6 +34,19 @@ class SequenceBoundaryCheck:
     first_column_prefix: tuple[int, ...]
 
 
+@dataclass(frozen=True)
+class DifferenceRowSummary:
+    """Compact diagnostics for one absolute-difference row."""
+
+    row_index: int
+    length: int
+    first: int
+    max_value: int
+    odd_count: int
+    certificate_defects: int
+    is_certificate: bool
+
+
 def absolute_difference_row(row: list[int]) -> list[int]:
     """Return the absolute differences of adjacent entries."""
     return [abs(right - left) for left, right in zip(row, row[1:])]
@@ -53,6 +66,45 @@ def difference_rows(initial: list[int]) -> list[list[int]]:
 def first_column(rows: list[list[int]]) -> list[int]:
     """Return the first entry of each non-empty row."""
     return [row[0] for row in rows if row]
+
+
+def row_certificate_defects(row: list[int]) -> int:
+    """Return how far a row is from the finite Gilbreath certificate shape."""
+    if not row:
+        raise ValueError("row must not be empty")
+
+    first_defect = 0 if row[0] == 1 else 1
+    tail_defects = sum(1 for value in row[1:] if value not in (0, 2))
+    return first_defect + tail_defects
+
+
+def is_certificate_row(row: list[int]) -> bool:
+    """Return True when row begins with 1 and all tail values are 0 or 2."""
+    return row_certificate_defects(row) == 0
+
+
+def first_certificate_row(rows: list[list[int]], start: int = 1) -> int | None:
+    """Return the first certificate row index, or None if no row qualifies."""
+    for index, row in enumerate(rows[start:], start=start):
+        if is_certificate_row(row):
+            return index
+    return None
+
+
+def difference_row_summaries(rows: list[list[int]]) -> list[DifferenceRowSummary]:
+    """Return row-level diagnostics for a finite difference triangle."""
+    return [
+        DifferenceRowSummary(
+            row_index=index,
+            length=len(row),
+            first=row[0],
+            max_value=max(row),
+            odd_count=sum(1 for value in row if value % 2 == 1),
+            certificate_defects=row_certificate_defects(row),
+            is_certificate=is_certificate_row(row),
+        )
+        for index, row in enumerate(rows)
+    ]
 
 
 def boundary_return_check(
@@ -139,6 +191,29 @@ def random_odd_small_gap_sequence(
     while len(values) < length:
         values.append(values[-1] + 2 * rng.randint(1, max_gap_units))
     return values
+
+
+def sequence_from_gaps(start: int, gaps: list[int]) -> list[int]:
+    """Build a sequence from a starting value and consecutive gaps."""
+    values = [start]
+    for gap in gaps:
+        values.append(values[-1] + gap)
+    return values
+
+
+def shuffled_tail_gap_sequence(initial: list[int], seed: int) -> list[int]:
+    """Return a sequence with the first gap fixed and all later gaps shuffled."""
+    if len(initial) < 2:
+        raise ValueError("initial sequence must have at least two values")
+
+    gaps = [right - left for left, right in zip(initial, initial[1:])]
+    if len(gaps) <= 1:
+        return initial[:]
+
+    rng = Random(seed)
+    tail = gaps[1:]
+    rng.shuffle(tail)
+    return sequence_from_gaps(initial[0], [gaps[0], *tail])
 
 
 def gilbreath_row_metrics(prime_count: int, max_rows: int = 16) -> list[dict[str, float | int]]:

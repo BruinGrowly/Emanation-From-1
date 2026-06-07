@@ -22,6 +22,16 @@ Evidence value:
 - Supportive only if Origin metrics predict pass/fail structure before the run.
 - Challenging if broad controls explain the prime behavior without needing Origin metrics.
 
+Related command:
+
+```powershell
+python experiments\gilbreath_deep_dive.py
+```
+
+```powershell
+python experiments\gilbreath_gap_shuffle.py
+```
+
 ### B2: Goldbach Witness Correlations
 
 Question:
@@ -93,4 +103,3 @@ Required fields:
 - Parameters.
 - Result.
 - Why it weakens or constrains the hypothesis.
-

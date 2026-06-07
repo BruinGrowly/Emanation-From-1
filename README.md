@@ -58,6 +58,24 @@ Run Gilbreath control-sequence tests:
 python experiments\gilbreath_controls.py
 ```
 
+Run deeper Gilbreath certificate-row diagnostics:
+
+```powershell
+python experiments\gilbreath_deep_dive.py
+```
+
+Run a seeded random-control sweep:
+
+```powershell
+python experiments\gilbreath_random_sweep.py
+```
+
+Run shuffled prime-gap controls:
+
+```powershell
+python experiments\gilbreath_gap_shuffle.py
+```
+
 Run a Goldbach/origin-metric correlation scan:
 
 ```powershell
@@ -85,10 +103,16 @@ docs/
   VERIFICATION_POLICY.md
 experiments/
   gilbreath_controls.py
+  gilbreath_deep_dive.py
+  gilbreath_gap_shuffle.py
+  gilbreath_random_sweep.py
   goldbach_origin_correlations.py
   initial_scan.py
 reports/
   GILBREATH_CONTROL_EXPERIMENTS.md
+  GILBREATH_DEEP_DIVE.md
+  GILBREATH_GAP_SHUFFLE.md
+  GILBREATH_RANDOM_SWEEP.md
   GOLDBACH_ORIGIN_CORRELATIONS.md
   INITIAL_EXPERIMENTS.md
 src/
