@@ -1,0 +1,163 @@
+# Modular Return Theorem Candidate
+
+This note turns the strongest Origin-first evidence line into theorem-shaped mathematics.
+
+Current empirical line:
+
+> Within a fixed emanation shell, radical compression predicts modular return-exponent compression.
+
+Operational terms:
+
+- Emanation shell: `Omega(n)`, the total number of prime factors with multiplicity.
+- Radical ratio: `rad(n) / n`.
+- Radical compression: `1 - rad(n) / n`.
+- Return-exponent compression: `lambda(n) / phi(n)`, where `lambda` is the Carmichael exponent.
+
+## Exact Theorem 1: Coprime Product Law
+
+If `gcd(a, b) = 1`, then:
+
+```text
+lambda(ab) / phi(ab)
+  =
+  (lambda(a) / phi(a))
+  * (lambda(b) / phi(b))
+  / gcd(lambda(a), lambda(b))
+```
+
+Reason:
+
+```text
+lambda(ab) = lcm(lambda(a), lambda(b))
+phi(ab) = phi(a) phi(b)
+lcm(x, y) = xy / gcd(x, y)
+```
+
+Interpretation:
+
+Every new coprime component introduces a return-exponent compression factor. The penalty is controlled by overlap in the component return periods.
+
+This is the exact mechanism behind the modular-return signal.
+
+## Exact Theorem 2: Prime-Power Component Formula
+
+Let:
+
+```text
+n = product p_i^a_i
+c_i = lambda(p_i^a_i)
+d_i = c_i / phi(p_i^a_i)
+G(n) = product(c_i) / lcm(c_i)
+```
+
+Then:
+
+```text
+lambda(n) / phi(n) = product(d_i) / G(n)
+```
+
+For odd prime powers, `d_i = 1`. For `2^a` with `a >= 3`, `d_i = 1/2`.
+
+Interpretation:
+
+For odd `n`, all return-exponent compression comes from the lcm-overlap penalty `G(n)`. The more the number is split into coprime prime-power components, the more opportunities there are for lcm compression.
+
+## Exact Corollary: Odd Distinct-Prime Bound
+
+For odd `n` with `omega(n)` distinct prime factors:
+
+```text
+lambda(n) / phi(n) <= 2^(1 - omega(n))
+```
+
+Reason:
+
+Each odd prime-power component has even Carmichael value. The product-to-lcm overlap penalty contains at least one shared factor `2` for each additional odd component.
+
+Interpretation:
+
+More distinct odd components force return-exponent compression. This is a theorem-level bridge between factor splitting and modular return to `1`.
+
+## Endpoint Shell Result
+
+Inside shell `k`:
+
+- Odd prime powers are maximally concentrated:
+
+```text
+n = p^k
+rad(n) / n = p^(1-k)
+lambda(n) / phi(n) = 1
+```
+
+- Odd squarefree products are maximally split:
+
+```text
+n = p_1 p_2 ... p_k
+rad(n) / n = 1
+lambda(n) / phi(n) <= 2^(1-k)
+```
+
+So, at the shell endpoints, radical compression and return-exponent compression are linked by proof:
+
+- High radical compression can reach maximal `lambda/phi`.
+- Zero radical compression is forced into lcm-overlap compression when multiple odd components are present.
+
+## What Is Not True
+
+The naive monotonic theorem is false:
+
+> If two numbers have the same shell and one has higher radical compression, then it must have higher `lambda/phi`.
+
+Counterexamples exist because `p_i - 1` overlap can dominate radical compression.
+
+Example from the local probe:
+
+```text
+Omega(30) = Omega(63) = 3
+
+radical_compression(30) = 0
+lambda(30) / phi(30) = 0.5
+
+radical_compression(63) = 2/3
+lambda(63) / phi(63) = 1/6
+```
+
+So radical compression is not a total ordering. It is a structural proxy for concentration versus splitting, while Carmichael overlap supplies the exact arithmetic mechanism.
+
+## Theorem Candidate
+
+The realistic theorem is not simple monotonicity. It is:
+
+> Modular return-exponent compression is exactly controlled by coprime component splitting and Carmichael lcm-overlap. Radical compression predicts it in finite shell-conditioned scans because radical compression measures concentration of factor mass inside a shell, while `lambda/phi` penalizes splitting into multiple coprime return components.
+
+Proof status:
+
+- Exact product law: proved.
+- Exact component formula: proved.
+- Odd distinct-prime bound: proved.
+- Endpoint shell contrast: proved.
+- Universal monotonicity by radical compression alone: false.
+- Statistical within-shell prediction by radical compression: empirically supported by `E22` and `E23`, not yet a universal theorem.
+
+## Next Proof Move
+
+The next theorem should include both:
+
+```text
+rad(n) / n
+```
+
+and an overlap term such as:
+
+```text
+G(n) = product(lambda(p_i^a_i)) / lcm(lambda(p_i^a_i))
+```
+
+The likely provable statement is that the observed signal decomposes into:
+
+1. Concentration pressure: measured by radical compression.
+2. Splitting pressure: measured by `omega(n)` and the component count.
+3. Overlap pressure: measured exactly by Carmichael lcm overlap.
+
+That is the rigorous path from the Origin language to standard number theory.

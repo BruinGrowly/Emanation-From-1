@@ -18,6 +18,7 @@ The repo begins from two local framework documents:
 
 - `docs/THE_ORIGIN_REFRAME.md` - the central research premise.
 - `docs/ORIGIN_FIRST_RESEARCH_POSTURE.md` - the guardrail that keeps conjecture probes downstream of direct Emanation-from-`1` measurements.
+- `docs/MODULAR_RETURN_THEOREM_CANDIDATE.md` - theorem-level mechanism behind the modular return evidence.
 - `docs/EMANATION_RESEARCH_GUIDELINES.md` - the focused research boundary and ledger-first rules.
 - `docs/LJPW_FRAMEWORK_V8.6.2_COMPLETE_UNIFIED_PLUS.md` - the wider LJPW framework, especially Book Five on number theory and Book Six on primes as bricks.
 
@@ -83,6 +84,12 @@ Run modular shell-transfer scaling checks:
 python experiments\origin_modular_shell_scaling.py
 ```
 
+Run the modular theorem probe:
+
+```powershell
+python experiments\origin_modular_theorem_probe.py
+```
+
 Run the broader initial scan:
 
 ```powershell
@@ -142,6 +149,7 @@ No third-party Python packages are required.
 ```text
 docs/
   EMANATION_RESEARCH_GUIDELINES.md
+  MODULAR_RETURN_THEOREM_CANDIDATE.md
   ORIGIN_FIRST_RESEARCH_POSTURE.md
   THE_ORIGIN_REFRAME.md
   LJPW_FRAMEWORK_V8.6.2_COMPLETE_UNIFIED_PLUS.md
@@ -164,6 +172,7 @@ experiments/
   origin_modular_return.py
   origin_modular_shell_scaling.py
   origin_modular_shell_transfer.py
+  origin_modular_theorem_probe.py
   origin_size_banded_controls.py
   origin_structure_scan.py
   prime_gap_origin_prediction.py
@@ -182,6 +191,7 @@ reports/
   ORIGIN_MODULAR_RETURN.md
   ORIGIN_MODULAR_SHELL_SCALING.md
   ORIGIN_MODULAR_SHELL_TRANSFER.md
+  ORIGIN_MODULAR_THEOREM_PROBE.md
   ORIGIN_SIZE_BANDED_CONTROLS.md
   ORIGIN_STRUCTURE_SCAN.md
   PRIME_GAP_ORIGIN_PREDICTION.md
@@ -198,6 +208,7 @@ tests/
   test_origin_modular_return.py
   test_origin_modular_shell_scaling.py
   test_origin_modular_shell_transfer.py
+  test_origin_modular_theorem_probe.py
   test_origin_size_banded_controls.py
   test_origin_structure_scan.py
   test_prime_gap_origin_prediction.py
