@@ -47,6 +47,7 @@ That document should be read with `docs/EVIDENCE_LEDGER.md` before adding new cl
 | Branching | Divisor structure | `divisor_count(n)` and factor exponent shape |
 | Compression | Repeated factor overlap | `radical(n) / n` |
 | Return path | Factor reduction | Repeatedly divide by smallest prime factor |
+| Anchor echo | Modular fixed point | Idempotents `x^2 = x mod n` and involutions `x^2 = 1 mod n` |
 | Boundary-return probe | Gilbreath rows | Absolute differences of the prime stream |
 | Minimal bridge | Twin prime gap | Prime pairs `(p, p + 2)` |
 | Pair-bond decomposition | Goldbach pair | Even `n = p + q` |
@@ -147,6 +148,7 @@ Generated reports include:
 - `reports/ORIGIN_MODULAR_SHELL_SCALING.md`
 - `reports/ORIGIN_MODULAR_THEOREM_PROBE.md`
 - `reports/ORIGIN_MODULAR_SIGNAL_DECOMPOSITION.md`
+- `reports/ORIGIN_ANCHOR_ECHO_FIXED_POINTS.md`
 - `reports/PRIME_GAP_OVERLAP_TRANSFER.md`
 - `reports/PRIME_GAP_ORIGIN_PROFILES.md`
 - `reports/PRIME_GAP_ORIGIN_PREDICTION.md`
@@ -167,6 +169,11 @@ python experiments\initial_scan.py --gilbreath-primes 1024 --goldbach-limit 5000
 Current evidence balance:
 
 - `docs/EVIDENCE_LEDGER.md`
+
+Theory-to-test bridge:
+
+- `docs/ORIGIN_THEORY_RESEARCH_BRIDGE.md`
+- `docs/pakheta_layer/README.md`
 
 Planned tests:
 

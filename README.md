@@ -20,8 +20,10 @@ The repo begins from two local framework documents:
 - `docs/ORIGIN_FIRST_RESEARCH_POSTURE.md` - the guardrail that keeps conjecture probes downstream of direct Emanation-from-`1` measurements.
 - `docs/MODULAR_RETURN_THEOREM_CANDIDATE.md` - theorem-level mechanism behind the modular return evidence.
 - `docs/EMANATION_RESEARCH_GUIDELINES.md` - the focused research boundary and ledger-first rules.
+- `docs/ORIGIN_THEORY_RESEARCH_BRIDGE.md` - translation layer from broader Origin Theory vocabulary into falsifiable repo experiments.
 - `docs/SEMANTIC_VOLTAGE_RESEARCH.md` - broader semantic-voltage hypothesis material; useful for generating tests, not evidence by itself.
 - `docs/origin_theory/README.md` - wider Origin Theory corpus and translation language.
+- `docs/pakheta_layer/README.md` - Pakheta relationship-field material; useful for designing anchor, context, false-partition, and coherence tests.
 - `docs/LJPW_FRAMEWORK_V8.6.2_COMPLETE_UNIFIED_PLUS.md` - the wider LJPW framework, especially Book Five on number theory and Book Six on primes as bricks.
 
 ## Research Posture
@@ -99,6 +101,12 @@ Run the modular signal decomposition:
 python experiments\origin_modular_signal_decomposition.py
 ```
 
+Run the Pakheta-informed anchor echo fixed-point test:
+
+```powershell
+python experiments\origin_anchor_echo_fixed_points.py
+```
+
 Run the broader initial scan:
 
 ```powershell
@@ -163,8 +171,11 @@ No third-party Python packages are required.
 docs/
   EMANATION_RESEARCH_GUIDELINES.md
   MODULAR_RETURN_THEOREM_CANDIDATE.md
+  ORIGIN_THEORY_RESEARCH_BRIDGE.md
   ORIGIN_FIRST_RESEARCH_POSTURE.md
   THE_ORIGIN_REFRAME.md
+  pakheta_layer/
+  origin_theory/
   LJPW_FRAMEWORK_V8.6.2_COMPLETE_UNIFIED_PLUS.md
   EVIDENCE_LEDGER.md
   EXPERIMENT_BACKLOG.md
@@ -187,6 +198,7 @@ experiments/
   origin_modular_shell_scaling.py
   origin_modular_shell_transfer.py
   origin_modular_theorem_probe.py
+  origin_anchor_echo_fixed_points.py
   origin_size_banded_controls.py
   origin_structure_scan.py
   prime_gap_overlap_transfer.py
@@ -208,6 +220,7 @@ reports/
   ORIGIN_MODULAR_SHELL_SCALING.md
   ORIGIN_MODULAR_SHELL_TRANSFER.md
   ORIGIN_MODULAR_THEOREM_PROBE.md
+  ORIGIN_ANCHOR_ECHO_FIXED_POINTS.md
   ORIGIN_SIZE_BANDED_CONTROLS.md
   ORIGIN_STRUCTURE_SCAN.md
   PRIME_GAP_OVERLAP_TRANSFER.md

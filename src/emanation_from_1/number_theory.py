@@ -193,6 +193,32 @@ def divisor_count(n: int) -> int:
     return total
 
 
+def modular_idempotent_count(n: int) -> int:
+    """Return the number of solutions to x**2 == x mod n."""
+    if n < 1:
+        raise ValueError("modular idempotent count is defined for positive integers")
+    return 2 ** len(factor_counter(n))
+
+
+def modular_involution_count(n: int) -> int:
+    """Return the number of solutions to x**2 == 1 mod n."""
+    if n < 1:
+        raise ValueError("modular involution count is defined for positive integers")
+
+    total = 1
+    for prime, exponent in factor_counter(n).items():
+        if prime == 2:
+            if exponent == 1:
+                total *= 1
+            elif exponent == 2:
+                total *= 2
+            else:
+                total *= 4
+        else:
+            total *= 2
+    return total
+
+
 def euler_totient(n: int) -> int:
     """Return Euler's totient function."""
     if n < 1:

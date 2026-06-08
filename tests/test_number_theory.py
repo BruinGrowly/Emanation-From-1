@@ -32,6 +32,8 @@ from emanation_from_1.number_theory import (
     lambda_phi_ratio,
     multiplicative_order,
     modular_return_decomposition,
+    modular_idempotent_count,
+    modular_involution_count,
     prime_power_return_component,
     radical,
     sieve,
@@ -160,6 +162,26 @@ class NumberTheoryTests(unittest.TestCase):
 
         with self.assertRaises(ValueError):
             multiplicative_order(2, 4)
+
+    def test_modular_fixed_point_counts(self) -> None:
+        self.assertEqual(modular_idempotent_count(1), 1)
+        self.assertEqual(modular_idempotent_count(12), 4)
+        self.assertEqual(modular_idempotent_count(60), 8)
+
+        self.assertEqual(modular_involution_count(1), 1)
+        self.assertEqual(modular_involution_count(2), 1)
+        self.assertEqual(modular_involution_count(4), 2)
+        self.assertEqual(modular_involution_count(8), 4)
+        self.assertEqual(modular_involution_count(12), 4)
+        self.assertEqual(modular_involution_count(18), 2)
+
+    def test_modular_fixed_point_counts_match_brute_force(self) -> None:
+        for n in range(1, 80):
+            idempotents = [x for x in range(n) if (x * x - x) % n == 0]
+            involutions = [x for x in range(n) if (x * x - 1) % n == 0]
+
+            self.assertEqual(modular_idempotent_count(n), len(idempotents), n)
+            self.assertEqual(modular_involution_count(n), len(involutions), n)
 
     def test_prime_power_return_component(self) -> None:
         component = prime_power_return_component(2, 4)

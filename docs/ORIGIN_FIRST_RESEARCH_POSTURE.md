@@ -72,7 +72,9 @@ The center now moves back to:
 - `reports/ORIGIN_MODULAR_SHELL_SCALING.md`
 - `reports/ORIGIN_MODULAR_THEOREM_PROBE.md`
 - `reports/ORIGIN_MODULAR_SIGNAL_DECOMPOSITION.md`
+- `reports/ORIGIN_ANCHOR_ECHO_FIXED_POINTS.md`
 - `reports/PRIME_GAP_OVERLAP_TRANSFER.md`
+- `docs/ORIGIN_THEORY_RESEARCH_BRIDGE.md`
 - `docs/MODULAR_RETURN_THEOREM_CANDIDATE.md`
 - `docs/EXPERIMENT_BACKLOG.md`
 - `docs/EVIDENCE_LEDGER.md`
@@ -81,6 +83,7 @@ Additional theory-source material now lives in:
 
 - `docs/origin_theory/README.md`
 - `docs/SEMANTIC_VOLTAGE_RESEARCH.md`
+- `docs/pakheta_layer/README.md`
 
 Use these as hypothesis generators, not as evidence substitutes.
 

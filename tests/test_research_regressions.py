@@ -22,6 +22,11 @@ from experiments.goldbach_origin_correlations import (  # noqa: E402
     goldbach_dataset,
     strongest_origin_correlation,
 )
+from experiments.origin_anchor_echo_fixed_points import (  # noqa: E402
+    brute_force_check,
+    fixed_point_dataset,
+    model_r_squared,
+)
 
 
 class ResearchRegressionTests(unittest.TestCase):
@@ -95,6 +100,25 @@ class ResearchRegressionTests(unittest.TestCase):
         self.assertEqual(singular[0], "phi_attenuation")
         self.assertAlmostEqual(singular[1], 0.1355, places=4)
         self.assertLess(abs(singular[1]), abs(normalized[1]))
+
+    def test_anchor_echo_fixed_point_mechanisms_match_ledger(self) -> None:
+        check = brute_force_check(80)
+        self.assertEqual(check["max_idempotent_error"], 0)
+        self.assertEqual(check["max_involution_error"], 0)
+
+        dataset = fixed_point_dataset(1000)
+        self.assertAlmostEqual(
+            model_r_squared(dataset, "log_idempotent_count", ["component_count"]),
+            1.0,
+        )
+        self.assertAlmostEqual(
+            model_r_squared(
+                dataset,
+                "log_involution_count",
+                ["odd_component_count", "two_adic_involution_log"],
+            ),
+            1.0,
+        )
 
 
 if __name__ == "__main__":
