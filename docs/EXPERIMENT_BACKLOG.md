@@ -80,8 +80,9 @@ Current local reading:
 - `log(p)` remains the stronger raw-gap baseline.
 - Residual correlations remain after removing a linear `log(p)` baseline.
 - In the default generated report, adjacent-composite and `p + 1` metrics are the strongest residual candidates.
-- Seeded shuffled-gap controls did not match the observed residual signal at the largest default prefix.
-- Treat this as local supportive evidence, then pressure-test it with larger ranges and stronger controls.
+- Seeded shuffled-gap, `p mod 30`, and `p mod 30` plus size-bin controls usually did not match the observed residual signal at the largest default prefix.
+- Large residual-gap classification finds the same adjacent-composite metric, but it is less clean under the strongest conditioned control.
+- Treat this as local supportive evidence, then pressure-test it with larger ranges, stronger conditioning, and direct prediction of unusually large residual gaps.
 
 ## Priority 2: Transfer Tests
 

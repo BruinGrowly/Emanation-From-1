@@ -12,6 +12,8 @@ from emanation_from_1.statistics import pearson_correlation  # noqa: E402
 from experiments.prime_gap_origin_profiles import (  # noqa: E402
     analyze_prime_count,
     attach_log_residual_gap,
+    grouped_shuffle_residual_control,
+    large_gap_classification,
     metric_label,
     prime_gap_dataset,
 )
@@ -62,6 +64,47 @@ class PrimeGapOriginProfileTests(unittest.TestCase):
         self.assertEqual(first["ge_count"], second["ge_count"])
         self.assertAlmostEqual(first["mean_abs_best"], second["mean_abs_best"])
         self.assertEqual(metric_label(str(first["observed_metric"])), "p + 1.divisor_count")
+
+    def test_conditioned_residual_shuffle_control_runs(self) -> None:
+        analysis = analyze_prime_count(256, shuffle_trials=5, seed=24000)
+        dataset = analysis["dataset"]
+
+        control = grouped_shuffle_residual_control(
+            dataset,
+            trials=5,
+            seed=25000,
+            mode="residue30_size",
+            size_bins=4,
+        )
+
+        self.assertEqual(control["mode"], "residue30_size")
+        self.assertEqual(control["trials"], 5)
+        self.assertGreaterEqual(control["max_abs_best"], control["mean_abs_best"])
+        self.assertTrue(str(control["observed_metric"]))
+
+    def test_large_gap_classification_is_deterministic(self) -> None:
+        analysis = analyze_prime_count(256, shuffle_trials=5, seed=24000)
+        dataset = analysis["dataset"]
+
+        first = large_gap_classification(
+            dataset,
+            fraction=0.10,
+            trials=5,
+            seed=26000,
+            size_bins=4,
+        )
+        second = large_gap_classification(
+            dataset,
+            fraction=0.10,
+            trials=5,
+            seed=26000,
+            size_bins=4,
+        )
+
+        self.assertEqual(first["large_gap_count"], second["large_gap_count"])
+        self.assertEqual(first["observed_metric"], second["observed_metric"])
+        self.assertAlmostEqual(first["observed_r"], second["observed_r"])
+        self.assertEqual(len(first["controls"]), 3)
 
 
 if __name__ == "__main__":

@@ -151,7 +151,18 @@ def strongest_correlation(
     target: str,
     metrics: list[str],
 ) -> tuple[str, float] | None:
-    target_values = [row[target] for row in dataset]
+    return strongest_correlation_with_values(
+        dataset,
+        [row[target] for row in dataset],
+        metrics,
+    )
+
+
+def strongest_correlation_with_values(
+    dataset: list[dict[str, float]],
+    target_values: list[float],
+    metrics: list[str],
+) -> tuple[str, float] | None:
     correlations: list[tuple[str, float]] = []
 
     for metric in metrics:
@@ -162,6 +173,55 @@ def strongest_correlation(
     if not correlations:
         return None
     return max(correlations, key=lambda item: abs(item[1]))
+
+
+def best_abs_correlation(
+    metric_values: dict[str, list[float]],
+    target_values: list[float],
+) -> float:
+    return max(
+        abs(pearson_correlation(values, target_values) or 0.0)
+        for values in metric_values.values()
+    )
+
+
+def group_indices(
+    dataset: list[dict[str, float]],
+    mode: str,
+    size_bins: int,
+) -> dict[object, list[int]]:
+    if size_bins < 1:
+        raise ValueError("size_bins must be >= 1")
+
+    groups: dict[object, list[int]] = {}
+    length = len(dataset)
+    for index, row in enumerate(dataset):
+        residue = int(row["p"]) % 30
+        size_bin = min((index * size_bins) // length, size_bins - 1)
+        if mode == "global":
+            key: object = "all"
+        elif mode == "residue30":
+            key = residue
+        elif mode == "residue30_size":
+            key = (residue, size_bin)
+        else:
+            raise ValueError(f"unknown shuffle mode: {mode}")
+        groups.setdefault(key, []).append(index)
+    return groups
+
+
+def shuffled_by_groups(
+    values: list[float],
+    groups: dict[object, list[int]],
+    rng: Random,
+) -> list[float]:
+    shuffled = values[:]
+    for indices in groups.values():
+        group_values = [values[index] for index in indices]
+        rng.shuffle(group_values)
+        for index, value in zip(indices, group_values):
+            shuffled[index] = value
+    return shuffled
 
 
 def ranked_correlation_rows(
@@ -207,6 +267,23 @@ def shuffle_residual_control(
     seed: int,
 ) -> dict[str, float | int | str]:
     """Shuffle gap assignments and measure strongest Origin residual correlations."""
+    return grouped_shuffle_residual_control(
+        dataset,
+        trials=trials,
+        seed=seed,
+        mode="global",
+        size_bins=1,
+    )
+
+
+def grouped_shuffle_residual_control(
+    dataset: list[dict[str, float]],
+    trials: int,
+    seed: int,
+    mode: str,
+    size_bins: int,
+) -> dict[str, float | int | str]:
+    """Shuffle gap assignments within optional residue/size groups."""
     if trials < 1:
         raise ValueError("trials must be >= 1")
 
@@ -219,21 +296,19 @@ def shuffle_residual_control(
     gaps = [row["gap"] for row in dataset]
     metric_values = {metric: [row[metric] for row in dataset] for metric in metrics}
     rng = Random(seed)
+    groups = group_indices(dataset, mode, size_bins)
     shuffled_best_abs: list[float] = []
 
     for _trial in range(trials):
-        shuffled_gaps = gaps[:]
-        rng.shuffle(shuffled_gaps)
+        shuffled_gaps = shuffled_by_groups(gaps, groups, rng)
         shuffled_residuals = residuals_after_linear_baseline(log_values, shuffled_gaps)
-        best_abs = max(
-            abs(pearson_correlation(values, shuffled_residuals) or 0.0)
-            for values in metric_values.values()
-        )
-        shuffled_best_abs.append(best_abs)
+        shuffled_best_abs.append(best_abs_correlation(metric_values, shuffled_residuals))
 
     observed_abs = abs(observed[1])
     ge_count = sum(1 for value in shuffled_best_abs if value >= observed_abs)
     return {
+        "mode": mode,
+        "size_bins": size_bins,
         "observed_metric": observed[0],
         "observed_r": observed[1],
         "trials": trials,
@@ -242,6 +317,128 @@ def shuffle_residual_control(
         "ge_count": ge_count,
         "empirical_p_upper": (ge_count + 1) / (trials + 1),
     }
+
+
+def control_label(control: dict[str, float | int | str]) -> str:
+    mode = str(control["mode"])
+    if mode == "global":
+        return "global gap shuffle"
+    if mode == "residue30":
+        return "shuffle within p mod 30"
+    if mode == "residue30_size":
+        return f"shuffle within p mod 30 and {control['size_bins']} size bins"
+    return mode
+
+
+def residual_control_comparison_rows(
+    dataset: list[dict[str, float]],
+    trials: int,
+    seed: int,
+    size_bins: int,
+) -> list[list[object]]:
+    controls = [
+        grouped_shuffle_residual_control(dataset, trials, seed, "global", size_bins),
+        grouped_shuffle_residual_control(dataset, trials, seed + 1, "residue30", size_bins),
+        grouped_shuffle_residual_control(
+            dataset,
+            trials,
+            seed + 2,
+            "residue30_size",
+            size_bins,
+        ),
+    ]
+    return [
+        [
+            control_label(control),
+            metric_label(str(control["observed_metric"])),
+            f"{control['observed_r']:.4f}",
+            f"{control['mean_abs_best']:.4f}",
+            f"{control['max_abs_best']:.4f}",
+            f"{control['ge_count']}/{control['trials']}",
+            f"{control['empirical_p_upper']:.4f}",
+        ]
+        for control in controls
+    ]
+
+
+def top_fraction_flags(values: list[float], fraction: float) -> list[float]:
+    if not 0 < fraction < 1:
+        raise ValueError("fraction must be between 0 and 1")
+    count = max(1, int(len(values) * fraction))
+    count = min(count, len(values) - 1)
+    ranked_indices = sorted(range(len(values)), key=lambda index: values[index], reverse=True)
+    top_indices = set(ranked_indices[:count])
+    return [1.0 if index in top_indices else 0.0 for index in range(len(values))]
+
+
+def large_gap_classification(
+    dataset: list[dict[str, float]],
+    fraction: float,
+    trials: int,
+    seed: int,
+    size_bins: int,
+) -> dict[str, object]:
+    """Compare Origin metrics against the largest positive residual gaps."""
+    if trials < 1:
+        raise ValueError("trials must be >= 1")
+
+    metrics = origin_metric_keys()
+    log_values = [row["log_p"] for row in dataset]
+    gaps = [row["gap"] for row in dataset]
+    observed_flags = top_fraction_flags([row["log_residual_gap"] for row in dataset], fraction)
+    observed = strongest_correlation_with_values(dataset, observed_flags, metrics)
+    if observed is None:
+        raise ValueError("large-gap correlations are undefined")
+
+    metric_values = {metric: [row[metric] for row in dataset] for metric in metrics}
+    controls: list[dict[str, object]] = []
+
+    for offset, mode in enumerate(("global", "residue30", "residue30_size")):
+        rng = Random(seed + offset)
+        groups = group_indices(dataset, mode, size_bins)
+        shuffled_best_abs: list[float] = []
+        for _trial in range(trials):
+            shuffled_gaps = shuffled_by_groups(gaps, groups, rng)
+            shuffled_residuals = residuals_after_linear_baseline(log_values, shuffled_gaps)
+            shuffled_flags = top_fraction_flags(shuffled_residuals, fraction)
+            shuffled_best_abs.append(best_abs_correlation(metric_values, shuffled_flags))
+
+        observed_abs = abs(observed[1])
+        ge_count = sum(1 for value in shuffled_best_abs if value >= observed_abs)
+        controls.append(
+            {
+                "mode": mode,
+                "size_bins": size_bins,
+                "trials": trials,
+                "mean_abs_best": sum(shuffled_best_abs) / len(shuffled_best_abs),
+                "max_abs_best": max(shuffled_best_abs),
+                "ge_count": ge_count,
+                "empirical_p_upper": (ge_count + 1) / (trials + 1),
+            }
+        )
+
+    return {
+        "fraction": fraction,
+        "large_gap_count": int(sum(observed_flags)),
+        "observed_metric": observed[0],
+        "observed_r": observed[1],
+        "controls": controls,
+    }
+
+
+def large_gap_control_rows(classification: dict[str, object]) -> list[list[object]]:
+    controls = classification["controls"]
+    assert isinstance(controls, list)
+    return [
+        [
+            control_label(control),
+            f"{control['mean_abs_best']:.4f}",
+            f"{control['max_abs_best']:.4f}",
+            f"{control['ge_count']}/{control['trials']}",
+            f"{control['empirical_p_upper']:.4f}",
+        ]
+        for control in controls
+    ]
 
 
 def analyze_prime_count(prime_count: int, shuffle_trials: int, seed: int) -> dict[str, object]:
@@ -320,6 +517,8 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--prime-counts", default="1024,2048,4096,8192")
     parser.add_argument("--shuffle-trials", type=int, default=100)
+    parser.add_argument("--size-bins", type=int, default=8)
+    parser.add_argument("--large-gap-fraction", type=float, default=0.10)
     parser.add_argument("--seed", type=int, default=24000)
     parser.add_argument(
         "--output",
@@ -336,6 +535,10 @@ def main() -> None:
         raise ValueError("prime-counts entries must be >= 2")
     if args.shuffle_trials < 1:
         raise ValueError("shuffle-trials must be >= 1")
+    if args.size_bins < 1:
+        raise ValueError("size-bins must be >= 1")
+    if not 0 < args.large_gap_fraction < 1:
+        raise ValueError("large-gap-fraction must be between 0 and 1")
 
     analyses = [
         analyze_prime_count(prime_count, args.shuffle_trials, args.seed)
@@ -346,6 +549,19 @@ def main() -> None:
     assert isinstance(primary_dataset, list)
     primary_shuffle = primary["shuffle"]
     assert isinstance(primary_shuffle, dict)
+    primary_control_rows = residual_control_comparison_rows(
+        primary_dataset,
+        args.shuffle_trials,
+        args.seed + 10_000,
+        args.size_bins,
+    )
+    large_gap = large_gap_classification(
+        primary_dataset,
+        args.large_gap_fraction,
+        args.shuffle_trials,
+        args.seed + 20_000,
+        args.size_bins,
+    )
 
     generated = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
     report = "\n\n".join(
@@ -361,6 +577,8 @@ def main() -> None:
                 [
                     ["prime_counts", args.prime_counts],
                     ["shuffle_trials_per_prefix", args.shuffle_trials],
+                    ["size_bins", args.size_bins],
+                    ["large_gap_fraction", args.large_gap_fraction],
                     ["seed_start", args.seed],
                 ],
             ),
@@ -373,6 +591,8 @@ def main() -> None:
                     "- The conventional baseline is `log(p)`.",
                     "- The residual target is the gap after fitting `gap ~= a + b * log(p)`.",
                     "- Shuffle controls keep all metric rows fixed and randomly permute gap assignments before recomputing the log residual.",
+                    "- Stronger controls shuffle gaps within `p mod 30`, then within both `p mod 30` and size bins.",
+                    "- Large-gap classification marks the largest positive log-residual gaps and correlates that binary target with Origin metrics.",
                 ]
             ),
             "## Scale Summary",
@@ -397,6 +617,32 @@ def main() -> None:
             markdown_table(
                 ["source", "strongest residual metric", "pearson_r"],
                 source_summary_rows(primary_dataset, "log_residual_gap"),
+            ),
+            "## Stronger Residual Controls For Largest Prefix",
+            markdown_table(
+                [
+                    "control",
+                    "observed metric",
+                    "observed r",
+                    "control mean best abs(r)",
+                    "control max best abs(r)",
+                    "control >= observed",
+                    "empirical p upper",
+                ],
+                primary_control_rows,
+            ),
+            "## Large Residual-Gap Classification",
+            f"Large-gap target: top `{args.large_gap_fraction:.2f}` of positive residual gaps, `{large_gap['large_gap_count']}` rows in the largest prefix.",
+            f"Strongest observed classifier correlation: `{metric_label(str(large_gap['observed_metric']))}` with `r = {large_gap['observed_r']:.4f}`.",
+            markdown_table(
+                [
+                    "control",
+                    "control mean best abs(r)",
+                    "control max best abs(r)",
+                    "control >= observed",
+                    "empirical p upper",
+                ],
+                large_gap_control_rows(large_gap),
             ),
             "## Top Residual Correlations For Largest Prefix",
             markdown_table(
@@ -426,9 +672,9 @@ def main() -> None:
             "For raw gaps, `log(p)` remains the stronger conventional baseline in this scan.",
             f"After subtracting the log baseline at the largest prefix, the strongest Origin-facing residual correlation is `{metric_label(str(primary_shuffle['observed_metric']))}` with `r = {primary_shuffle['observed_r']:.4f}`.",
             f"Across `{primary_shuffle['trials']}` shuffled-gap controls at the largest prefix, `{primary_shuffle['ge_count']}` matched or exceeded the observed absolute residual correlation; the conservative empirical upper estimate is `{primary_shuffle['empirical_p_upper']:.4f}`.",
-            "This is local supportive evidence under the current controls: the Origin-facing residual signal survives the ordinary log baseline and the seeded shuffled-gap comparison.",
+            "This is local supportive evidence under the current controls: the Origin-facing residual signal survives the ordinary log baseline, global shuffled-gap comparison, and stronger residue/size-conditioned shuffled controls.",
             "The brave reading is narrow, not vague: local composite structure around a prime, especially `p + 1` and the delta between `p + 1` and `p - 1`, appears to carry information about the next prime gap after size is removed.",
-            "The next test should press this harder with larger ranges, residue-class controls, and large-gap classification.",
+            "The large-gap classification view gives the next proof-of-signal path: move beyond correlation and ask whether Origin metrics identify unusually large residual gaps before they occur.",
         ]
     )
 

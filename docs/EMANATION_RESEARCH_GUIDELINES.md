@@ -74,8 +74,8 @@ If those cannot be named, keep the idea in notes rather than treating it as evid
 1. Protect the existing ledger claims with deterministic regression tests.
 2. Extend the prime-gap/origin-profile experiment from backlog item `B3` with stronger controls:
    - larger prime prefixes,
-   - residue-class and wheel-conditioned controls,
-   - large-gap classification instead of only correlation.
+   - wheel-conditioned controls beyond `p mod 30`,
+   - direct large-gap prediction instead of only correlation/classification summaries.
 3. Extend Gilbreath controls beyond first-order Markov gaps:
    - second-order and `k`-history Markov controls,
    - wheel or residue-class preserving controls,
