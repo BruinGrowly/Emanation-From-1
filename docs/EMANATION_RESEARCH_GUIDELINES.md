@@ -38,6 +38,7 @@ Current ledger reading:
 - `E19` is the first direct Origin-first discriminating test. Shell depth retains strong residual structure after a size baseline and size-banded shuffles, but the evidence remains internal to factorization.
 - `E20` is the first Origin-first modular transfer result. Pre-declared shell depth predicts modular return-to-`1` compression beyond size-banded controls, with the caveat that modular group structure is factorization-linked.
 - `E21` narrows the modular result: shell depth survives stronger group conditioning for return-exponent compression, but sampled order behavior mostly collapses under group baselines.
+- `E22` strengthens the narrowed modular result: within a fixed shell, radical compression still predicts return-exponent compression after conventional group baselines.
 - `E2`, `E3`, `E4`, and `E10` constrain the Gilbreath reading. First-column `1` behavior is not prime-specific unless controls are handled carefully.
 - `E6` and `E7` constrain Goldbach-origin claims. Simple factor-depth metrics mostly collapse into conventional arithmetic structure after singular-factor correction.
 - `E8` through `E13` are the strongest current candidate-supportive line. Prime gap order preserves certified Gilbreath locks better than shuffled, block-shuffled, and first-order Markov controls in the tested finite ranges.

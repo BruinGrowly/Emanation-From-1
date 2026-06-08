@@ -71,6 +71,12 @@ Run stronger modular group-conditioned controls:
 python experiments\origin_modular_group_controls.py
 ```
 
+Run shell-conditioned modular transfer tests:
+
+```powershell
+python experiments\origin_modular_shell_transfer.py
+```
+
 Run the broader initial scan:
 
 ```powershell
@@ -150,6 +156,7 @@ experiments/
   initial_scan.py
   origin_modular_group_controls.py
   origin_modular_return.py
+  origin_modular_shell_transfer.py
   origin_size_banded_controls.py
   origin_structure_scan.py
   prime_gap_origin_prediction.py
@@ -166,6 +173,7 @@ reports/
   INITIAL_EXPERIMENTS.md
   ORIGIN_MODULAR_GROUP_CONTROLS.md
   ORIGIN_MODULAR_RETURN.md
+  ORIGIN_MODULAR_SHELL_TRANSFER.md
   ORIGIN_SIZE_BANDED_CONTROLS.md
   ORIGIN_STRUCTURE_SCAN.md
   PRIME_GAP_ORIGIN_PREDICTION.md
@@ -180,6 +188,7 @@ tests/
   test_number_theory.py
   test_origin_modular_group_controls.py
   test_origin_modular_return.py
+  test_origin_modular_shell_transfer.py
   test_origin_size_banded_controls.py
   test_origin_structure_scan.py
   test_prime_gap_origin_prediction.py
