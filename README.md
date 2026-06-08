@@ -96,6 +96,12 @@ Run a Goldbach/origin-metric correlation scan:
 python experiments\goldbach_origin_correlations.py
 ```
 
+Run prime-gap/origin-profile correlations:
+
+```powershell
+python experiments\prime_gap_origin_profiles.py
+```
+
 Run the test suite:
 
 ```powershell
@@ -125,6 +131,7 @@ experiments/
   gilbreath_random_sweep.py
   goldbach_origin_correlations.py
   initial_scan.py
+  prime_gap_origin_profiles.py
 reports/
   GILBREATH_CONTROL_EXPERIMENTS.md
   GILBREATH_DEEP_DIVE.md
@@ -134,6 +141,7 @@ reports/
   GILBREATH_RANDOM_SWEEP.md
   GOLDBACH_ORIGIN_CORRELATIONS.md
   INITIAL_EXPERIMENTS.md
+  PRIME_GAP_ORIGIN_PROFILES.md
 src/
   emanation_from_1/
     conjectures.py
@@ -141,6 +149,8 @@ src/
     origin_metrics.py
 tests/
   test_number_theory.py
+  test_prime_gap_origin_profiles.py
+  test_research_regressions.py
 ```
 
 ## First Experiment Families

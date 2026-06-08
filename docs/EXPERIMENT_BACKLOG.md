@@ -69,6 +69,20 @@ Controls:
 - Shuffle gap assignments.
 - Compare adjacent composites with similar size.
 
+Command:
+
+```powershell
+python experiments\prime_gap_origin_profiles.py
+```
+
+Current local reading:
+
+- `log(p)` remains the stronger raw-gap baseline.
+- Residual correlations remain after removing a linear `log(p)` baseline.
+- In the default generated report, adjacent-composite and `p + 1` metrics are the strongest residual candidates.
+- Seeded shuffled-gap controls did not match the observed residual signal at the largest default prefix.
+- Treat this as local supportive evidence, then pressure-test it with larger ranges and stronger controls.
+
 ## Priority 2: Transfer Tests
 
 ### B4: One Metric Across Multiple Phenomena

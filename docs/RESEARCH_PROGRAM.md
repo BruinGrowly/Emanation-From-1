@@ -120,9 +120,10 @@ Experimentally:
 
 ## Experiment Log
 
-The initial generated report lives at:
+Generated reports include:
 
 - `reports/INITIAL_EXPERIMENTS.md`
+- `reports/PRIME_GAP_ORIGIN_PROFILES.md`
 
 Regenerate it with:
 
