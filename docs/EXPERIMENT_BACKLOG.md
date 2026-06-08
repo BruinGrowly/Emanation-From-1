@@ -123,11 +123,16 @@ python experiments\prime_gap_origin_profiles.py
 python experiments\prime_gap_origin_prediction.py
 ```
 
+```powershell
+python experiments\prime_gap_overlap_transfer.py
+```
+
 Current local reading:
 
 - Residual correlations remain after removing a linear `log(p)` baseline.
 - Seeded shuffled-gap, `p mod 30`, and `p mod 30` plus size-bin controls usually did not match the strongest residual correlation at the largest default prefix.
 - Direct held-out prediction is constraining: pre-declared metrics produce near-random AUCs and only weak enrichment, with residue-plus-size controls often matching or exceeding them.
+- Carmichael overlap pressure also failed this first non-modular transfer test: pre-registered `p + 1` overlap pressure produced held-out AUCs `0.5029` and `0.4974`, with residue-plus-size controls matching or exceeding observed AUCs in `73/200` trials.
 - Treat this as an unfinished transfer test, not as the center of the repo.
 
 ### B6: Twin-Bridge And Modular-Return Tests
@@ -190,7 +195,7 @@ Next proof target after signal decomposition:
 
 - Treat overlap pressure as the primary exact mechanism for modular return-exponent compression.
 - Prove bounded statements explaining when concentration and splitting proxies do, or do not, track overlap pressure inside fixed shells.
-- Pre-register an overlap-pressure metric and test whether it transfers to a non-modular target, so the research does not merely rediscover the definition of `lambda(n)`.
+- Since the first pre-registered overlap-pressure transfer to prime gaps was constraining, do not assume overlap pressure generalizes. Any next transfer should use a sharper target and a pre-declared failure condition.
 
 ## Priority 3: Boundary-Return Probes
 

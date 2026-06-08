@@ -110,6 +110,14 @@ Interpretation:
 
 The modular-return signal is overwhelmingly an overlap-pressure signal in the default finite scan. Radical compression and component splitting remain useful Origin-facing proxies, but they are not the source of the full mechanism.
 
+First non-modular transfer check:
+
+- `experiments/prime_gap_overlap_transfer.py` pre-registers `p + 1` overlap pressure as a predictor for unusually large held-out prime gaps.
+- In the default held-out windows, AUCs were `0.5029` and `0.4974`.
+- Residue-plus-size controls matched or exceeded the observed AUC in `73/200` trials.
+
+So overlap pressure is currently a strong mechanism for modular return-exponent compression, not a demonstrated general predictor across number-theory phenomena.
+
 ## Exact Corollary: Odd Distinct-Prime Bound
 
 For odd `n` with `omega(n)` distinct prime factors:

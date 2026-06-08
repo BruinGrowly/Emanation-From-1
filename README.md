@@ -123,6 +123,10 @@ python experiments\prime_gap_origin_profiles.py
 python experiments\prime_gap_origin_prediction.py
 ```
 
+```powershell
+python experiments\prime_gap_overlap_transfer.py
+```
+
 Run Gilbreath-style boundary-return probes:
 
 ```powershell
@@ -183,6 +187,7 @@ experiments/
   origin_modular_theorem_probe.py
   origin_size_banded_controls.py
   origin_structure_scan.py
+  prime_gap_overlap_transfer.py
   prime_gap_origin_prediction.py
   prime_gap_origin_profiles.py
 reports/
@@ -203,6 +208,7 @@ reports/
   ORIGIN_MODULAR_THEOREM_PROBE.md
   ORIGIN_SIZE_BANDED_CONTROLS.md
   ORIGIN_STRUCTURE_SCAN.md
+  PRIME_GAP_OVERLAP_TRANSFER.md
   PRIME_GAP_ORIGIN_PREDICTION.md
   PRIME_GAP_ORIGIN_PROFILES.md
 src/
@@ -221,6 +227,7 @@ tests/
   test_origin_modular_theorem_probe.py
   test_origin_size_banded_controls.py
   test_origin_structure_scan.py
+  test_prime_gap_overlap_transfer.py
   test_prime_gap_origin_prediction.py
   test_prime_gap_origin_profiles.py
   test_research_regressions.py
