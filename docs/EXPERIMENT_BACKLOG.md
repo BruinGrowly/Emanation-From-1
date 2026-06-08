@@ -164,6 +164,10 @@ python experiments\origin_modular_shell_scaling.py
 python experiments\origin_modular_theorem_probe.py
 ```
 
+```powershell
+python experiments\origin_modular_signal_decomposition.py
+```
+
 Current local reading:
 
 - The pre-declared shell metric `emanation_depth` beats size-banded controls on modular-return targets in the default scan through `5000`.
@@ -175,19 +179,18 @@ Current local reading:
 - Scaling checks across limits `1000`, `2500`, `5000`, and `10000` keep the primary within-shell `radical_compression -> lambda_over_phi` signal stable: `r = 0.5741`, `0.5400`, `0.5142`, and `0.4887`; shell-shuffled controls matched `0/100` at every limit.
 - The theorem probe proves the exact coprime product/lcm mechanism behind return-exponent compression and proves endpoint shell bounds. It also finds counterexamples to naive monotonicity by radical compression alone.
 - The modular-return mechanism is now represented in code by `modular_return_decomposition(n)`, which separates concentration proxy, component splitting, local prime-power defect, and Carmichael lcm-overlap pressure using exact ratios.
+- The signal-decomposition probe shows the conditioned log return-compression identity remains exact after shell-centering and group-baseline residualization. In the default scan through `10000`, Carmichael lcm-overlap accounts for `99.88%` of the exact covariance contribution, local prime-power defect accounts for `0.12%`, and Origin-facing concentration/splitting proxies capture `33.33%` of the conditioned log-signal variance before exact mechanism terms are added.
 
 Evidence value:
 
 - Supportive if an Origin metric predicts return-period or bridge behavior beyond size, parity, and residue controls.
 - Constraining if modular behavior is fully explained by standard group structure with no added metric value.
 
-Next proof target after decomposition:
+Next proof target after signal decomposition:
 
-- Use the implemented decomposition to replace the false monotonic claim with a theorem using three terms:
-  - concentration pressure: `radical(n) / n`,
-  - splitting pressure: `omega(n)`,
-  - overlap pressure: `product(lambda(p_i^a_i)) / lcm(lambda(p_i^a_i))`.
-- Prove which parts of the modular-return signal come from each term.
+- Treat overlap pressure as the primary exact mechanism for modular return-exponent compression.
+- Prove bounded statements explaining when concentration and splitting proxies do, or do not, track overlap pressure inside fixed shells.
+- Pre-register an overlap-pressure metric and test whether it transfers to a non-modular target, so the research does not merely rediscover the definition of `lambda(n)`.
 
 ## Priority 3: Boundary-Return Probes
 

@@ -89,6 +89,27 @@ lambda(n) / phi(n)
 
 So the exact arithmetic mechanism is local defect plus Carmichael lcm overlap. Radical compression is not a term in that identity by itself; it is the Origin-facing concentration proxy that predicts the balance between concentrated prime powers and split coprime components inside fixed shells.
 
+On the log scale this becomes additive:
+
+```text
+log(lambda(n) / phi(n))
+  =
+  log(local_defect_ratio(n)) - log(overlap_penalty(n))
+```
+
+`experiments/origin_modular_signal_decomposition.py` uses this additive identity to quantify the shell-conditioned signal after applying the same group baselines used by the modular transfer tests.
+
+Default local result through `10000`:
+
+- maximum identity error after shell-centering and shared residualization: `4.441e-15`;
+- local prime-power defect contribution: `0.12%`;
+- Carmichael lcm-overlap contribution: `99.88%`;
+- Origin-facing concentration/splitting proxies capture `33.33%` of the conditioned log-signal variance before exact mechanism terms are added.
+
+Interpretation:
+
+The modular-return signal is overwhelmingly an overlap-pressure signal in the default finite scan. Radical compression and component splitting remain useful Origin-facing proxies, but they are not the source of the full mechanism.
+
 ## Exact Corollary: Odd Distinct-Prime Bound
 
 For odd `n` with `omega(n)` distinct prime factors:
@@ -169,7 +190,7 @@ Proof status:
 
 ## Next Proof Move
 
-The decomposition move is now implemented and regression-tested. The next theorem should prove which parts of the observed shell-conditioned signal are explained by each term:
+The decomposition and signal-attribution moves are now implemented and regression-tested. The next theorem should explain when Origin-facing proxies track the exact overlap term:
 
 1. Concentration pressure: measured by radical compression.
 2. Splitting pressure: measured by `omega(n)` and the component count.
@@ -182,5 +203,11 @@ The strongest realistic target is not:
 That is false. The next target is:
 
 > Inside fixed emanation shells, radical compression predicts `lambda(n) / phi(n)` only insofar as it tracks concentration/splitting, while the exact return compression is determined by local prime-power defects and Carmichael lcm overlap.
+
+The next strongest statement should bound or characterize when `rad(n) / n`, component count, or odd component count can predict:
+
+```text
+product(lambda(p_i^a_i)) / lcm(lambda(p_i^a_i))
+```
 
 That is the rigorous path from the Origin language to standard number theory.

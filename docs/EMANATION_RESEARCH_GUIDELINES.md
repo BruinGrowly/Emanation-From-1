@@ -42,6 +42,7 @@ Current ledger reading:
 - `E23` checks stability: the same within-shell radical-compression signal persists across tested modular-return ranges without retuning.
 - `E24` gives the theorem-level mechanism: coprime component splitting compresses return exponents through Carmichael lcm overlap.
 - `E25` blocks the overclaim: radical compression alone is not a universal monotone ordering of `lambda/phi`.
+- `E26` decomposes the modular-return signal: after shell-centering and group baselines, the exact log signal is dominated by Carmichael lcm-overlap, while Origin-facing proxies capture only part of that signal.
 - `E2`, `E3`, `E4`, and `E10` constrain the Gilbreath reading. First-column `1` behavior is not prime-specific unless controls are handled carefully.
 - `E6` and `E7` constrain Goldbach-origin claims. Simple factor-depth metrics mostly collapse into conventional arithmetic structure after singular-factor correction.
 - `E8` through `E13` are the strongest current candidate-supportive line. Prime gap order preserves certified Gilbreath locks better than shuffled, block-shuffled, and first-order Markov controls in the tested finite ranges.

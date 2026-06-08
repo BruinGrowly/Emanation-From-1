@@ -91,6 +91,12 @@ Run the modular theorem probe:
 python experiments\origin_modular_theorem_probe.py
 ```
 
+Run the modular signal decomposition:
+
+```powershell
+python experiments\origin_modular_signal_decomposition.py
+```
+
 Run the broader initial scan:
 
 ```powershell
@@ -171,6 +177,7 @@ experiments/
   initial_scan.py
   origin_modular_group_controls.py
   origin_modular_return.py
+  origin_modular_signal_decomposition.py
   origin_modular_shell_scaling.py
   origin_modular_shell_transfer.py
   origin_modular_theorem_probe.py
@@ -190,6 +197,7 @@ reports/
   INITIAL_EXPERIMENTS.md
   ORIGIN_MODULAR_GROUP_CONTROLS.md
   ORIGIN_MODULAR_RETURN.md
+  ORIGIN_MODULAR_SIGNAL_DECOMPOSITION.md
   ORIGIN_MODULAR_SHELL_SCALING.md
   ORIGIN_MODULAR_SHELL_TRANSFER.md
   ORIGIN_MODULAR_THEOREM_PROBE.md
@@ -207,6 +215,7 @@ tests/
   test_number_theory.py
   test_origin_modular_group_controls.py
   test_origin_modular_return.py
+  test_origin_modular_signal_decomposition.py
   test_origin_modular_shell_scaling.py
   test_origin_modular_shell_transfer.py
   test_origin_modular_theorem_probe.py
@@ -233,3 +242,4 @@ tests/
 - Compare shell distributions against ordinary number-line intervals.
 - Build an `origin_metric(n)` that combines factor depth, logarithmic distance, divisor branching, radical compression, and phi attenuation.
 - Use the modular-return decomposition to prove which part of the shell-conditioned signal comes from concentration, component splitting, and Carmichael overlap.
+- Pre-register Carmichael overlap pressure as a transfer metric and test whether it predicts a non-modular target.
