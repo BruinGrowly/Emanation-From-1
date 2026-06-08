@@ -29,6 +29,12 @@ Evidence only counts as weight for the Origin Reframe when it survives relevant 
 - AI-chat output is hypothesis material only. It should not be quoted as evidence.
 - Ordinary explanations get first right of refusal. If a standard baseline explains the result, record that.
 
+The focused research boundary is maintained in:
+
+- `docs/EMANATION_RESEARCH_GUIDELINES.md`
+
+That document should be read with `docs/EVIDENCE_LEDGER.md` before adding new claims or experiment families.
+
 ## Vocabulary Map
 
 | Origin Frame | Conventional Object | Operational Measurement |

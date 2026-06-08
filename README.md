@@ -15,6 +15,7 @@ The repo is allowed to find support, ambiguity, or failure. Counterexamples and 
 The repo begins from two local framework documents:
 
 - `docs/THE_ORIGIN_REFRAME.md` - the central research premise.
+- `docs/EMANATION_RESEARCH_GUIDELINES.md` - the focused research boundary and ledger-first rules.
 - `docs/LJPW_FRAMEWORK_V8.6.2_COMPLETE_UNIFIED_PLUS.md` - the wider LJPW framework, especially Book Five on number theory and Book Six on primes as bricks.
 
 ## Research Posture
@@ -28,6 +29,7 @@ This repo treats LJPW language as a hypothesis-generating frame, not as a substi
 
 See `docs/VERIFICATION_POLICY.md` before adding interpretive claims.
 See `docs/EVIDENCE_LEDGER.md` for the current evidence balance.
+See `docs/EMANATION_RESEARCH_GUIDELINES.md` for the narrow Emanation-from-`1` scope.
 
 ## Current Operational Definitions
 
@@ -106,6 +108,7 @@ No third-party Python packages are required.
 
 ```text
 docs/
+  EMANATION_RESEARCH_GUIDELINES.md
   THE_ORIGIN_REFRAME.md
   LJPW_FRAMEWORK_V8.6.2_COMPLETE_UNIFIED_PLUS.md
   EVIDENCE_LEDGER.md

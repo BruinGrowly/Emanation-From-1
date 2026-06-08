@@ -49,3 +49,12 @@ The target is not confirmation. The target is evidence quality.
 ## Current Bottom Line
 
 The Origin Reframe is operationalized but not established. Current local evidence is mixed. The Goldbach witness test weighs against treating simple factor-depth metrics as distinctive Origin evidence, because the conventional singular-factor baseline absorbs most of that signal. The Gilbreath gap-order tests are currently the strongest candidate-supportive evidence: prime prefixes preserve the boundary `1` until certificate lock across tested scales, while shuffled, block-shuffled, and first-order Markov versions of their own gap structure usually fail before reaching lock.
+
+## Regression Coverage
+
+`tests/test_research_regressions.py` protects the main local ledger claims without adding new evidence by itself:
+
+- Prime-prefix certified lock rows for `64`, `128`, `256`, `512`, and `1024` primes.
+- Basic constraining controls: consecutive odds lock trivially, while the gap-6 odd control fails.
+- Fixed-seed prime-gap order controls fail early for full shuffle, block shuffle, and first-order Markov generation.
+- The default Goldbach scan through `10000` reproduces the no-failure result and the constrained post-singular-baseline correlation.
