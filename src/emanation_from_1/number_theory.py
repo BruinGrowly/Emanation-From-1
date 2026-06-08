@@ -3,7 +3,50 @@
 from __future__ import annotations
 
 from collections import Counter
+from dataclasses import dataclass
+from fractions import Fraction
 from math import gcd, isqrt, lcm, log
+
+
+@dataclass(frozen=True)
+class PrimePowerReturnComponent:
+    """Carmichael-return data for one prime-power component."""
+
+    prime: int
+    exponent: int
+    modulus: int
+    phi: int
+    lambda_value: int
+    local_defect: Fraction
+
+
+@dataclass(frozen=True)
+class ModularReturnDecomposition:
+    """Exact decomposition of lambda(n) / phi(n) into return pressures."""
+
+    n: int
+    shell_depth: int
+    component_count: int
+    odd_component_count: int
+    radical: int
+    radical_ratio: Fraction
+    radical_compression: Fraction
+    components: tuple[PrimePowerReturnComponent, ...]
+    local_defect_ratio: Fraction
+    overlap_penalty: Fraction
+    lambda_phi_ratio: Fraction
+
+    @property
+    def minimum_odd_overlap_penalty(self) -> int:
+        """Return the forced power-of-two overlap from odd components."""
+        if self.odd_component_count == 0:
+            return 1
+        return 2 ** (self.odd_component_count - 1)
+
+    @property
+    def odd_distinct_prime_bound(self) -> Fraction:
+        """Return 2^(1-omega_odd(n)) as an exact ratio."""
+        return Fraction(1, self.minimum_odd_overlap_penalty)
 
 
 def sieve(limit: int) -> list[int]:
@@ -90,6 +133,47 @@ def factor_counter(n: int) -> Counter[int]:
     return Counter(factor(n))
 
 
+def prime_power_modulus(prime: int, exponent: int) -> int:
+    """Return p**a after validating a prime-power descriptor."""
+    if not is_prime(prime):
+        raise ValueError("prime-power component requires a prime base")
+    if exponent < 1:
+        raise ValueError("prime-power exponent must be >= 1")
+    return prime**exponent
+
+
+def prime_power_phi(prime: int, exponent: int) -> int:
+    """Return phi(p**a) for a prime-power component."""
+    modulus = prime_power_modulus(prime, exponent)
+    return modulus - (modulus // prime)
+
+
+def prime_power_lambda(prime: int, exponent: int) -> int:
+    """Return lambda(p**a) for a prime-power component."""
+    prime_power_modulus(prime, exponent)
+    if prime == 2 and exponent >= 3:
+        return 2 ** (exponent - 2)
+    return (prime - 1) * (prime ** (exponent - 1))
+
+
+def prime_power_return_component(
+    prime: int,
+    exponent: int,
+) -> PrimePowerReturnComponent:
+    """Return exact return data for p**a."""
+    modulus = prime_power_modulus(prime, exponent)
+    phi_value = prime_power_phi(prime, exponent)
+    lambda_value = prime_power_lambda(prime, exponent)
+    return PrimePowerReturnComponent(
+        prime=prime,
+        exponent=exponent,
+        modulus=modulus,
+        phi=phi_value,
+        lambda_value=lambda_value,
+        local_defect=Fraction(lambda_value, phi_value),
+    )
+
+
 def radical(n: int) -> int:
     """Return the product of distinct prime factors of n."""
     product = 1
@@ -129,12 +213,52 @@ def carmichael_lambda(n: int) -> int:
 
     exponent = 1
     for prime, power in factor_counter(n).items():
-        if prime == 2 and power >= 3:
-            component = 2 ** (power - 2)
-        else:
-            component = (prime - 1) * (prime ** (power - 1))
+        component = prime_power_lambda(prime, power)
         exponent = lcm(exponent, component)
     return exponent
+
+
+def lambda_phi_ratio(n: int) -> Fraction:
+    """Return lambda(n) / phi(n) as an exact ratio."""
+    if n < 1:
+        raise ValueError("lambda/phi ratio is defined for positive integers")
+    return Fraction(carmichael_lambda(n), euler_totient(n))
+
+
+def modular_return_decomposition(n: int) -> ModularReturnDecomposition:
+    """Decompose lambda(n) / phi(n) into local defect and lcm overlap terms."""
+    if n < 1:
+        raise ValueError("modular return decomposition is defined for positive integers")
+
+    counter = factor_counter(n)
+    components = tuple(
+        prime_power_return_component(prime, exponent)
+        for prime, exponent in sorted(counter.items())
+    )
+    local_defect_ratio = Fraction(1, 1)
+    component_product = 1
+    component_lcm = 1
+    for component in components:
+        local_defect_ratio *= component.local_defect
+        component_product *= component.lambda_value
+        component_lcm = lcm(component_lcm, component.lambda_value)
+
+    overlap_penalty = Fraction(component_product, component_lcm)
+    radical_value = radical(n)
+    radical_ratio = Fraction(radical_value, n)
+    return ModularReturnDecomposition(
+        n=n,
+        shell_depth=sum(counter.values()),
+        component_count=len(counter),
+        odd_component_count=sum(1 for prime in counter if prime % 2 == 1),
+        radical=radical_value,
+        radical_ratio=radical_ratio,
+        radical_compression=1 - radical_ratio,
+        components=components,
+        local_defect_ratio=local_defect_ratio,
+        overlap_penalty=overlap_penalty,
+        lambda_phi_ratio=local_defect_ratio / overlap_penalty,
+    )
 
 
 def multiplicative_order(a: int, n: int) -> int:

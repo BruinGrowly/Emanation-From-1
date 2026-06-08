@@ -44,6 +44,7 @@ See `docs/EMANATION_RESEARCH_GUIDELINES.md` for the narrow Emanation-from-`1` sc
 - A composite is a layered differentiation whose factor path can be reduced back to `1`.
 - `emanation_depth(n)` is the total number of prime factors of `n`, counted with multiplicity.
 - `return_path_to_one(n)` repeatedly removes the smallest prime factor until the path reaches `1`.
+- `modular_return_decomposition(n)` separates `lambda(n) / phi(n)` into exact local prime-power defect and Carmichael lcm-overlap terms, with radical compression retained as the Origin-facing concentration proxy.
 - Classical conjectures are downstream tests for whether Origin metrics transfer beyond their native factor-path setting.
 
 ## Quick Start
@@ -231,3 +232,4 @@ tests/
 - Pre-register one Origin pressure metric from the shell map before applying it to Goldbach, prime gaps, or Gilbreath.
 - Compare shell distributions against ordinary number-line intervals.
 - Build an `origin_metric(n)` that combines factor depth, logarithmic distance, divisor branching, radical compression, and phi attenuation.
+- Use the modular-return decomposition to prove which part of the shell-conditioned signal comes from concentration, component splitting, and Carmichael overlap.

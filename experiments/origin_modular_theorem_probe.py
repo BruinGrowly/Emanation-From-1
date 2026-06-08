@@ -4,7 +4,8 @@ from __future__ import annotations
 
 import argparse
 from datetime import datetime, timezone
-from math import gcd, lcm
+from fractions import Fraction
+from math import gcd
 from pathlib import Path
 import sys
 
@@ -16,8 +17,9 @@ for path in (ROOT, SRC):
 
 from emanation_from_1.number_theory import (  # noqa: E402
     carmichael_lambda,
-    euler_totient,
     factor_counter,
+    lambda_phi_ratio as exact_lambda_phi_ratio,
+    modular_return_decomposition,
     radical,
 )
 
@@ -32,43 +34,33 @@ def markdown_table(headers: list[str], rows: list[list[object]]) -> str:
     return "\n".join(output)
 
 
-def prime_power_component(prime: int, exponent: int) -> int:
-    if prime == 2 and exponent >= 3:
-        return 2 ** (exponent - 2)
-    return (prime - 1) * (prime ** (exponent - 1))
+def format_fraction(value: Fraction) -> str:
+    if value.denominator == 1:
+        return str(value.numerator)
+    return f"{value.numerator}/{value.denominator}"
 
 
-def lambda_phi_ratio(n: int) -> float:
-    return carmichael_lambda(n) / euler_totient(n)
+def factor_shape(n: int) -> str:
+    counter = factor_counter(n)
+    if not counter:
+        return "1"
+    return " * ".join(
+        str(prime) if exponent == 1 else f"{prime}^{exponent}"
+        for prime, exponent in sorted(counter.items())
+    )
 
 
-def component_formula_ratio(n: int) -> float:
-    components = [
-        prime_power_component(prime, exponent)
-        for prime, exponent in factor_counter(n).items()
-    ]
-    local_defect = 1
-    for prime, exponent in factor_counter(n).items():
-        phi_component = (prime - 1) * (prime ** (exponent - 1))
-        local_defect *= prime_power_component(prime, exponent) / phi_component
-
-    component_lcm = 1
-    component_product = 1
-    for component in components:
-        component_lcm = lcm(component_lcm, component)
-        component_product *= component
-
-    if not components:
-        return 1.0
-    overlap_penalty = component_product / component_lcm
-    return local_defect / overlap_penalty
+def lambda_phi_ratio(n: int) -> Fraction:
+    return exact_lambda_phi_ratio(n)
 
 
-def distinct_odd_prime_bound(n: int) -> float:
-    odd_distinct = sum(1 for prime in factor_counter(n) if prime % 2 == 1)
-    if odd_distinct == 0:
-        return 1.0
-    return 2 ** (1 - odd_distinct)
+def component_formula_ratio(n: int) -> Fraction:
+    decomposition = modular_return_decomposition(n)
+    return decomposition.local_defect_ratio / decomposition.overlap_penalty
+
+
+def distinct_odd_prime_bound(n: int) -> Fraction:
+    return modular_return_decomposition(n).odd_distinct_prime_bound
 
 
 def verify_component_formula(limit: int) -> tuple[int, int | None]:
@@ -77,7 +69,7 @@ def verify_component_formula(limit: int) -> tuple[int, int | None]:
         expected = lambda_phi_ratio(n)
         formula = component_formula_ratio(n)
         checked += 1
-        if abs(expected - formula) > 1e-12:
+        if expected != formula:
             return checked, n
     return checked, None
 
@@ -86,7 +78,7 @@ def verify_odd_bound(limit: int) -> tuple[int, int | None]:
     checked = 0
     for n in range(3, limit + 1, 2):
         checked += 1
-        if lambda_phi_ratio(n) > distinct_odd_prime_bound(n) + 1e-12:
+        if lambda_phi_ratio(n) > distinct_odd_prime_bound(n):
             return checked, n
     return checked, None
 
@@ -103,7 +95,7 @@ def verify_coprime_product_law(limit: int) -> tuple[int, tuple[int, int] | None]
                 carmichael_lambda(a),
                 carmichael_lambda(b),
             )
-            if abs(left - right) > 1e-12:
+            if left != right:
                 return checked, (a, b)
     return checked, None
 
@@ -167,17 +159,50 @@ def endpoint_rows(max_shell: int) -> list[list[object]]:
     return rows
 
 
+def pressure_decomposition_rows(values: list[int]) -> list[list[object]]:
+    rows: list[list[object]] = []
+    for n in values:
+        decomposition = modular_return_decomposition(n)
+        rows.append(
+            [
+                n,
+                factor_shape(n),
+                decomposition.shell_depth,
+                decomposition.component_count,
+                decomposition.odd_component_count,
+                f"{decomposition.radical_compression:.4f}",
+                format_fraction(decomposition.local_defect_ratio),
+                format_fraction(decomposition.overlap_penalty),
+                format_fraction(decomposition.lambda_phi_ratio),
+                format_fraction(decomposition.odd_distinct_prime_bound),
+            ]
+        )
+    return rows
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--limit", type=int, default=10_000)
     parser.add_argument("--pair-limit", type=int, default=100)
     parser.add_argument("--max-shell", type=int, default=8)
     parser.add_argument(
+        "--pressure-examples",
+        default="8,9,12,30,63,105,210,7560",
+        help="Comma-separated n values for the pressure decomposition table.",
+    )
+    parser.add_argument(
         "--output",
         type=Path,
         default=ROOT / "reports" / "ORIGIN_MODULAR_THEOREM_PROBE.md",
     )
     return parser.parse_args()
+
+
+def parse_csv_ints(value: str, label: str) -> list[int]:
+    values = [int(part.strip()) for part in value.split(",") if part.strip()]
+    if not values or any(item < 1 for item in values):
+        raise ValueError(f"{label} must be a comma-separated list of positive integers")
+    return values
 
 
 def main() -> None:
@@ -188,6 +213,7 @@ def main() -> None:
         raise ValueError("pair-limit must be >= 2")
     if args.max_shell < 2:
         raise ValueError("max-shell must be >= 2")
+    pressure_examples = parse_csv_ints(args.pressure_examples, "pressure-examples")
 
     component_checked, component_failure = verify_component_formula(args.limit)
     odd_bound_checked, odd_bound_failure = verify_odd_bound(args.limit)
@@ -201,6 +227,7 @@ def main() -> None:
             f"Generated: `{generated}`",
             "This report is generated by `experiments/origin_modular_theorem_probe.py`.",
             "It separates what is already theorem-level from what remains empirical in the modular return line.",
+            "The next proof move is now explicit: decompose return-exponent compression into concentration, splitting, and Carmichael-overlap pressure.",
             "## Verified Identities And Bounds",
             markdown_table(
                 ["claim", "checked", "first_failure"],
@@ -221,6 +248,25 @@ def main() -> None:
                         "none" if pair_failure is None else pair_failure,
                     ],
                 ],
+            ),
+            "## Three-Term Pressure Decomposition",
+            "For `n = product p_i^a_i`, set `c_i = lambda(p_i^a_i)` and `d_i = c_i / phi(p_i^a_i)`. Then:",
+            "```text\nlambda(n) / phi(n) = product(d_i) / (product(c_i) / lcm(c_i))\n```",
+            "The Origin-facing reading is: concentration pressure is tracked by radical compression, splitting pressure by the number of coprime prime-power components, and overlap pressure exactly by the product-to-lcm penalty.",
+            markdown_table(
+                [
+                    "n",
+                    "factor_shape",
+                    "Omega",
+                    "components",
+                    "odd_components",
+                    "radical_compression",
+                    "local_defect",
+                    "overlap_penalty",
+                    "lambda_phi",
+                    "odd_bound",
+                ],
+                pressure_decomposition_rows(pressure_examples),
             ),
             "## Endpoint Comparison Inside Shells",
             "Odd prime powers are maximally concentrated; odd squarefree products are maximally split.",

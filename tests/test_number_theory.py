@@ -29,7 +29,10 @@ from emanation_from_1.number_theory import (
     factor,
     goldbach_singular_factor,
     is_prime,
+    lambda_phi_ratio,
     multiplicative_order,
+    modular_return_decomposition,
+    prime_power_return_component,
     radical,
     sieve,
 )
@@ -157,6 +160,34 @@ class NumberTheoryTests(unittest.TestCase):
 
         with self.assertRaises(ValueError):
             multiplicative_order(2, 4)
+
+    def test_prime_power_return_component(self) -> None:
+        component = prime_power_return_component(2, 4)
+
+        self.assertEqual(component.modulus, 16)
+        self.assertEqual(component.phi, 8)
+        self.assertEqual(component.lambda_value, 4)
+        self.assertEqual(component.local_defect, lambda_phi_ratio(16))
+
+    def test_modular_return_decomposition(self) -> None:
+        decomposition = modular_return_decomposition(105)
+
+        self.assertEqual(decomposition.shell_depth, 3)
+        self.assertEqual(decomposition.component_count, 3)
+        self.assertEqual(decomposition.odd_component_count, 3)
+        self.assertEqual(decomposition.radical_compression, 0)
+        self.assertEqual(decomposition.local_defect_ratio, 1)
+        self.assertEqual(decomposition.overlap_penalty, 4)
+        self.assertEqual(decomposition.lambda_phi_ratio, lambda_phi_ratio(105))
+        self.assertEqual(decomposition.odd_distinct_prime_bound, decomposition.lambda_phi_ratio)
+
+    def test_modular_return_decomposition_separates_pressure_terms(self) -> None:
+        squarefree = modular_return_decomposition(30)
+        compressed = modular_return_decomposition(63)
+
+        self.assertLess(squarefree.radical_compression, compressed.radical_compression)
+        self.assertGreater(squarefree.lambda_phi_ratio, compressed.lambda_phi_ratio)
+        self.assertGreater(compressed.overlap_penalty, squarefree.overlap_penalty)
 
 
 if __name__ == "__main__":

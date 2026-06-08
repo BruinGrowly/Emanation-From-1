@@ -62,6 +62,33 @@ Interpretation:
 
 For odd `n`, all return-exponent compression comes from the lcm-overlap penalty `G(n)`. The more the number is split into coprime prime-power components, the more opportunities there are for lcm compression.
 
+## Exact Decomposition: Three Pressure Terms
+
+The reusable code path is now:
+
+```python
+from emanation_from_1.number_theory import modular_return_decomposition
+```
+
+`modular_return_decomposition(n)` returns exact `Fraction` values for:
+
+- concentration proxy: `radical_compression = 1 - rad(n) / n`;
+- splitting pressure: `component_count = omega(n)`, the number of distinct prime-power components;
+- odd splitting pressure: `odd_component_count`;
+- local defect: `product(lambda(p_i^a_i) / phi(p_i^a_i))`;
+- overlap pressure: `product(lambda(p_i^a_i)) / lcm(lambda(p_i^a_i))`;
+- return-exponent compression: `lambda(n) / phi(n)`.
+
+The formal identity is:
+
+```text
+lambda(n) / phi(n)
+  =
+  local_defect_ratio(n) / overlap_penalty(n)
+```
+
+So the exact arithmetic mechanism is local defect plus Carmichael lcm overlap. Radical compression is not a term in that identity by itself; it is the Origin-facing concentration proxy that predicts the balance between concentrated prime powers and split coprime components inside fixed shells.
+
 ## Exact Corollary: Odd Distinct-Prime Bound
 
 For odd `n` with `omega(n)` distinct prime factors:
@@ -142,22 +169,18 @@ Proof status:
 
 ## Next Proof Move
 
-The next theorem should include both:
-
-```text
-rad(n) / n
-```
-
-and an overlap term such as:
-
-```text
-G(n) = product(lambda(p_i^a_i)) / lcm(lambda(p_i^a_i))
-```
-
-The likely provable statement is that the observed signal decomposes into:
+The decomposition move is now implemented and regression-tested. The next theorem should prove which parts of the observed shell-conditioned signal are explained by each term:
 
 1. Concentration pressure: measured by radical compression.
 2. Splitting pressure: measured by `omega(n)` and the component count.
 3. Overlap pressure: measured exactly by Carmichael lcm overlap.
+
+The strongest realistic target is not:
+
+> Radical compression universally orders `lambda(n) / phi(n)`.
+
+That is false. The next target is:
+
+> Inside fixed emanation shells, radical compression predicts `lambda(n) / phi(n)` only insofar as it tracks concentration/splitting, while the exact return compression is determined by local prime-power defects and Carmichael lcm overlap.
 
 That is the rigorous path from the Origin language to standard number theory.

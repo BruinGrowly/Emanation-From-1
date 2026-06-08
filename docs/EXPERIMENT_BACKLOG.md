@@ -174,15 +174,16 @@ Current local reading:
 - Shell-conditioned transfer keeps the Origin-first line alive inside fixed shell depth: pre-declared `radical_compression` predicts residual `lambda_over_phi` (`r = 0.5142`, `0/100` controls matched) and weakly predicts `average_order_ratio` (`r = 0.0622`, `0/100` controls matched), while `max_order_ratio` and `full_exponent_hit` do not survive.
 - Scaling checks across limits `1000`, `2500`, `5000`, and `10000` keep the primary within-shell `radical_compression -> lambda_over_phi` signal stable: `r = 0.5741`, `0.5400`, `0.5142`, and `0.4887`; shell-shuffled controls matched `0/100` at every limit.
 - The theorem probe proves the exact coprime product/lcm mechanism behind return-exponent compression and proves endpoint shell bounds. It also finds counterexamples to naive monotonicity by radical compression alone.
+- The modular-return mechanism is now represented in code by `modular_return_decomposition(n)`, which separates concentration proxy, component splitting, local prime-power defect, and Carmichael lcm-overlap pressure using exact ratios.
 
 Evidence value:
 
 - Supportive if an Origin metric predicts return-period or bridge behavior beyond size, parity, and residue controls.
 - Constraining if modular behavior is fully explained by standard group structure with no added metric value.
 
-Next proof target:
+Next proof target after decomposition:
 
-- Replace the false monotonic claim with a theorem using three terms:
+- Use the implemented decomposition to replace the false monotonic claim with a theorem using three terms:
   - concentration pressure: `radical(n) / n`,
   - splitting pressure: `omega(n)`,
   - overlap pressure: `product(lambda(p_i^a_i)) / lcm(lambda(p_i^a_i))`.

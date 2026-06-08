@@ -13,6 +13,7 @@ from experiments.origin_modular_theorem_probe import (  # noqa: E402
     distinct_odd_prime_bound,
     lambda_phi_ratio,
     monotonicity_counterexamples,
+    pressure_decomposition_rows,
     verify_component_formula,
     verify_coprime_product_law,
     verify_odd_bound,
@@ -43,6 +44,17 @@ class OriginModularTheoremProbeTests(unittest.TestCase):
         shell_three = next(row for row in examples if row[0] == 3)
         self.assertEqual(shell_three[1], 30)
         self.assertEqual(shell_three[4], 63)
+
+    def test_pressure_decomposition_rows_include_overlap_term(self) -> None:
+        rows = pressure_decomposition_rows([30, 63])
+
+        self.assertEqual(rows[0][0], 30)
+        self.assertEqual(rows[0][7], "2")
+        self.assertEqual(rows[0][8], "1/2")
+
+        self.assertEqual(rows[1][0], 63)
+        self.assertEqual(rows[1][7], "6")
+        self.assertEqual(rows[1][8], "1/6")
 
 
 if __name__ == "__main__":
