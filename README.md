@@ -53,6 +53,12 @@ Run the Origin-first structure map:
 python experiments\origin_structure_scan.py
 ```
 
+Run Origin-first size-banded controls:
+
+```powershell
+python experiments\origin_size_banded_controls.py
+```
+
 Run the broader initial scan:
 
 ```powershell
@@ -130,6 +136,7 @@ experiments/
   gilbreath_random_sweep.py
   goldbach_origin_correlations.py
   initial_scan.py
+  origin_size_banded_controls.py
   origin_structure_scan.py
   prime_gap_origin_prediction.py
   prime_gap_origin_profiles.py
@@ -143,6 +150,7 @@ reports/
   GILBREATH_RANDOM_SWEEP.md
   GOLDBACH_ORIGIN_CORRELATIONS.md
   INITIAL_EXPERIMENTS.md
+  ORIGIN_SIZE_BANDED_CONTROLS.md
   ORIGIN_STRUCTURE_SCAN.md
   PRIME_GAP_ORIGIN_PREDICTION.md
   PRIME_GAP_ORIGIN_PROFILES.md
@@ -154,6 +162,7 @@ src/
 tests/
   test_gilbreath_k_history_markov.py
   test_number_theory.py
+  test_origin_size_banded_controls.py
   test_origin_structure_scan.py
   test_prime_gap_origin_prediction.py
   test_prime_gap_origin_profiles.py

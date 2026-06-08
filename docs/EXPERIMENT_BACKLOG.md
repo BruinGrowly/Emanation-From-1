@@ -76,6 +76,18 @@ Evidence value:
 - Supportive if shell/branching effects survive size bands.
 - Challenging if effects disappear once size and residue are fixed.
 
+Command:
+
+```powershell
+python experiments\origin_size_banded_controls.py
+```
+
+Current local reading:
+
+- In the default scan through `100000`, shell depth remains strongly associated with log-size residual divisor branching (`r = 0.8582`), radical compression (`r = 0.7729`), and squarefree failure (`r = -0.7101`).
+- Size-banded shuffled controls matched or exceeded the observed absolute residual correlations in `0/200` trials for all three targets.
+- This is supportive for the Origin-first measurement posture, but it is still internal factor-structure evidence; the next step is transfer beyond the shell map.
+
 ## Priority 2: Transfer Tests
 
 ### B4: Goldbach Pairing As Origin Transfer

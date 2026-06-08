@@ -65,6 +65,7 @@ The early repo work over-emphasized Gilbreath because repeated differencing prov
 The center now moves back to:
 
 - `reports/ORIGIN_STRUCTURE_SCAN.md`
+- `reports/ORIGIN_SIZE_BANDED_CONTROLS.md`
 - `docs/EXPERIMENT_BACKLOG.md`
 - `docs/EVIDENCE_LEDGER.md`
 
