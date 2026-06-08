@@ -38,7 +38,7 @@ not count as evidence until those terms become exact repo objects.
 | `1` as anchor | Fixed point, identity, empty factorization, return target | Operationalized in profiles and modular-return scans |
 | Emanation distance | Factor depth, expression depth, return-path length | Factor depth is implemented; expression depth is not yet audited |
 | Semantic voltage | Coherence pressure or retention under transformation | Not yet operationalized as one pre-registered metric |
-| Anchor echo | Origin-like invariance should beat matched controls | Fixed-point first pass added; independent transfer remains open |
+| Anchor echo | Origin-like invariance should beat matched controls | Fixed-point pass added; exact residual transfer is constraining |
 | Pakheta relationship-field | Exact structure preserved across representations | Useful as a test-design grammar; not evidence by itself |
 | Pakheta anchor | Fixed point, invariant, basis, or stable access point | First local test added in `reports/ORIGIN_ANCHOR_ECHO_FIXED_POINTS.md` |
 | False partition | Break the real relation while preserving shell or size | Implemented as shell shuffles for fixed-point targets |
@@ -72,6 +72,8 @@ The Pakheta-informed anchor-echo pass is now similarly bounded:
 - shell-shuffled controls break the relationship cleanly;
 - the mechanism is conventional CRT component branching, not standalone proof
   of the Origin ontology.
+- after subtracting the exact component formulas, fixed-point anchor residuals
+  have no measurable leftover variance to transfer into modular-return targets.
 
 Plainly:
 
@@ -80,6 +82,16 @@ Plainly:
 That is still useful. It means Pakheta should be used as a generator of exact
 tests and controls, especially for anchors, false partitions, context order, and
 coherence loss.
+
+The follow-up residual transfer test is more constraining:
+
+- `experiments/origin_anchor_residual_transfer.py`
+- `reports/ORIGIN_ANCHOR_RESIDUAL_TRANSFER.md`
+
+It removed the exact fixed-point formulas first, then tried to transfer any
+remaining anchor residual into modular-return targets. The residuals were zero
+or floating-point roundoff. This means the fixed-point anchor line is exhausted
+by its exact CRT mechanism unless a new, non-exhausted anchor metric is defined.
 
 ## What Pakheta Adds
 
@@ -143,21 +155,24 @@ First pass now exists:
 
 - `experiments/origin_anchor_echo_fixed_points.py`
 - `reports/ORIGIN_ANCHOR_ECHO_FIXED_POINTS.md`
+- `experiments/origin_anchor_residual_transfer.py`
+- `reports/ORIGIN_ANCHOR_RESIDUAL_TRANSFER.md`
 
 Result:
 
 - idempotent fixed-point richness is exactly component branching;
 - involution richness is exactly odd component branching plus the `2^a`
   correction;
-- this is a clean theorem-level mechanism, but not yet a downstream transfer.
+- the residual transfer test found no leftover fixed-point anchor variance after
+  those exact formulas were subtracted.
 
 Remaining local tests:
 
-- Compare fixed-point richness to divisor branching and Carmichael overlap.
-- Ask whether origin-coherence proxies predict fixed-point richness after
-  conventional baselines.
-- Test whether fixed-point richness predicts an independent downstream target
-  after its exact component mechanism is accounted for.
+- Define a new anchor metric that is not already exhausted by CRT component
+  counting.
+- Test context/path sensitivity with non-commuting arithmetic operations.
+- Ask whether origin-coherence proxies predict an independent target before
+  exact mechanism terms are allowed into the model.
 
 Why this is promising:
 
@@ -226,48 +241,46 @@ large interpretive claim.
 
 ## Recommended Next Experiment
 
-The fixed-point anchor test has been added. The cleanest next executable
-experiment is now:
+The fixed-point anchor and residual-transfer tests have been added. The cleanest
+next executable experiment is now:
 
-> Test whether fixed-point anchor richness transfers into an independent target
-> after the exact CRT mechanism is removed.
+> Test Pakheta path sensitivity in Origin arithmetic.
 
 Pre-registered question:
 
-> After size, shell, and component-count baselines, do idempotent or involution
-> residuals predict modular-return residuals, local prime-neighborhood residuals,
-> or another pre-declared target better than shuffled controls?
+> Do two exact arithmetic contexts applied in different orders leave different
+> residual signatures after size, shell, and known mechanism baselines?
 
 Candidate targets:
 
-- `lambda(n) / phi(n)` residuals after the known overlap decomposition;
-- prime-neighborhood targets on `p - 1` and `p + 1`;
-- context-order deltas such as `compress_then_return(n)` versus
-  `return_then_compress(n)`, if defined exactly.
+- `return_then_compress(n)` versus `compress_then_return(n)`;
+- `factor_reduce_then_project(n)` versus `project_then_factor_reduce(n)`;
+- modular-return residuals after ordered transformations of `n`, `radical(n)`,
+  and prime-power components.
 
 Metrics:
 
-- idempotent residual after component count;
-- involution residual after odd component count and `2^a` correction;
-- radical compression;
+- path delta under order reversal;
+- shell-conditioned radical compression;
 - overlap pressure;
+- component-count change;
 - origin-coherence candidate family.
 
 Controls:
 
 - residualize against `log(n)`;
 - residualize or group by shell `Omega(n)`;
-- residualize against exact component baselines;
+- residualize against exact mechanism baselines;
 - shuffle targets within shell and size bins;
+- compare against commutative controls where order should not matter.
 - compare against conventional factor-count baselines.
 
 Why this is the best next move:
 
 - It follows directly from the theory and Pakheta corpus.
 - It remains inside conventional arithmetic.
-- It does not re-count the theorem we already know.
-- It asks whether anchor structure carries signal beyond its exact local
-  mechanism.
+- It does not re-count the fixed-point theorem we already exhausted.
+- It tests a different Pakheta claim: context order and path memory.
 
 ## Current Research Posture
 

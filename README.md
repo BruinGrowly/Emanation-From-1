@@ -107,6 +107,12 @@ Run the Pakheta-informed anchor echo fixed-point test:
 python experiments\origin_anchor_echo_fixed_points.py
 ```
 
+Run the anchor residual transfer pressure test:
+
+```powershell
+python experiments\origin_anchor_residual_transfer.py
+```
+
 Run the broader initial scan:
 
 ```powershell
@@ -199,6 +205,7 @@ experiments/
   origin_modular_shell_transfer.py
   origin_modular_theorem_probe.py
   origin_anchor_echo_fixed_points.py
+  origin_anchor_residual_transfer.py
   origin_size_banded_controls.py
   origin_structure_scan.py
   prime_gap_overlap_transfer.py
@@ -221,6 +228,7 @@ reports/
   ORIGIN_MODULAR_SHELL_TRANSFER.md
   ORIGIN_MODULAR_THEOREM_PROBE.md
   ORIGIN_ANCHOR_ECHO_FIXED_POINTS.md
+  ORIGIN_ANCHOR_RESIDUAL_TRANSFER.md
   ORIGIN_SIZE_BANDED_CONTROLS.md
   ORIGIN_STRUCTURE_SCAN.md
   PRIME_GAP_OVERLAP_TRANSFER.md

@@ -27,6 +27,12 @@ from experiments.origin_anchor_echo_fixed_points import (  # noqa: E402
     fixed_point_dataset,
     model_r_squared,
 )
+from experiments.origin_anchor_residual_transfer import (  # noqa: E402
+    ANCHOR_RESIDUALS,
+    ZERO_TOLERANCE,
+    anchor_residual_transfer_dataset,
+    residual_summary,
+)
 
 
 class ResearchRegressionTests(unittest.TestCase):
@@ -119,6 +125,18 @@ class ResearchRegressionTests(unittest.TestCase):
             ),
             1.0,
         )
+
+    def test_anchor_residual_transfer_has_no_leftover_signal(self) -> None:
+        dataset = anchor_residual_transfer_dataset(
+            512,
+            max_bases=6,
+            candidate_base_limit=24,
+        )
+
+        for key, _description in ANCHOR_RESIDUALS:
+            with self.subTest(residual=key):
+                summary = residual_summary(dataset, key)
+                self.assertLessEqual(summary["max_abs"], ZERO_TOLERANCE)
 
 
 if __name__ == "__main__":
