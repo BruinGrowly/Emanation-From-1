@@ -148,12 +148,17 @@ Command:
 python experiments\origin_modular_return.py
 ```
 
+```powershell
+python experiments\origin_modular_group_controls.py
+```
+
 Current local reading:
 
 - The pre-declared shell metric `emanation_depth` beats size-banded controls on modular-return targets in the default scan through `5000`.
 - Strongest predeclared result: `lambda_over_phi`, with residual `r = -0.6529`; size-banded controls matched or exceeded it in `0/100` trials.
 - Sampled order ratios are weaker but still above controls: `average_order_ratio` residual `r = 0.2520`, `max_order_ratio` residual `r = 0.0574`, and `full_exponent_hit` residual `r = 0.0574`, each with `0/100` controls matching or exceeding.
 - Treat this as supportive transfer evidence, with the caveat that modular return behavior is still deeply tied to factorization.
+- Stronger group-conditioned controls split the result: `lambda_over_phi` remains supportive after conditioning on `log(n)`, `phi(n)/n`, and `log(phi(n))` (`r = -0.3422`, `0/100` controls matched), but the sampled order-ratio targets mostly collapse after conditioning on `lambda_over_phi`.
 
 Evidence value:
 

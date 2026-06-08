@@ -142,6 +142,7 @@ Generated reports include:
 - `reports/ORIGIN_STRUCTURE_SCAN.md`
 - `reports/ORIGIN_SIZE_BANDED_CONTROLS.md`
 - `reports/ORIGIN_MODULAR_RETURN.md`
+- `reports/ORIGIN_MODULAR_GROUP_CONTROLS.md`
 - `reports/PRIME_GAP_ORIGIN_PROFILES.md`
 - `reports/PRIME_GAP_ORIGIN_PREDICTION.md`
 - `reports/GILBREATH_K_HISTORY_MARKOV_GAP_MODEL.md`
