@@ -156,6 +156,10 @@ python experiments\origin_modular_group_controls.py
 python experiments\origin_modular_shell_transfer.py
 ```
 
+```powershell
+python experiments\origin_modular_shell_scaling.py
+```
+
 Current local reading:
 
 - The pre-declared shell metric `emanation_depth` beats size-banded controls on modular-return targets in the default scan through `5000`.
@@ -164,6 +168,7 @@ Current local reading:
 - Treat this as supportive transfer evidence, with the caveat that modular return behavior is still deeply tied to factorization.
 - Stronger group-conditioned controls split the result: `lambda_over_phi` remains supportive after conditioning on `log(n)`, `phi(n)/n`, and `log(phi(n))` (`r = -0.3422`, `0/100` controls matched), but the sampled order-ratio targets mostly collapse after conditioning on `lambda_over_phi`.
 - Shell-conditioned transfer keeps the Origin-first line alive inside fixed shell depth: pre-declared `radical_compression` predicts residual `lambda_over_phi` (`r = 0.5142`, `0/100` controls matched) and weakly predicts `average_order_ratio` (`r = 0.0622`, `0/100` controls matched), while `max_order_ratio` and `full_exponent_hit` do not survive.
+- Scaling checks across limits `1000`, `2500`, `5000`, and `10000` keep the primary within-shell `radical_compression -> lambda_over_phi` signal stable: `r = 0.5741`, `0.5400`, `0.5142`, and `0.4887`; shell-shuffled controls matched `0/100` at every limit.
 
 Evidence value:
 

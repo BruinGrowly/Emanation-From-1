@@ -69,6 +69,7 @@ The center now moves back to:
 - `reports/ORIGIN_MODULAR_RETURN.md`
 - `reports/ORIGIN_MODULAR_GROUP_CONTROLS.md`
 - `reports/ORIGIN_MODULAR_SHELL_TRANSFER.md`
+- `reports/ORIGIN_MODULAR_SHELL_SCALING.md`
 - `docs/EXPERIMENT_BACKLOG.md`
 - `docs/EVIDENCE_LEDGER.md`
 

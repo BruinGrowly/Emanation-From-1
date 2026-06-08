@@ -77,6 +77,12 @@ Run shell-conditioned modular transfer tests:
 python experiments\origin_modular_shell_transfer.py
 ```
 
+Run modular shell-transfer scaling checks:
+
+```powershell
+python experiments\origin_modular_shell_scaling.py
+```
+
 Run the broader initial scan:
 
 ```powershell
@@ -156,6 +162,7 @@ experiments/
   initial_scan.py
   origin_modular_group_controls.py
   origin_modular_return.py
+  origin_modular_shell_scaling.py
   origin_modular_shell_transfer.py
   origin_size_banded_controls.py
   origin_structure_scan.py
@@ -173,6 +180,7 @@ reports/
   INITIAL_EXPERIMENTS.md
   ORIGIN_MODULAR_GROUP_CONTROLS.md
   ORIGIN_MODULAR_RETURN.md
+  ORIGIN_MODULAR_SHELL_SCALING.md
   ORIGIN_MODULAR_SHELL_TRANSFER.md
   ORIGIN_SIZE_BANDED_CONTROLS.md
   ORIGIN_STRUCTURE_SCAN.md
@@ -188,6 +196,7 @@ tests/
   test_number_theory.py
   test_origin_modular_group_controls.py
   test_origin_modular_return.py
+  test_origin_modular_shell_scaling.py
   test_origin_modular_shell_transfer.py
   test_origin_size_banded_controls.py
   test_origin_structure_scan.py
