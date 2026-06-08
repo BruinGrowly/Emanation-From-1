@@ -66,6 +66,7 @@ The center now moves back to:
 
 - `reports/ORIGIN_STRUCTURE_SCAN.md`
 - `reports/ORIGIN_SIZE_BANDED_CONTROLS.md`
+- `reports/ORIGIN_MODULAR_RETURN.md`
 - `docs/EXPERIMENT_BACKLOG.md`
 - `docs/EVIDENCE_LEDGER.md`
 

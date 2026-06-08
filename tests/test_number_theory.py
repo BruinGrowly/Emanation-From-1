@@ -23,10 +23,13 @@ from emanation_from_1.conjectures import (
     shuffled_tail_gap_sequence,
 )
 from emanation_from_1.number_theory import (
+    carmichael_lambda,
     divisor_count,
+    euler_totient,
     factor,
     goldbach_singular_factor,
     is_prime,
+    multiplicative_order,
     radical,
     sieve,
 )
@@ -137,6 +140,23 @@ class NumberTheoryTests(unittest.TestCase):
         self.assertEqual(goldbach_singular_factor(8), 1.0)
         self.assertAlmostEqual(goldbach_singular_factor(6), 2.0)
         self.assertAlmostEqual(goldbach_singular_factor(30), 8 / 3)
+
+    def test_modular_return_helpers(self) -> None:
+        self.assertEqual(euler_totient(1), 1)
+        self.assertEqual(euler_totient(9), 6)
+        self.assertEqual(euler_totient(12), 4)
+
+        self.assertEqual(carmichael_lambda(8), 2)
+        self.assertEqual(carmichael_lambda(9), 6)
+        self.assertEqual(carmichael_lambda(15), 4)
+        self.assertEqual(carmichael_lambda(16), 4)
+
+        self.assertEqual(multiplicative_order(2, 9), 6)
+        self.assertEqual(multiplicative_order(2, 15), 4)
+        self.assertEqual(multiplicative_order(4, 15), 2)
+
+        with self.assertRaises(ValueError):
+            multiplicative_order(2, 4)
 
 
 if __name__ == "__main__":

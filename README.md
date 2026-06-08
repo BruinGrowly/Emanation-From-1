@@ -59,6 +59,12 @@ Run Origin-first size-banded controls:
 python experiments\origin_size_banded_controls.py
 ```
 
+Run Origin-first modular return tests:
+
+```powershell
+python experiments\origin_modular_return.py
+```
+
 Run the broader initial scan:
 
 ```powershell
@@ -136,6 +142,7 @@ experiments/
   gilbreath_random_sweep.py
   goldbach_origin_correlations.py
   initial_scan.py
+  origin_modular_return.py
   origin_size_banded_controls.py
   origin_structure_scan.py
   prime_gap_origin_prediction.py
@@ -150,6 +157,7 @@ reports/
   GILBREATH_RANDOM_SWEEP.md
   GOLDBACH_ORIGIN_CORRELATIONS.md
   INITIAL_EXPERIMENTS.md
+  ORIGIN_MODULAR_RETURN.md
   ORIGIN_SIZE_BANDED_CONTROLS.md
   ORIGIN_STRUCTURE_SCAN.md
   PRIME_GAP_ORIGIN_PREDICTION.md
@@ -162,6 +170,7 @@ src/
 tests/
   test_gilbreath_k_history_markov.py
   test_number_theory.py
+  test_origin_modular_return.py
   test_origin_size_banded_controls.py
   test_origin_structure_scan.py
   test_prime_gap_origin_prediction.py

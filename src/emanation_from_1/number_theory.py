@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from collections import Counter
-from math import isqrt, log
+from math import gcd, isqrt, lcm, log
 
 
 def sieve(limit: int) -> list[int]:
@@ -107,6 +107,48 @@ def divisor_count(n: int) -> int:
     for exponent in factor_counter(n).values():
         total *= exponent + 1
     return total
+
+
+def euler_totient(n: int) -> int:
+    """Return Euler's totient function."""
+    if n < 1:
+        raise ValueError("totient is defined for positive integers")
+
+    result = n
+    for prime in factor_counter(n):
+        result = (result // prime) * (prime - 1)
+    return result
+
+
+def carmichael_lambda(n: int) -> int:
+    """Return the Carmichael exponent of the multiplicative group modulo n."""
+    if n < 1:
+        raise ValueError("Carmichael lambda is defined for positive integers")
+    if n == 1:
+        return 1
+
+    exponent = 1
+    for prime, power in factor_counter(n).items():
+        if prime == 2 and power >= 3:
+            component = 2 ** (power - 2)
+        else:
+            component = (prime - 1) * (prime ** (power - 1))
+        exponent = lcm(exponent, component)
+    return exponent
+
+
+def multiplicative_order(a: int, n: int) -> int:
+    """Return the least positive k with a**k == 1 mod n."""
+    if n < 2:
+        raise ValueError("multiplicative order requires modulus >= 2")
+    if gcd(a, n) != 1:
+        raise ValueError("multiplicative order requires a and n to be coprime")
+
+    order = carmichael_lambda(n)
+    for prime in factor_counter(order):
+        while order % prime == 0 and pow(a, order // prime, n) == 1:
+            order //= prime
+    return order
 
 
 def goldbach_singular_factor(n: int) -> float:
