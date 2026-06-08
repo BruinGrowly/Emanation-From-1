@@ -8,6 +8,11 @@ The wider framework can inspire questions, but repo evidence must stay narrow, l
 
 Classical conjectures are useful probes. They are not the research center.
 
+The wider source corpus in `docs/origin_theory/` and `docs/SEMANTIC_VOLTAGE_RESEARCH.md`
+is useful for generating hypotheses and vocabulary. It should not be cited as
+evidence unless a claim is translated into a local measurement, baseline,
+control, finite range, and failure condition.
+
 ## Scope Boundary
 
 In scope:

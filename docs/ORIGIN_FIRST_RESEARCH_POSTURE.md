@@ -77,6 +77,13 @@ The center now moves back to:
 - `docs/EXPERIMENT_BACKLOG.md`
 - `docs/EVIDENCE_LEDGER.md`
 
+Additional theory-source material now lives in:
+
+- `docs/origin_theory/README.md`
+- `docs/SEMANTIC_VOLTAGE_RESEARCH.md`
+
+Use these as hypothesis generators, not as evidence substitutes.
+
 Every future experiment should answer:
 
 > What was defined from `1` before this probe was chosen?

@@ -20,6 +20,8 @@ The repo begins from two local framework documents:
 - `docs/ORIGIN_FIRST_RESEARCH_POSTURE.md` - the guardrail that keeps conjecture probes downstream of direct Emanation-from-`1` measurements.
 - `docs/MODULAR_RETURN_THEOREM_CANDIDATE.md` - theorem-level mechanism behind the modular return evidence.
 - `docs/EMANATION_RESEARCH_GUIDELINES.md` - the focused research boundary and ledger-first rules.
+- `docs/SEMANTIC_VOLTAGE_RESEARCH.md` - broader semantic-voltage hypothesis material; useful for generating tests, not evidence by itself.
+- `docs/origin_theory/README.md` - wider Origin Theory corpus and translation language.
 - `docs/LJPW_FRAMEWORK_V8.6.2_COMPLETE_UNIFIED_PLUS.md` - the wider LJPW framework, especially Book Five on number theory and Book Six on primes as bricks.
 
 ## Research Posture
