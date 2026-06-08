@@ -6,15 +6,18 @@ This repository is an evidence-gathering research sandbox for the **Origin Refra
 
 The working question is simple and strange in the best way:
 
-**Does studying factorization, prime behavior, and conjectural number theory as traces back to `1` reveal reproducible structure that survives controls?**
+**What becomes visible when integers are studied first as emanations from `1`, and only later as points on a number line?**
 
 The repo is allowed to find support, ambiguity, or failure. Counterexamples and null results are part of the work.
+
+Gilbreath, Goldbach, prime gaps, and twin primes are **probe families**. They are not the center of the repo. The center is the direct structure of emanation: factor layers, return paths, branching, compression, and transfer of those measurements into other number-theory settings.
 
 ## Source Documents
 
 The repo begins from two local framework documents:
 
 - `docs/THE_ORIGIN_REFRAME.md` - the central research premise.
+- `docs/ORIGIN_FIRST_RESEARCH_POSTURE.md` - the guardrail that keeps conjecture probes downstream of direct Emanation-from-`1` measurements.
 - `docs/EMANATION_RESEARCH_GUIDELINES.md` - the focused research boundary and ledger-first rules.
 - `docs/LJPW_FRAMEWORK_V8.6.2_COMPLETE_UNIFIED_PLUS.md` - the wider LJPW framework, especially Book Five on number theory and Book Six on primes as bricks.
 
@@ -29,20 +32,28 @@ This repo treats LJPW language as a hypothesis-generating frame, not as a substi
 
 See `docs/VERIFICATION_POLICY.md` before adding interpretive claims.
 See `docs/EVIDENCE_LEDGER.md` for the current evidence balance.
+See `docs/ORIGIN_FIRST_RESEARCH_POSTURE.md` for the Origin-first research order.
 See `docs/EMANATION_RESEARCH_GUIDELINES.md` for the narrow Emanation-from-`1` scope.
 
 ## Current Operational Definitions
 
 - `1` is the origin/fixed point.
+- An **emanation shell** is the set of integers with the same total factor depth from `1`.
 - A prime is an irreducible first-layer departure from `1`.
 - A composite is a layered differentiation whose factor path can be reduced back to `1`.
 - `emanation_depth(n)` is the total number of prime factors of `n`, counted with multiplicity.
 - `return_path_to_one(n)` repeatedly removes the smallest prime factor until the path reaches `1`.
-- Gilbreath rows are interpreted as repeated discrete differentiation of the prime stream; the conjectural first-column `1`s are treated as origin-return signatures.
+- Classical conjectures are downstream tests for whether Origin metrics transfer beyond their native factor-path setting.
 
 ## Quick Start
 
-Run the initial scan and regenerate the first report:
+Run the Origin-first structure map:
+
+```powershell
+python experiments\origin_structure_scan.py
+```
+
+Run the broader initial scan:
 
 ```powershell
 python experiments\initial_scan.py
@@ -54,52 +65,38 @@ Run a larger custom scan:
 python experiments\initial_scan.py --gilbreath-primes 1024 --goldbach-limit 50000 --twin-limit 50000
 ```
 
-Run Gilbreath control-sequence tests:
-
-```powershell
-python experiments\gilbreath_controls.py
-```
-
-Run deeper Gilbreath certificate-row diagnostics:
-
-```powershell
-python experiments\gilbreath_deep_dive.py
-```
-
-Run a seeded random-control sweep:
-
-```powershell
-python experiments\gilbreath_random_sweep.py
-```
-
-Run shuffled prime-gap controls:
-
-```powershell
-python experiments\gilbreath_gap_shuffle.py
-```
-
-Run prefix scaling plus block-shuffled prime-gap controls:
-
-```powershell
-python experiments\gilbreath_prefix_block_shuffle.py
-```
-
-Run first-order Markov prime-gap controls:
-
-```powershell
-python experiments\gilbreath_markov_gap_model.py
-```
-
-Run a Goldbach/origin-metric correlation scan:
+Run Origin-metric transfer probes:
 
 ```powershell
 python experiments\goldbach_origin_correlations.py
 ```
 
-Run prime-gap/origin-profile correlations:
-
 ```powershell
 python experiments\prime_gap_origin_profiles.py
+```
+
+```powershell
+python experiments\prime_gap_origin_prediction.py
+```
+
+Run Gilbreath-style boundary-return probes:
+
+```powershell
+python experiments\gilbreath_deep_dive.py
+```
+
+```powershell
+python experiments\gilbreath_k_history_markov_gap_model.py
+```
+
+Additional Gilbreath controls are available:
+
+```powershell
+python experiments\gilbreath_controls.py
+python experiments\gilbreath_random_sweep.py
+python experiments\gilbreath_gap_shuffle.py
+python experiments\gilbreath_prefix_block_shuffle.py
+python experiments\gilbreath_markov_gap_model.py
 ```
 
 Run the test suite:
@@ -115,6 +112,7 @@ No third-party Python packages are required.
 ```text
 docs/
   EMANATION_RESEARCH_GUIDELINES.md
+  ORIGIN_FIRST_RESEARCH_POSTURE.md
   THE_ORIGIN_REFRAME.md
   LJPW_FRAMEWORK_V8.6.2_COMPLETE_UNIFIED_PLUS.md
   EVIDENCE_LEDGER.md
@@ -126,21 +124,27 @@ experiments/
   gilbreath_controls.py
   gilbreath_deep_dive.py
   gilbreath_gap_shuffle.py
+  gilbreath_k_history_markov_gap_model.py
   gilbreath_markov_gap_model.py
   gilbreath_prefix_block_shuffle.py
   gilbreath_random_sweep.py
   goldbach_origin_correlations.py
   initial_scan.py
+  origin_structure_scan.py
+  prime_gap_origin_prediction.py
   prime_gap_origin_profiles.py
 reports/
   GILBREATH_CONTROL_EXPERIMENTS.md
   GILBREATH_DEEP_DIVE.md
   GILBREATH_GAP_SHUFFLE.md
+  GILBREATH_K_HISTORY_MARKOV_GAP_MODEL.md
   GILBREATH_MARKOV_GAP_MODEL.md
   GILBREATH_PREFIX_BLOCK_SHUFFLE.md
   GILBREATH_RANDOM_SWEEP.md
   GOLDBACH_ORIGIN_CORRELATIONS.md
   INITIAL_EXPERIMENTS.md
+  ORIGIN_STRUCTURE_SCAN.md
+  PRIME_GAP_ORIGIN_PREDICTION.md
   PRIME_GAP_ORIGIN_PROFILES.md
 src/
   emanation_from_1/
@@ -148,22 +152,26 @@ src/
     number_theory.py
     origin_metrics.py
 tests/
+  test_gilbreath_k_history_markov.py
   test_number_theory.py
+  test_origin_structure_scan.py
+  test_prime_gap_origin_prediction.py
   test_prime_gap_origin_profiles.py
   test_research_regressions.py
 ```
 
 ## First Experiment Families
 
-1. **Factor Profiles:** classify integers by their factor layers, radical, divisor count, and return path to `1`.
-2. **Gilbreath Differentiation:** build absolute-difference rows from the prime sequence and search for first-column failures.
-3. **Goldbach Pairing:** scan even numbers for prime-pair decompositions as a Love/Justice pairing model.
-4. **Twin Prime Bridges:** track minimal prime gaps as the `2` bridge recurs through the prime stream.
-5. **Origin Metric Tests:** check whether factor-depth and return-path metrics add explanatory power beyond conventional baselines.
+1. **Origin Structure:** classify integers by emanation shell, return path, divisor branching, radical compression, and first shell appearance.
+2. **Origin Metric Transfer:** test whether pre-declared shell or branching metrics add signal beyond ordinary size and density baselines.
+3. **Adjacent Composite Structure:** study `p - 1`, `p + 1`, and deltas around primes as local composite neighborhoods, not as prime mystique.
+4. **Pairing And Bridge Probes:** use Goldbach, twin primes, and prime gaps as tests of whether Origin metrics transfer into known number-theory phenomena.
+5. **Boundary-Return Probes:** use Gilbreath-style differencing as one downstream return-to-`1` test, with strong controls.
 
 ## Next Directions
 
 - Add CSV/JSON exports for long scans.
-- Add visualizations of Gilbreath row density and first-column persistence.
-- Compare factor-depth distributions against prime gaps and Goldbach pair counts.
-- Build an `origin_metric(n)` that combines factor depth, logarithmic distance, divisor branching, and phi attenuation.
+- Add visualizations of emanation shells, branching hotspots, and return-path compression.
+- Pre-register one Origin pressure metric from the shell map before applying it to Goldbach, prime gaps, or Gilbreath.
+- Compare shell distributions against ordinary number-line intervals.
+- Build an `origin_metric(n)` that combines factor depth, logarithmic distance, divisor branching, radical compression, and phi attenuation.

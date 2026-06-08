@@ -286,23 +286,47 @@ def block_shuffled_tail_gap_sequence(
 
 def markov_gap_sequence(initial: list[int], seed: int) -> list[int]:
     """Generate a sequence from empirical one-step gap transitions."""
+    return markov_gap_sequence_with_history(initial, history=1, seed=seed)
+
+
+def markov_gap_sequence_with_history(
+    initial: list[int],
+    history: int,
+    seed: int,
+) -> list[int]:
+    """Generate a sequence from empirical k-history gap transitions with backoff."""
     if len(initial) < 2:
         raise ValueError("initial sequence must have at least two values")
+    if history < 1:
+        raise ValueError("history must be >= 1")
 
     gaps = [right - left for left, right in zip(initial, initial[1:])]
-    transitions: dict[int, list[int]] = {}
-    for current_gap, next_gap in zip(gaps, gaps[1:]):
-        transitions.setdefault(current_gap, []).append(next_gap)
+    if len(gaps) <= history:
+        return initial[:]
+
+    transition_maps: dict[int, dict[tuple[int, ...], list[int]]] = {}
+    for order in range(1, history + 1):
+        transitions: dict[tuple[int, ...], list[int]] = {}
+        for index in range(order, len(gaps)):
+            key = tuple(gaps[index - order : index])
+            transitions.setdefault(key, []).append(gaps[index])
+        transition_maps[order] = transitions
 
     rng = Random(seed)
-    generated_gaps = [gaps[0]]
-    current_gap = gaps[0]
+    generated_gaps = gaps[:history]
 
     while len(generated_gaps) < len(gaps):
-        choices = transitions.get(current_gap, gaps[1:] or gaps)
+        choices: list[int] | None = None
+        max_order = min(history, len(generated_gaps))
+        for order in range(max_order, 0, -1):
+            key = tuple(generated_gaps[-order:])
+            choices = transition_maps[order].get(key)
+            if choices:
+                break
+        if choices is None:
+            choices = gaps[history:] or gaps
         next_gap = rng.choice(choices)
         generated_gaps.append(next_gap)
-        current_gap = next_gap
 
     return sequence_from_gaps(initial[0], generated_gaps)
 

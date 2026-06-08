@@ -203,10 +203,10 @@ def main() -> None:
             "## Next Measurements",
             "\n".join(
                 [
-                    "- Export long Gilbreath row metrics to CSV.",
-                    "- Compare Goldbach witness counts against factor depth of each even number.",
-                    "- Track whether high divisor branching predicts richer prime-pair decompositions.",
-                    "- Plot row-wise density of `1` values in Gilbreath rows.",
+                    "- Extend the Origin shell map with CSV/JSON exports.",
+                    "- Compare shell and branching metrics inside size-banded controls.",
+                    "- Pre-register one Origin pressure metric before applying it to conjecture probes.",
+                    "- Treat Gilbreath row density as one boundary-return probe, not as the center of the project.",
                 ]
             ),
         ]

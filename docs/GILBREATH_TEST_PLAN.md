@@ -1,5 +1,9 @@
 # Gilbreath Test Plan
 
+This is a boundary-return probe inside the Origin Reframe research program. It is not the center of the repo.
+
+Use this plan only after the Origin-facing object or metric has been defined independently from `1`.
+
 ## Formal Object Under Test
 
 Given an initial sequence:
@@ -102,6 +106,16 @@ python experiments\gilbreath_markov_gap_model.py
 ```
 
 This asks whether local gap-transition statistics explain the certified-lock behavior.
+
+### T9: K-History Markov Gap Model
+
+Generate controls from empirical transition maps using `k` prior gaps as state.
+
+```powershell
+python experiments\gilbreath_k_history_markov_gap_model.py
+```
+
+This asks whether longer local gap memory explains the certified-lock behavior better than one-step transitions. The default run tests histories `1`, `2`, and `3`. History `2` is a meaningful confounder in the current scan because it recovers many more locks than the first-order model, so Gilbreath evidence should not be described as merely defeating local gap statistics.
 
 ## Interpretive Boundary
 

@@ -2,19 +2,22 @@
 
 This document keeps the repository focused on the measurable research program:
 
-> Study integers, primes, and finite conjecture-shaped scans by how they depart from, differentiate from, and return toward `1`.
+> Study integers by how they depart from, differentiate from, branch from, compress away from, and return toward `1`.
 
 The wider framework can inspire questions, but repo evidence must stay narrow, local, and testable.
+
+Classical conjectures are useful probes. They are not the research center.
 
 ## Scope Boundary
 
 In scope:
 
 - Positive integers as factor paths back to `1`.
+- Emanation shells: integers grouped by total factor depth from `1`.
+- Branching and compression: divisor count, factor-exponent shape, radical ratio, and return-path structure.
 - Primes as irreducible first-layer departures.
 - Composite structure as layered differentiation.
-- Repeated absolute differencing as a finite return-to-`1` test.
-- Goldbach witnesses, twin-prime bridges, and prime gaps when they are measured against origin metrics.
+- Goldbach witnesses, twin-prime bridges, prime gaps, and repeated absolute differencing only when they are measured against pre-declared origin metrics.
 - Conventional baselines and controls that can weaken or explain the Origin reading.
 
 Out of scope for this repo unless converted into a local number-theory test:
@@ -31,9 +34,12 @@ Use `docs/EVIDENCE_LEDGER.md` as the scorecard before adding experiments or clai
 Current ledger reading:
 
 - `E1` is operational, not evidential. Computing factor profiles gives vocabulary, not support by itself.
+- `E18` is the current Origin-first baseline. It maps shells, branching hotspots, first shell appearances, and return paths. This is the repo's native object of study, but it remains operational until it predicts or discriminates.
 - `E2`, `E3`, `E4`, and `E10` constrain the Gilbreath reading. First-column `1` behavior is not prime-specific unless controls are handled carefully.
 - `E6` and `E7` constrain Goldbach-origin claims. Simple factor-depth metrics mostly collapse into conventional arithmetic structure after singular-factor correction.
 - `E8` through `E13` are the strongest current candidate-supportive line. Prime gap order preserves certified Gilbreath locks better than shuffled, block-shuffled, and first-order Markov controls in the tested finite ranges.
+- `E16` constrains prime-gap Origin-profile claims. The residual association is interesting, but pre-declared metrics have not yet produced robust held-out prediction of large residual gaps.
+- `E17` constrains Gilbreath claims. Two-gap Markov controls recover many more certified locks than one-step controls, so local gap memory is a serious null model even though it still does not reproduce the real prime prefixes.
 
 Practical rule:
 
@@ -60,7 +66,7 @@ Avoid:
 Before adding an experiment, record:
 
 - The measured object.
-- The Origin-facing metric or operation.
+- The Origin-facing metric or operation, preferably defined before choosing a classical conjecture probe.
 - The conventional baseline.
 - The control family.
 - The finite range and seed policy.
@@ -71,16 +77,11 @@ If those cannot be named, keep the idea in notes rather than treating it as evid
 
 ## Near-Term Research Path
 
-1. Protect the existing ledger claims with deterministic regression tests.
-2. Extend the prime-gap/origin-profile experiment from backlog item `B3` with stronger controls:
-   - larger prime prefixes,
-   - wheel-conditioned controls beyond `p mod 30`,
-   - direct large-gap prediction instead of only correlation/classification summaries.
-3. Extend Gilbreath controls beyond first-order Markov gaps:
-   - second-order and `k`-history Markov controls,
-   - wheel or residue-class preserving controls,
-   - size-conditioned gap controls.
-4. Add a counterexample registry for predictions that fail.
-5. Pre-register one origin metric before testing transfer across Goldbach, prime gaps, twin primes, and Gilbreath locks.
+1. Treat `reports/ORIGIN_STRUCTURE_SCAN.md` as the baseline map of the project.
+2. Pre-register one origin metric from shells, branching, compression, or return paths before applying it elsewhere.
+3. Test that metric inside ordinary size bands first, so it is not just a number-line size proxy.
+4. Only then transfer it into Goldbach, prime gaps, twin primes, modular returns, or Gilbreath-style differencing.
+5. Keep Gilbreath as a boundary-return probe, not as the default definition of Origin evidence.
+6. Add a counterexample registry for predictions that fail.
 
 The center stays simple: every serious result should clarify whether tracing structure back to `1` adds predictive value beyond ordinary number theory.
