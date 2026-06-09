@@ -12,10 +12,13 @@ from emanation_from_1.origin_pakheta import (
     compression_context,
     compression_gather_commutator,
     compression_gather_gap_factor,
+    compression_prime_return_commutator,
+    compression_prime_return_gap_factor,
     compression_return_commutator,
     compression_return_gap_factor,
     gather_context,
     return_min_context,
+    return_prime_context,
 )
 
 
@@ -23,6 +26,8 @@ class OriginPakhetaCalculusTests(unittest.TestCase):
     def test_basic_contexts(self) -> None:
         self.assertEqual(compression_context(72), 6)
         self.assertEqual(return_min_context(72), 36)
+        self.assertEqual(return_prime_context(3)(72), 24)
+        self.assertEqual(return_prime_context(5)(72), 72)
         self.assertEqual(gather_context(5)(72), 360)
 
     def test_compression_is_idempotent(self) -> None:
@@ -51,6 +56,27 @@ class OriginPakhetaCalculusTests(unittest.TestCase):
                 commutator.ratio,
                 Fraction(compression_return_gap_factor(n), 1),
             )
+
+    def test_compression_prime_return_commutator_detects_repeated_prime(self) -> None:
+        repeated = compression_prime_return_commutator(72, 3)
+        single = compression_prime_return_commutator(18, 2)
+        absent = compression_prime_return_commutator(25, 3)
+
+        self.assertFalse(repeated.commutes)
+        self.assertEqual(repeated.ratio, Fraction(3, 1))
+        self.assertTrue(single.commutes)
+        self.assertEqual(single.ratio, Fraction(1, 1))
+        self.assertTrue(absent.commutes)
+        self.assertEqual(absent.ratio, Fraction(1, 1))
+
+    def test_compression_prime_return_gap_formula(self) -> None:
+        for prime in (2, 3, 5, 7):
+            for n in range(1, 200):
+                commutator = compression_prime_return_commutator(n, prime)
+                self.assertEqual(
+                    commutator.ratio,
+                    Fraction(compression_prime_return_gap_factor(n, prime), 1),
+                )
 
     def test_compression_gather_commutator_detects_existing_prime_facet(self) -> None:
         present = compression_gather_commutator(18, 3)

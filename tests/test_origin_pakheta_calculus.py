@@ -21,6 +21,10 @@ class OriginPakhetaCalculusScanTests(unittest.TestCase):
         check = formula_check(256)
 
         self.assertEqual(check["compression_return_mismatches"], 0)
+        self.assertEqual(check["return_2_mismatches"], 0)
+        self.assertEqual(check["return_3_mismatches"], 0)
+        self.assertEqual(check["return_5_mismatches"], 0)
+        self.assertEqual(check["return_7_mismatches"], 0)
         self.assertEqual(check["gather_2_mismatches"], 0)
         self.assertEqual(check["gather_3_mismatches"], 0)
         self.assertEqual(check["gather_5_mismatches"], 0)
@@ -31,6 +35,9 @@ class OriginPakhetaCalculusScanTests(unittest.TestCase):
 
         self.assertGreater(by_n[4]["compression_return_log_gap"], 0.0)
         self.assertEqual(by_n[6]["compression_return_log_gap"], 0.0)
+        self.assertGreater(by_n[4]["return_2_log_gap"], 0.0)
+        self.assertEqual(by_n[6]["return_2_log_gap"], 0.0)
+        self.assertGreater(by_n[9]["return_3_log_gap"], 0.0)
         self.assertGreater(by_n[6]["gather_2_log_gap"], 0.0)
         self.assertEqual(by_n[7]["gather_2_log_gap"], 0.0)
 

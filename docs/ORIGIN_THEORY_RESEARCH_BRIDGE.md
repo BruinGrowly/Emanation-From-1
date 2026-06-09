@@ -104,6 +104,7 @@ It defines exact context operators over positive integers:
 ```text
 C(n) = rad(n)
 R_min(n) = n / spf(n)
+R_p(n) = n / p if p divides n, otherwise n
 G_p(n) = p * n
 Delta(A, B; n) = A(B(n)) / B(A(n))
 ```
@@ -120,6 +121,15 @@ C(R_min(n)) / R_min(C(n))
 Plainly:
 
 > context order has an exact arithmetic residue.
+
+The first extension generalizes return from the least prime to selected primes:
+
+```text
+C(R_p(n)) / R_p(C(n))
+  =
+  p, if the chosen p-layer is repeated
+  1, otherwise
+```
 
 This is the first usable calculus surface for Origin-Pakheta work.
 

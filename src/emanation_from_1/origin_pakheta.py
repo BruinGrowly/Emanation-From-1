@@ -58,6 +58,21 @@ def return_min_context(n: int) -> int:
     return n // least_prime_factor(n)
 
 
+def return_prime_context(prime: int) -> IntegerContext:
+    """Return a context that removes one selected prime layer if present."""
+    if not is_prime(prime):
+        raise ValueError("selected return context requires a prime")
+
+    def return_prime(n: int) -> int:
+        if n < 1:
+            raise ValueError("return context is defined for positive integers")
+        if n % prime == 0:
+            return n // prime
+        return n
+
+    return return_prime
+
+
 def gather_context(prime: int) -> IntegerContext:
     """Return a context that gathers one prime facet onto n."""
     if not is_prime(prime):
@@ -116,6 +131,30 @@ def compression_return_gap_factor(n: int) -> int:
     least_prime = min(counter)
     if counter[least_prime] > 1:
         return least_prime
+    return 1
+
+
+def compression_prime_return_commutator(n: int, prime: int) -> PathCommutator:
+    """Compare compress-after-return_p with return_p-after-compress."""
+    return path_commutator(
+        n,
+        compression_context,
+        "C",
+        return_prime_context(prime),
+        f"R_{prime}",
+    )
+
+
+def compression_prime_return_gap_factor(n: int, prime: int) -> int:
+    """Return the exact C/R_p path gap factor."""
+    if n < 1:
+        raise ValueError("path gap factor is defined for positive integers")
+    if not is_prime(prime):
+        raise ValueError("selected return path gap requires a prime")
+
+    exponent = factor_counter(n).get(prime, 0)
+    if exponent > 1:
+        return prime
     return 1
 
 

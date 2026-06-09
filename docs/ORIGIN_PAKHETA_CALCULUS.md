@@ -56,6 +56,7 @@ The first context operators are deliberately small.
 | --- | --- | --- |
 | `C(n)` | `rad(n)` | compress to squarefree field skeleton |
 | `R_min(n)` | remove one least-prime factor | return one layer toward `1` |
+| `R_p(n)` | remove one selected `p` layer if present | selected return context |
 | `G_p(n)` | `p * n` for prime `p` | gather one prime facet into the field |
 
 These are not metaphors. They are exact maps on positive integers.
@@ -132,6 +133,63 @@ R_min(C(n)) = R_min(p * rad(m)) = rad(m)
 So the ratio is `p` exactly when the least-prime layer is repeated, and `1`
 otherwise.
 
+### Compression-Selected-Return Identity
+
+For a chosen prime `p`, define:
+
+```text
+R_p(n) =
+  n / p, if p divides n
+  n,     otherwise
+```
+
+Then:
+
+```text
+C(R_p(n)) / R_p(C(n))
+  =
+  p, if v_p(n) > 1
+  1, otherwise
+```
+
+Plainly:
+
+```text
+compress then R_p != R_p then compress
+exactly when the chosen p-layer is repeated
+```
+
+This generalizes the least-prime return identity from `R_min` to a selected
+prime-return family.
+
+Proof sketch:
+
+Write `n = p^a * m`, where `p` does not divide `m`.
+
+If `a = 0`, both paths leave the `p` facet absent:
+
+```text
+C(R_p(n)) = C(n) = rad(m)
+R_p(C(n)) = R_p(rad(m)) = rad(m)
+```
+
+If `a = 1`, both paths remove the single `p` facet:
+
+```text
+C(R_p(n)) = C(m) = rad(m)
+R_p(C(n)) = R_p(p * rad(m)) = rad(m)
+```
+
+If `a > 1`, compression preserves the presence of `p`, while return-after-
+compression removes it:
+
+```text
+C(R_p(n)) = C(p^(a-1) * m) = p * rad(m)
+R_p(C(n)) = R_p(p * rad(m)) = rad(m)
+```
+
+So the ratio is `p` exactly when the selected prime layer is repeated.
+
 ### Compression-Gather Identity
 
 For prime `p`:
@@ -176,7 +234,7 @@ and `1` otherwise.
 It has:
 
 - objects: positive integer fields;
-- operators: `C`, `R_min`, `G_p`;
+- operators: `C`, `R_min`, `R_p`, `G_p`;
 - observables: shell, branching, compression, path gap;
 - equations: exact commutator identities;
 - controls: shell shuffles and size residuals;
@@ -188,7 +246,7 @@ That is enough to start doing mathematics with it.
 
 | Claim Type | Status |
 | --- | --- |
-| `C`, `R_min`, and `G_p` are exact maps | definition |
+| `C`, `R_min`, `R_p`, and `G_p` are exact maps | definition |
 | path commutator `Delta(A,B;n)` is exact | definition |
 | v0 commutator identities | theorem-level identities with finite regression coverage |
 | shell-controlled path signals | local finite evidence |

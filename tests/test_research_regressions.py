@@ -146,6 +146,10 @@ class ResearchRegressionTests(unittest.TestCase):
     def test_origin_pakheta_calculus_path_identity_matches_ledger(self) -> None:
         check = formula_check(512)
         self.assertEqual(check["compression_return_mismatches"], 0)
+        self.assertEqual(check["return_2_mismatches"], 0)
+        self.assertEqual(check["return_3_mismatches"], 0)
+        self.assertEqual(check["return_5_mismatches"], 0)
+        self.assertEqual(check["return_7_mismatches"], 0)
         self.assertEqual(check["gather_2_mismatches"], 0)
         self.assertEqual(check["gather_3_mismatches"], 0)
         self.assertEqual(check["gather_5_mismatches"], 0)

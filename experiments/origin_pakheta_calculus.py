@@ -26,6 +26,8 @@ from emanation_from_1.origin_metrics import origin_profile  # noqa: E402
 from emanation_from_1.origin_pakheta import (  # noqa: E402
     compression_gather_commutator,
     compression_gather_gap_factor,
+    compression_prime_return_commutator,
+    compression_prime_return_gap_factor,
     compression_return_commutator,
     compression_return_gap_factor,
 )
@@ -38,8 +40,13 @@ from experiments.origin_modular_shell_transfer import (  # noqa: E402
 
 
 GATHER_PRIMES = [2, 3, 5]
+RETURN_PRIMES = [2, 3, 5, 7]
 PATH_TARGETS = [
     ("compression_return_log_gap", "radical_compression"),
+    ("return_2_log_gap", "repeated_factor_2"),
+    ("return_3_log_gap", "repeated_factor_3"),
+    ("return_5_log_gap", "repeated_factor_5"),
+    ("return_7_log_gap", "repeated_factor_7"),
     ("gather_2_log_gap", "has_factor_2"),
     ("gather_3_log_gap", "has_factor_3"),
     ("gather_5_log_gap", "has_factor_5"),
@@ -90,6 +97,13 @@ def calculus_dataset(limit: int) -> list[dict[str, float]]:
             "compression_return_log_gap": compression_return.log_abs_gap,
             "compression_return_commutes": 1.0 if compression_return.commutes else 0.0,
         }
+        for prime in RETURN_PRIMES:
+            commutator = compression_prime_return_commutator(n, prime)
+            exponent = counter.get(prime, 0)
+            row[f"factor_{prime}_exponent"] = float(exponent)
+            row[f"repeated_factor_{prime}"] = 1.0 if exponent > 1 else 0.0
+            row[f"return_{prime}_log_gap"] = commutator.log_abs_gap
+            row[f"return_{prime}_commutes"] = 1.0 if commutator.commutes else 0.0
         for prime in GATHER_PRIMES:
             commutator = compression_gather_commutator(n, prime)
             row[f"has_factor_{prime}"] = 1.0 if n % prime == 0 else 0.0
@@ -105,12 +119,22 @@ def formula_check(limit: int) -> dict[str, int]:
         raise ValueError("limit must be >= 1")
 
     compression_return_mismatches = 0
+    selected_return_mismatches = {prime: 0 for prime in RETURN_PRIMES}
     gather_mismatches = {prime: 0 for prime in GATHER_PRIMES}
     for n in range(1, limit + 1):
         compression_return = compression_return_commutator(n)
         expected_return = Fraction(compression_return_gap_factor(n), 1)
         if compression_return.ratio != expected_return:
             compression_return_mismatches += 1
+
+        for prime in RETURN_PRIMES:
+            selected_return = compression_prime_return_commutator(n, prime)
+            expected_selected = Fraction(
+                compression_prime_return_gap_factor(n, prime),
+                1,
+            )
+            if selected_return.ratio != expected_selected:
+                selected_return_mismatches[prime] += 1
 
         for prime in GATHER_PRIMES:
             gather = compression_gather_commutator(n, prime)
@@ -120,6 +144,10 @@ def formula_check(limit: int) -> dict[str, int]:
     return {
         "limit": limit,
         "compression_return_mismatches": compression_return_mismatches,
+        **{
+            f"return_{prime}_mismatches": selected_return_mismatches[prime]
+            for prime in RETURN_PRIMES
+        },
         **{
             f"gather_{prime}_mismatches": gather_mismatches[prime]
             for prime in GATHER_PRIMES
@@ -230,6 +258,14 @@ def formula_rows(check: dict[str, int]) -> list[list[object]]:
         ],
         *[
             [
+                f"C/R_{prime}",
+                f"`C(R_{prime}(n)) / R_{prime}(C(n)) = {prime} if v_{prime}(n) > 1 else 1`",
+                check[f"return_{prime}_mismatches"],
+            ]
+            for prime in RETURN_PRIMES
+        ],
+        *[
+            [
                 f"C/G_{prime}",
                 f"`C(G_{prime}(n)) / G_{prime}(C(n)) = 1/{prime} if {prime} divides n else 1`",
                 check[f"gather_{prime}_mismatches"],
@@ -278,6 +314,7 @@ def write_report(
                 "| --- | --- | --- |",
                 "| `C(n)` | `rad(n)` | compression / squarefree field skeleton |",
                 "| `R_min(n)` | remove one least-prime factor | return one layer toward `1` |",
+                "| `R_p(n)` | remove one selected `p` layer if present | selected return context |",
                 "| `G_p(n)` | `p * n` for prime `p` | gather one prime facet into the field |",
                 "| `Delta(A,B;n)` | `A(B(n)) / B(A(n))` | path-order residue |",
                 "",
@@ -338,6 +375,13 @@ def write_report(
                 "```text",
                 "compress then return != return then compress",
                 "exactly when the least-prime return layer is repeated",
+                "```",
+                "",
+                "The selected-prime return family generalizes this:",
+                "",
+                "```text",
+                "compress then R_p != R_p then compress",
+                "exactly when the chosen p-layer is repeated",
                 "```",
                 "",
                 "That gives the Origin-Pakheta program a first path-sensitive",
