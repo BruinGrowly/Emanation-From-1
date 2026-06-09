@@ -9,7 +9,14 @@ if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
 from emanation_from_1.origin_pakheta import (
+    carmichael_lambda_context,
+    compression_carmichael_lambda_commutator,
+    compression_carmichael_lambda_gap_factor,
     compression_context,
+    compression_divisor_branching_commutator,
+    compression_divisor_branching_gap_factor,
+    compression_euler_totient_commutator,
+    compression_euler_totient_gap_factor,
     compression_gather_commutator,
     compression_gather_gap_factor,
     compression_prime_return_commutator,
@@ -18,10 +25,14 @@ from emanation_from_1.origin_pakheta import (
     compression_prime_set_return_gap_factor,
     compression_return_commutator,
     compression_return_gap_factor,
+    divisor_branching_context,
+    euler_totient_context,
     gather_context,
     return_min_context,
     return_prime_context,
     return_prime_set_context,
+    return_prime_set_divisor_branching_commutator,
+    return_prime_set_divisor_branching_gap_factor,
 )
 
 
@@ -125,6 +136,44 @@ class OriginPakhetaCalculusTests(unittest.TestCase):
                     commutator.ratio,
                     compression_gather_gap_factor(n, prime),
                 )
+
+    def test_new_contexts(self) -> None:
+        self.assertEqual(divisor_branching_context(12), 6)
+        self.assertEqual(carmichael_lambda_context(12), 2)
+        self.assertEqual(euler_totient_context(12), 4)
+
+    def test_compression_divisor_branching_gap_formula(self) -> None:
+        for n in range(1, 200):
+            commutator = compression_divisor_branching_commutator(n)
+            self.assertEqual(
+                commutator.ratio,
+                compression_divisor_branching_gap_factor(n),
+            )
+
+    def test_return_prime_set_divisor_branching_gap_formula(self) -> None:
+        for prime_set in ((2, 3), (2, 5), (2, 3, 5), (3, 5, 7)):
+            for n in range(1, 200):
+                commutator = return_prime_set_divisor_branching_commutator(n, prime_set)
+                self.assertEqual(
+                    commutator.ratio,
+                    return_prime_set_divisor_branching_gap_factor(n, prime_set),
+                )
+
+    def test_compression_carmichael_lambda_gap_formula(self) -> None:
+        for n in range(1, 200):
+            commutator = compression_carmichael_lambda_commutator(n)
+            self.assertEqual(
+                commutator.ratio,
+                compression_carmichael_lambda_gap_factor(n),
+            )
+
+    def test_compression_euler_totient_gap_formula(self) -> None:
+        for n in range(1, 200):
+            commutator = compression_euler_totient_commutator(n)
+            self.assertEqual(
+                commutator.ratio,
+                compression_euler_totient_gap_factor(n),
+            )
 
 
 if __name__ == "__main__":

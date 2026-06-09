@@ -31,6 +31,12 @@ class OriginPakhetaCalculusScanTests(unittest.TestCase):
         self.assertEqual(check["gather_2_mismatches"], 0)
         self.assertEqual(check["gather_3_mismatches"], 0)
         self.assertEqual(check["gather_5_mismatches"], 0)
+        self.assertEqual(check["compression_divisor_branching_mismatches"], 0)
+        self.assertEqual(check["return_set_divisor_branching_2_3_mismatches"], 0)
+        self.assertEqual(check["return_set_divisor_branching_2_3_5_mismatches"], 0)
+        self.assertEqual(check["return_set_divisor_branching_3_5_7_mismatches"], 0)
+        self.assertEqual(check["compression_carmichael_lambda_mismatches"], 0)
+        self.assertEqual(check["compression_totient_mismatches"], 0)
 
     def test_calculus_dataset_exposes_path_gaps(self) -> None:
         dataset = calculus_dataset(12)

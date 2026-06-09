@@ -7,7 +7,14 @@ from fractions import Fraction
 from math import log
 from typing import Callable, Iterable
 
-from .number_theory import factor_counter, is_prime, radical
+from .number_theory import (
+    carmichael_lambda,
+    divisor_count,
+    euler_totient,
+    factor_counter,
+    is_prime,
+    radical,
+)
 
 
 IntegerContext = Callable[[int], int]
@@ -233,3 +240,150 @@ def compression_gather_gap_factor(n: int, prime: int) -> Fraction:
     if n % prime == 0:
         return Fraction(1, prime)
     return Fraction(1, 1)
+
+
+def divisor_branching_context(n: int) -> int:
+    """Return the divisor count of n."""
+    if n < 1:
+        raise ValueError("divisor branching context is defined for positive integers")
+    return divisor_count(n)
+
+
+def carmichael_lambda_context(n: int) -> int:
+    """Return the Carmichael lambda of n."""
+    if n < 1:
+        raise ValueError("Carmichael lambda context is defined for positive integers")
+    return carmichael_lambda(n)
+
+
+def euler_totient_context(n: int) -> int:
+    """Return Euler's totient of n."""
+    if n < 1:
+        raise ValueError("Euler totient context is defined for positive integers")
+    return euler_totient(n)
+
+
+def compression_divisor_branching_commutator(n: int) -> PathCommutator:
+    """Compare compress-after-branching with branching-after-compress."""
+    return path_commutator(
+        n,
+        compression_context,
+        "C",
+        divisor_branching_context,
+        "B",
+    )
+
+
+def compression_divisor_branching_gap_factor(n: int) -> Fraction:
+    """Return the exact C/B path gap factor."""
+    if n < 1:
+        raise ValueError("path gap factor is defined for positive integers")
+    
+    omega_val = len(factor_counter(n))
+    d_n = divisor_count(n)
+    return Fraction(radical(d_n), 2**omega_val)
+
+
+def return_prime_set_divisor_branching_commutator(
+    n: int,
+    primes: Iterable[int],
+) -> PathCommutator:
+    """Compare return_S-after-branching with branching-after-return_S."""
+    selected_primes = _validated_prime_set(primes)
+    label = ",".join(str(prime) for prime in selected_primes)
+    return path_commutator(
+        n,
+        return_prime_set_context(selected_primes),
+        f"R_{{{label}}}",
+        divisor_branching_context,
+        "B",
+    )
+
+
+def return_prime_set_divisor_branching_gap_factor(
+    n: int,
+    primes: Iterable[int],
+) -> Fraction:
+    """Return the exact R_S/B path gap factor."""
+    if n < 1:
+        raise ValueError("path gap factor is defined for positive integers")
+    
+    selected_primes = _validated_prime_set(primes)
+    counter = factor_counter(n)
+    d_n = divisor_count(n)
+    
+    rad_s = 1
+    for prime in selected_primes:
+        if d_n % prime == 0:
+            rad_s *= prime
+            
+    num = 1
+    den = rad_s
+    for prime in selected_primes:
+        exp = counter.get(prime, 0)
+        if exp > 0:
+            num *= exp + 1
+            den *= exp
+            
+    return Fraction(num, den)
+
+
+def compression_carmichael_lambda_commutator(n: int) -> PathCommutator:
+    """Compare compress-after-carmichael with carmichael-after-compress."""
+    return path_commutator(
+        n,
+        compression_context,
+        "C",
+        carmichael_lambda_context,
+        "M",
+    )
+
+
+def compression_carmichael_lambda_gap_factor(n: int) -> Fraction:
+    """Return the exact C/M path gap factor."""
+    if n < 1:
+        raise ValueError("path gap factor is defined for positive integers")
+    if n == 1:
+        return Fraction(1, 1)
+        
+    from math import lcm
+    counter = factor_counter(n)
+    
+    num_lcm = 1
+    for p, val in counter.items():
+        rad_p_minus_1 = radical(p - 1)
+        power_term = p ** min(1, val - 1)
+        term = rad_p_minus_1 * power_term
+        num_lcm = lcm(num_lcm, term)
+        
+    den_lcm = 1
+    for p in counter:
+        den_lcm = lcm(den_lcm, p - 1)
+        
+    return Fraction(num_lcm, den_lcm)
+
+
+def compression_euler_totient_commutator(n: int) -> PathCommutator:
+    """Compare compress-after-totient with totient-after-compress."""
+    return path_commutator(
+        n,
+        compression_context,
+        "C",
+        euler_totient_context,
+        "T",
+    )
+
+
+def compression_euler_totient_gap_factor(n: int) -> Fraction:
+    """Return the exact C/T path gap factor."""
+    if n < 1:
+        raise ValueError("path gap factor is defined for positive integers")
+    if n == 1:
+        return Fraction(1, 1)
+        
+    phi_val = euler_totient(n)
+    rad_phi = radical(phi_val)
+    rad_n = radical(n)
+    phi_rad = euler_totient(rad_n)
+    return Fraction(rad_phi, phi_rad)
+

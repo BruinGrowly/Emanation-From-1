@@ -46,7 +46,8 @@ The sixth is the hardest evidential frontier.
 | P7 | Modular return compression is exactly local defect divided by Carmichael overlap | proved in `docs/MODULAR_RETURN_THEOREM_CANDIDATE.md` |
 | P8 | Fixed-point anchor richness is exactly CRT component branching for idempotents and involutions | theorem-level, implemented and regression-tested |
 | P9 | Fixed-point anchor residuals transfer after exact mechanisms are removed | false for the tested definitions |
-| P10 | Richer path residues transfer beyond their local commutation laws | open |
+| P10 | `C/B`, `R_S/B`, `C/M`, and `C/T` commutator laws classify branching and modular-return complexity | proved in `docs/ORIGIN_PAKHETA_CALCULUS_PROOFS.md` |
+| P11 | Richer path residues transfer beyond their local commutation laws | open |
 
 ## What Is Already Proved Enough To Build On
 
@@ -131,6 +132,9 @@ R_min(n) = n / spf(n)
 R_p(n) = n / p if p divides n, otherwise n
 R_S(n) = n / product_{p in S, p divides n} p
 G_p(n) = p * n
+B(n) = divisor_count(n)
+M(n) = carmichael_lambda(n)
+T(n) = euler_totient(n)
 ```
 
 All are exact maps on positive integers.
@@ -175,6 +179,46 @@ Delta(C, G_p; n)
   =
   1 / p, if p divides n
   1,     otherwise
+```
+
+Status: proved.
+
+**B6. Compression-Divisor Branching Law**
+
+```text
+Delta(C, B; n)
+  =
+  rad(d(n)) / 2^omega(n)
+```
+
+Status: proved.
+
+**B7. Return-Divisor Branching Law**
+
+```text
+Delta(R_S, B; n)
+  =
+  (1 / rad_S(d(n))) * product_{p in S, v_p(n) > 0} (v_p(n) + 1) / v_p(n)
+```
+
+Status: proved.
+
+**B8. Compression-Carmichael Lambda Law**
+
+```text
+Delta(C, M; n)
+  =
+  lcm_{p | n} ( rad(p-1) * p^min(1, v_p(n) - 1) ) / lcm_{p | n} (p - 1)
+```
+
+Status: proved.
+
+**B9. Compression-Euler Totient Law**
+
+```text
+Delta(C, T; n)
+  =
+  rad(phi(n)) / phi(rad(n))
 ```
 
 Status: proved.

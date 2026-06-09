@@ -24,6 +24,12 @@ from emanation_from_1.number_theory import (  # noqa: E402
 )
 from emanation_from_1.origin_metrics import origin_profile  # noqa: E402
 from emanation_from_1.origin_pakheta import (  # noqa: E402
+    compression_carmichael_lambda_commutator,
+    compression_carmichael_lambda_gap_factor,
+    compression_divisor_branching_commutator,
+    compression_divisor_branching_gap_factor,
+    compression_euler_totient_commutator,
+    compression_euler_totient_gap_factor,
     compression_gather_commutator,
     compression_gather_gap_factor,
     compression_prime_return_commutator,
@@ -32,6 +38,8 @@ from emanation_from_1.origin_pakheta import (  # noqa: E402
     compression_prime_set_return_gap_factor,
     compression_return_commutator,
     compression_return_gap_factor,
+    return_prime_set_divisor_branching_commutator,
+    return_prime_set_divisor_branching_gap_factor,
 )
 from emanation_from_1.statistics import mean, pearson_correlation  # noqa: E402
 from experiments.origin_modular_shell_transfer import (  # noqa: E402
@@ -53,6 +61,9 @@ PATH_TARGETS = [
     ("gather_2_log_gap", "has_factor_2"),
     ("gather_3_log_gap", "has_factor_3"),
     ("gather_5_log_gap", "has_factor_5"),
+    ("compression_divisor_branching_log_gap", "radical_compression"),
+    ("compression_carmichael_lambda_log_gap", "radical_compression"),
+    ("compression_totient_log_gap", "radical_compression"),
 ]
 
 
@@ -120,6 +131,19 @@ def calculus_dataset(limit: int) -> list[dict[str, float]]:
             row[f"has_factor_{prime}"] = 1.0 if n % prime == 0 else 0.0
             row[f"gather_{prime}_log_gap"] = commutator.log_abs_gap
             row[f"gather_{prime}_commutes"] = 1.0 if commutator.commutes else 0.0
+        
+        c_b = compression_divisor_branching_commutator(n)
+        row["compression_divisor_branching_log_gap"] = c_b.log_abs_gap
+        row["compression_divisor_branching_commutes"] = 1.0 if c_b.commutes else 0.0
+        
+        c_m = compression_carmichael_lambda_commutator(n)
+        row["compression_carmichael_lambda_log_gap"] = c_m.log_abs_gap
+        row["compression_carmichael_lambda_commutes"] = 1.0 if c_m.commutes else 0.0
+        
+        c_t = compression_euler_totient_commutator(n)
+        row["compression_totient_log_gap"] = c_t.log_abs_gap
+        row["compression_totient_commutes"] = 1.0 if c_t.commutes else 0.0
+
         rows.append(row)
     return rows
 
@@ -135,6 +159,12 @@ def formula_check(limit: int) -> dict[str, int]:
         prime_set: 0 for prime_set in RETURN_PRIME_SETS
     }
     gather_mismatches = {prime: 0 for prime in GATHER_PRIMES}
+    compression_divisor_branching_mismatches = 0
+    return_prime_set_divisor_branching_mismatches = {
+        prime_set: 0 for prime_set in RETURN_PRIME_SETS
+    }
+    compression_carmichael_lambda_mismatches = 0
+    compression_totient_mismatches = 0
     for n in range(1, limit + 1):
         compression_return = compression_return_commutator(n)
         expected_return = Fraction(compression_return_gap_factor(n), 1)
@@ -162,10 +192,26 @@ def formula_check(limit: int) -> dict[str, int]:
             if selected_set_return.ratio != expected_selected_set:
                 selected_set_return_mismatches[prime_set] += 1
 
-        for prime in GATHER_PRIMES:
             gather = compression_gather_commutator(n, prime)
             if gather.ratio != compression_gather_gap_factor(n, prime):
                 gather_mismatches[prime] += 1
+
+        c_b = compression_divisor_branching_commutator(n)
+        if c_b.ratio != compression_divisor_branching_gap_factor(n):
+            compression_divisor_branching_mismatches += 1
+
+        for prime_set in RETURN_PRIME_SETS:
+            r_s_b = return_prime_set_divisor_branching_commutator(n, prime_set)
+            if r_s_b.ratio != return_prime_set_divisor_branching_gap_factor(n, prime_set):
+                return_prime_set_divisor_branching_mismatches[prime_set] += 1
+
+        c_m = compression_carmichael_lambda_commutator(n)
+        if c_m.ratio != compression_carmichael_lambda_gap_factor(n):
+            compression_carmichael_lambda_mismatches += 1
+
+        c_t = compression_euler_totient_commutator(n)
+        if c_t.ratio != compression_euler_totient_gap_factor(n):
+            compression_totient_mismatches += 1
 
     return {
         "limit": limit,
@@ -184,6 +230,15 @@ def formula_check(limit: int) -> dict[str, int]:
             f"gather_{prime}_mismatches": gather_mismatches[prime]
             for prime in GATHER_PRIMES
         },
+        "compression_divisor_branching_mismatches": compression_divisor_branching_mismatches,
+        **{
+            f"return_set_divisor_branching_{prime_set_key(prime_set)}_mismatches": (
+                return_prime_set_divisor_branching_mismatches[prime_set]
+            )
+            for prime_set in RETURN_PRIME_SETS
+        },
+        "compression_carmichael_lambda_mismatches": compression_carmichael_lambda_mismatches,
+        "compression_totient_mismatches": compression_totient_mismatches,
     }
 
 
@@ -312,6 +367,29 @@ def formula_rows(check: dict[str, int]) -> list[list[object]]:
             ]
             for prime in GATHER_PRIMES
         ],
+        [
+            "C/B",
+            "`C(B(n)) / B(C(n)) = rad(d(n)) / 2^omega(n)`",
+            check["compression_divisor_branching_mismatches"],
+        ],
+        *[
+            [
+                f"R_{prime_set_symbol(prime_set)}/B",
+                "`R_S(B(n)) / B(R_S(n)) = formula with rad_S(d(n))`",
+                check[f"return_set_divisor_branching_{prime_set_key(prime_set)}_mismatches"],
+            ]
+            for prime_set in RETURN_PRIME_SETS
+        ],
+        [
+            "C/M",
+            "`C(M(n)) / M(C(n)) = lcm formula`",
+            check["compression_carmichael_lambda_mismatches"],
+        ],
+        [
+            "C/T",
+            "`C(T(n)) / T(C(n)) = rad(phi(n)) / phi(rad(n))`",
+            check["compression_totient_mismatches"],
+        ],
     ]
 
 
@@ -345,7 +423,7 @@ def write_report(
                 "Delta(A, B; n) = A(B(n)) / B(A(n))",
                 "```",
                 "",
-                "If `Delta = 1`, the two contexts commute at `n`. If not, the",
+"If `Delta = 1`, the two contexts commute at `n`. If not, the",
                 "integer field remembers the path order.",
                 "",
                 "## v0 Operators",
@@ -356,6 +434,9 @@ def write_report(
                 "| `R_min(n)` | remove one least-prime factor | return one layer toward `1` |",
                 "| `R_p(n)` | remove one selected `p` layer if present | selected return context |",
                 "| `G_p(n)` | `p * n` for prime `p` | gather one prime facet into the field |",
+                "| `B(n)` | `divisor_count(n)` | divisor-branching context |",
+                "| `M(n)` | `carmichael_lambda(n)` | modular-return exponent/period context |",
+                "| `T(n)` | `euler_totient(n)` | modular-return size/density context |",
                 "| `Delta(A,B;n)` | `A(B(n)) / B(A(n))` | path-order residue |",
                 "",
                 "## Exact Formula Checks",

@@ -52,7 +52,7 @@ define its Origin-Pakheta field as:
 
 ## v0 Context Operators
 
-The first context operators are deliberately small.
+The context operators include the base set and new branching/modular projections.
 
 | Symbol | Definition | Pakheta Function |
 | --- | --- | --- |
@@ -61,6 +61,9 @@ The first context operators are deliberately small.
 | `R_p(n)` | remove one selected `p` layer if present | selected return context |
 | `R_S(n)` | remove one layer for each selected prime in finite set `S` | multi-anchor return context |
 | `G_p(n)` | `p * n` for prime `p` | gather one prime facet into the field |
+| `B(n)` | `divisor_count(n)` | divisor-branching context |
+| `M(n)` | `carmichael_lambda(n)` | modular-return exponent/period context |
+| `T(n)` | `euler_totient(n)` | modular-return size/density context |
 
 These are not metaphors. They are exact maps on positive integers.
 
@@ -259,12 +262,48 @@ G_p(C(n)) = p * rad(n)
 So the ratio is `1/p` exactly when the gathered prime facet is already present,
 and `1` otherwise.
 
+### Compression-Divisor Branching Identity
+
+Let $B(n) = d(n)$ be the divisor count of $n$. For any positive integer $n$:
+
+```text
+C(B(n)) / B(C(n)) = rad(d(n)) / 2^omega(n)
+```
+
+Where $n > 1$ commutes under $C$ and $B$ if and only if $n = p^{2^k - 1}$ for some prime $p$ and integer $k \ge 1$.
+
+### Return-Divisor Branching Identity
+
+For any finite set $S$ of primes, and $B(n) = d(n)$:
+
+```text
+R_S(B(n)) / B(R_S(n)) = (1 / rad_S(d(n))) * product_{p in S, v_p(n) > 0} (v_p(n) + 1) / v_p(n)
+```
+
+### Compression-Carmichael Lambda Identity
+
+Let $M(n) = \lambda(n)$ be the Carmichael exponent of $n$. For any positive integer $n$:
+
+```text
+C(M(n)) / M(C(n)) = lcm_{p | n} ( rad(p-1) * p^min(1, v_p(n) - 1) ) / lcm_{p | n} (p - 1)
+```
+
+Where squarefree $n > 2$ commutes under $C$ and $M$ if and only if $\lambda(n)$ is squarefree.
+
+### Compression-Euler Totient Identity
+
+Let $T(n) = \phi(n)$ be Euler's totient of $n$. For any positive integer $n$:
+
+```text
+C(T(n)) / T(C(n)) = rad(phi(n)) / phi(rad(n))
+```
+
 ## Why This Is A Calculus
 
 It has:
 
 - objects: positive integer fields;
-- operators: `C`, `R_min`, `R_p`, `R_S`, `G_p`;
+- operators: `C`, `R_min`, `R_p`, `R_S`, `G_p`, `B`, `M`, `T`;
 - observables: shell, branching, compression, path gap;
 - equations: exact commutator identities;
 - controls: shell shuffles and size residuals;
