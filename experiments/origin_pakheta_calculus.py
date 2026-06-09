@@ -28,6 +28,8 @@ from emanation_from_1.origin_pakheta import (  # noqa: E402
     compression_gather_gap_factor,
     compression_prime_return_commutator,
     compression_prime_return_gap_factor,
+    compression_prime_set_return_commutator,
+    compression_prime_set_return_gap_factor,
     compression_return_commutator,
     compression_return_gap_factor,
 )
@@ -41,6 +43,7 @@ from experiments.origin_modular_shell_transfer import (  # noqa: E402
 
 GATHER_PRIMES = [2, 3, 5]
 RETURN_PRIMES = [2, 3, 5, 7]
+RETURN_PRIME_SETS = [(2, 3), (2, 3, 5), (3, 5, 7)]
 PATH_TARGETS = [
     ("compression_return_log_gap", "radical_compression"),
     ("return_2_log_gap", "repeated_factor_2"),
@@ -51,6 +54,14 @@ PATH_TARGETS = [
     ("gather_3_log_gap", "has_factor_3"),
     ("gather_5_log_gap", "has_factor_5"),
 ]
+
+
+def prime_set_key(primes: tuple[int, ...]) -> str:
+    return "_".join(str(prime) for prime in primes)
+
+
+def prime_set_symbol(primes: tuple[int, ...]) -> str:
+    return "{" + ",".join(str(prime) for prime in primes) + "}"
 
 
 def markdown_table(headers: list[str], rows: list[list[object]]) -> str:
@@ -120,6 +131,9 @@ def formula_check(limit: int) -> dict[str, int]:
 
     compression_return_mismatches = 0
     selected_return_mismatches = {prime: 0 for prime in RETURN_PRIMES}
+    selected_set_return_mismatches = {
+        prime_set: 0 for prime_set in RETURN_PRIME_SETS
+    }
     gather_mismatches = {prime: 0 for prime in GATHER_PRIMES}
     for n in range(1, limit + 1):
         compression_return = compression_return_commutator(n)
@@ -136,6 +150,18 @@ def formula_check(limit: int) -> dict[str, int]:
             if selected_return.ratio != expected_selected:
                 selected_return_mismatches[prime] += 1
 
+        for prime_set in RETURN_PRIME_SETS:
+            selected_set_return = compression_prime_set_return_commutator(
+                n,
+                prime_set,
+            )
+            expected_selected_set = Fraction(
+                compression_prime_set_return_gap_factor(n, prime_set),
+                1,
+            )
+            if selected_set_return.ratio != expected_selected_set:
+                selected_set_return_mismatches[prime_set] += 1
+
         for prime in GATHER_PRIMES:
             gather = compression_gather_commutator(n, prime)
             if gather.ratio != compression_gather_gap_factor(n, prime):
@@ -147,6 +173,12 @@ def formula_check(limit: int) -> dict[str, int]:
         **{
             f"return_{prime}_mismatches": selected_return_mismatches[prime]
             for prime in RETURN_PRIMES
+        },
+        **{
+            f"return_set_{prime_set_key(prime_set)}_mismatches": (
+                selected_set_return_mismatches[prime_set]
+            )
+            for prime_set in RETURN_PRIME_SETS
         },
         **{
             f"gather_{prime}_mismatches": gather_mismatches[prime]
@@ -253,7 +285,7 @@ def formula_rows(check: dict[str, int]) -> list[list[object]]:
     return [
         [
             "C/R_min",
-            "`C(R_min(n)) / R_min(C(n)) = spf(n) if v_spf(n)(n) > 1 else 1`",
+            "`C(R_min(n)) / R_min(C(n)) = spf(n) if v_{spf(n)}(n) > 1 else 1`",
             check["compression_return_mismatches"],
         ],
         *[
@@ -263,6 +295,14 @@ def formula_rows(check: dict[str, int]) -> list[list[object]]:
                 check[f"return_{prime}_mismatches"],
             ]
             for prime in RETURN_PRIMES
+        ],
+        *[
+            [
+                f"C/R_{prime_set_symbol(prime_set)}",
+                "`C(R_S(n)) / R_S(C(n)) = product of selected repeated primes`",
+                check[f"return_set_{prime_set_key(prime_set)}_mismatches"],
+            ]
+            for prime_set in RETURN_PRIME_SETS
         ],
         *[
             [

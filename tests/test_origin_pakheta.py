@@ -14,11 +14,14 @@ from emanation_from_1.origin_pakheta import (
     compression_gather_gap_factor,
     compression_prime_return_commutator,
     compression_prime_return_gap_factor,
+    compression_prime_set_return_commutator,
+    compression_prime_set_return_gap_factor,
     compression_return_commutator,
     compression_return_gap_factor,
     gather_context,
     return_min_context,
     return_prime_context,
+    return_prime_set_context,
 )
 
 
@@ -28,6 +31,7 @@ class OriginPakhetaCalculusTests(unittest.TestCase):
         self.assertEqual(return_min_context(72), 36)
         self.assertEqual(return_prime_context(3)(72), 24)
         self.assertEqual(return_prime_context(5)(72), 72)
+        self.assertEqual(return_prime_set_context((2, 3, 5))(72), 12)
         self.assertEqual(gather_context(5)(72), 360)
 
     def test_compression_is_idempotent(self) -> None:
@@ -76,6 +80,32 @@ class OriginPakhetaCalculusTests(unittest.TestCase):
                 self.assertEqual(
                     commutator.ratio,
                     Fraction(compression_prime_return_gap_factor(n, prime), 1),
+                )
+
+    def test_compression_prime_set_return_commutator_multiplies_repeated_layers(
+        self,
+    ) -> None:
+        both_repeated = compression_prime_set_return_commutator(72, (2, 3, 5))
+        one_repeated = compression_prime_set_return_commutator(18, (2, 3))
+        squarefree = compression_prime_set_return_commutator(30, (2, 3, 5))
+
+        self.assertFalse(both_repeated.commutes)
+        self.assertEqual(both_repeated.ratio, Fraction(6, 1))
+        self.assertFalse(one_repeated.commutes)
+        self.assertEqual(one_repeated.ratio, Fraction(3, 1))
+        self.assertTrue(squarefree.commutes)
+        self.assertEqual(squarefree.ratio, Fraction(1, 1))
+
+    def test_compression_prime_set_return_gap_formula(self) -> None:
+        for prime_set in ((2, 3), (2, 5), (2, 3, 5), (3, 5, 7)):
+            for n in range(1, 300):
+                commutator = compression_prime_set_return_commutator(n, prime_set)
+                self.assertEqual(
+                    commutator.ratio,
+                    Fraction(
+                        compression_prime_set_return_gap_factor(n, prime_set),
+                        1,
+                    ),
                 )
 
     def test_compression_gather_commutator_detects_existing_prime_facet(self) -> None:

@@ -4,6 +4,7 @@
 **Scope:** Positive integers  
 **Companion scan:** `experiments/origin_pakheta_calculus.py`  
 **Report:** `reports/ORIGIN_PAKHETA_CALCULUS.md`  
+**Proof appendix:** `docs/ORIGIN_PAKHETA_CALCULUS_PROOFS.md`
 **Milestone note:** `docs/ORIGIN_PAKHETA_CALCULUS_MILESTONE.md`
 
 This document defines the first usable Origin-Pakheta calculus for the repo.
@@ -58,6 +59,7 @@ The first context operators are deliberately small.
 | `C(n)` | `rad(n)` | compress to squarefree field skeleton |
 | `R_min(n)` | remove one least-prime factor | return one layer toward `1` |
 | `R_p(n)` | remove one selected `p` layer if present | selected return context |
+| `R_S(n)` | remove one layer for each selected prime in finite set `S` | multi-anchor return context |
 | `G_p(n)` | `p * n` for prime `p` | gather one prime facet into the field |
 
 These are not metaphors. They are exact maps on positive integers.
@@ -99,7 +101,7 @@ For `n > 1`:
 ```text
 C(R_min(n)) / R_min(C(n))
   =
-  spf(n), if v_spf(n)(n) > 1
+  spf(n), if v_{spf(n)}(n) > 1
   1,      otherwise
 ```
 
@@ -191,6 +193,33 @@ R_p(C(n)) = R_p(p * rad(m)) = rad(m)
 
 So the ratio is `p` exactly when the selected prime layer is repeated.
 
+### Compression-Selected-Set-Return Identity
+
+For a finite set `S` of selected primes, define:
+
+```text
+R_S(n) = n / product_{p in S, p divides n} p
+```
+
+Then:
+
+```text
+C(R_S(n)) / R_S(C(n))
+  =
+  product_{p in S, v_p(n) > 1} p
+```
+
+Plainly:
+
+```text
+compress then R_S != R_S then compress
+exactly when at least one selected prime layer is repeated
+```
+
+This is the first multi-anchor return law in the calculus. It says the path
+gap is not a vague disturbance: it is exactly the product of the selected
+repeated layers.
+
 ### Compression-Gather Identity
 
 For prime `p`:
@@ -235,7 +264,7 @@ and `1` otherwise.
 It has:
 
 - objects: positive integer fields;
-- operators: `C`, `R_min`, `R_p`, `G_p`;
+- operators: `C`, `R_min`, `R_p`, `R_S`, `G_p`;
 - observables: shell, branching, compression, path gap;
 - equations: exact commutator identities;
 - controls: shell shuffles and size residuals;
@@ -247,9 +276,9 @@ That is enough to start doing mathematics with it.
 
 | Claim Type | Status |
 | --- | --- |
-| `C`, `R_min`, `R_p`, and `G_p` are exact maps | definition |
+| `C`, `R_min`, `R_p`, `R_S`, and `G_p` are exact maps | definition |
 | path commutator `Delta(A,B;n)` is exact | definition |
-| v0 commutator identities | theorem-level identities with finite regression coverage |
+| v0 commutator identities | proved in proof appendix with finite regression coverage |
 | shell-controlled path signals | local finite evidence |
 | full Origin Reframe | not proved by v0 calculus |
 | Pakheta Layer as universal relation layer | theory source and methodology |

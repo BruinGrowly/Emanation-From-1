@@ -96,6 +96,8 @@ by its exact CRT mechanism unless a new, non-exhausted anchor metric is defined.
 The first Origin-Pakheta calculus now exists:
 
 - `docs/ORIGIN_PAKHETA_CALCULUS.md`
+- `docs/ORIGIN_PAKHETA_PROOF_PROGRAM.md`
+- `docs/ORIGIN_PAKHETA_CALCULUS_PROOFS.md`
 - `experiments/origin_pakheta_calculus.py`
 - `reports/ORIGIN_PAKHETA_CALCULUS.md`
 
@@ -105,6 +107,7 @@ It defines exact context operators over positive integers:
 C(n) = rad(n)
 R_min(n) = n / spf(n)
 R_p(n) = n / p if p divides n, otherwise n
+R_S(n) = n / product_{p in S, p divides n} p
 G_p(n) = p * n
 Delta(A, B; n) = A(B(n)) / B(A(n))
 ```
@@ -129,6 +132,14 @@ C(R_p(n)) / R_p(C(n))
   =
   p, if the chosen p-layer is repeated
   1, otherwise
+```
+
+The second extension generalizes return to finite selected prime sets:
+
+```text
+C(R_S(n)) / R_S(C(n))
+  =
+  product_{p in S, v_p(n) > 1} p
 ```
 
 This is the first usable calculus surface for Origin-Pakheta work.

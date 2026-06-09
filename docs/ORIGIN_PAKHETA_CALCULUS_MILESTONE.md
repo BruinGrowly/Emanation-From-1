@@ -4,6 +4,7 @@
 **Date:** June 9, 2026  
 **Depends on:** `docs/ORIGIN_PAKHETA_CALCULUS.md`  
 **Companion report:** `reports/ORIGIN_PAKHETA_CALCULUS.md`
+**Proof program:** `docs/ORIGIN_PAKHETA_PROOF_PROGRAM.md`
 
 This note captures what became possible once the first Origin-Pakheta calculus
 started working.
@@ -56,13 +57,14 @@ not only by static properties such as size, factors, residues, or divisor count.
 
 ## First Working Operators
 
-The first calculus uses four context families:
+The first calculus uses five context families:
 
 | Symbol | Definition | Reading |
 | --- | --- | --- |
 | `C(n)` | `rad(n)` | compress to squarefree skeleton |
 | `R_min(n)` | remove one least-prime factor | return one least layer toward `1` |
 | `R_p(n)` | remove one selected `p` layer if present | selected return context |
+| `R_S(n)` | remove one layer for each selected prime in finite set `S` | multi-anchor return context |
 | `G_p(n)` | `p * n` | gather one prime facet |
 
 These operators are deliberately small. Their value is that they are exact and
@@ -104,6 +106,23 @@ compress then selected-return != selected-return then compress
 exactly when the selected prime layer is repeated
 ```
 
+### Selected-Set Return Law
+
+For a finite set `S` of selected primes:
+
+```text
+C(R_S(n)) / R_S(C(n))
+  =
+  product_{p in S, v_p(n) > 1} p
+```
+
+Meaning:
+
+```text
+compress then selected-set-return != selected-set-return then compress
+exactly when at least one selected prime layer is repeated
+```
+
 ### Gather Law
 
 For prime `p`:
@@ -128,6 +147,8 @@ The default scan through `2..10000` found:
 
 - `0` mismatches for `C/R_min`;
 - `0` mismatches for `C/R_p` with `p in {2, 3, 5, 7}`;
+- `0` mismatches for `C/R_S` with `S` in `{2,3}`, `{2,3,5}`,
+  and `{3,5,7}`;
 - `0` mismatches for `C/G_p` with `p in {2, 3, 5}`;
 - `C/R_min` path gap nonzero for `3302/9999` integers;
 - shell-controlled `radical_compression -> C/R_min path gap` correlation
@@ -206,7 +227,7 @@ Pakheta terms now have arithmetic counterparts:
 | --- | --- |
 | field | positive integer with prime-power facets |
 | node/facet | prime-power component |
-| context | exact operator such as `C`, `R_p`, or `G_p` |
+| context | exact operator such as `C`, `R_p`, `R_S`, or `G_p` |
 | path | ordered composition of contexts |
 | path memory | non-commuting path commutator |
 | coherence | commutation or low path gap under declared contexts |
@@ -270,9 +291,9 @@ Then compute commutators such as:
 
 ```text
 Delta(C, M; n)
-Delta(R_p, M; n)
+Delta(R_S, M; n)
 Delta(C, B; n)
-Delta(R_p, B; n)
+Delta(R_S, B; n)
 ```
 
 The goal is to find whether path residues remain merely local identities or

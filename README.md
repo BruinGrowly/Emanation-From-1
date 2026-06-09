@@ -22,6 +22,8 @@ The repo begins from two local framework documents:
 - `docs/EMANATION_RESEARCH_GUIDELINES.md` - the focused research boundary and ledger-first rules.
 - `docs/ORIGIN_THEORY_RESEARCH_BRIDGE.md` - translation layer from broader Origin Theory vocabulary into falsifiable repo experiments.
 - `docs/ORIGIN_PAKHETA_CALCULUS.md` - first usable Origin-Pakheta calculus: exact contexts, path commutators, and path-sensitivity theorem targets.
+- `docs/ORIGIN_PAKHETA_PROOF_PROGRAM.md` - proof ladder for turning the Origin-Pakheta calculus into theorem targets.
+- `docs/ORIGIN_PAKHETA_CALCULUS_PROOFS.md` - proof appendix for the v0 calculus identities, selected-set return law, and path-length facts.
 - `docs/ORIGIN_PAKHETA_CALCULUS_MILESTONE.md` - milestone note on what the working calculus now makes possible.
 - `docs/SEMANTIC_VOLTAGE_RESEARCH.md` - broader semantic-voltage hypothesis material; useful for generating tests, not evidence by itself.
 - `docs/origin_theory/README.md` - wider Origin Theory corpus and translation language.
@@ -188,6 +190,8 @@ docs/
   MODULAR_RETURN_THEOREM_CANDIDATE.md
   ORIGIN_THEORY_RESEARCH_BRIDGE.md
   ORIGIN_PAKHETA_CALCULUS.md
+  ORIGIN_PAKHETA_PROOF_PROGRAM.md
+  ORIGIN_PAKHETA_CALCULUS_PROOFS.md
   ORIGIN_PAKHETA_CALCULUS_MILESTONE.md
   ORIGIN_FIRST_RESEARCH_POSTURE.md
   THE_ORIGIN_REFRAME.md

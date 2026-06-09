@@ -32,11 +32,14 @@ integer field remembers the path order.
 
 | commutator | identity | mismatches |
 | --- | --- | --- |
-| C/R_min | `C(R_min(n)) / R_min(C(n)) = spf(n) if v_spf(n)(n) > 1 else 1` | 0 |
+| C/R_min | `C(R_min(n)) / R_min(C(n)) = spf(n) if v_{spf(n)}(n) > 1 else 1` | 0 |
 | C/R_2 | `C(R_2(n)) / R_2(C(n)) = 2 if v_2(n) > 1 else 1` | 0 |
 | C/R_3 | `C(R_3(n)) / R_3(C(n)) = 3 if v_3(n) > 1 else 1` | 0 |
 | C/R_5 | `C(R_5(n)) / R_5(C(n)) = 5 if v_5(n) > 1 else 1` | 0 |
 | C/R_7 | `C(R_7(n)) / R_7(C(n)) = 7 if v_7(n) > 1 else 1` | 0 |
+| C/R_{2,3} | `C(R_S(n)) / R_S(C(n)) = product of selected repeated primes` | 0 |
+| C/R_{2,3,5} | `C(R_S(n)) / R_S(C(n)) = product of selected repeated primes` | 0 |
+| C/R_{3,5,7} | `C(R_S(n)) / R_S(C(n)) = product of selected repeated primes` | 0 |
 | C/G_2 | `C(G_2(n)) / G_2(C(n)) = 1/2 if 2 divides n else 1` | 0 |
 | C/G_3 | `C(G_3(n)) / G_3(C(n)) = 1/3 if 3 divides n else 1` | 0 |
 | C/G_5 | `C(G_5(n)) / G_5(C(n)) = 1/5 if 5 divides n else 1` | 0 |
