@@ -21,6 +21,7 @@ The repo begins from two local framework documents:
 - `docs/MODULAR_RETURN_THEOREM_CANDIDATE.md` - theorem-level mechanism behind the modular return evidence.
 - `docs/EMANATION_RESEARCH_GUIDELINES.md` - the focused research boundary and ledger-first rules.
 - `docs/ORIGIN_THEORY_RESEARCH_BRIDGE.md` - translation layer from broader Origin Theory vocabulary into falsifiable repo experiments.
+- `docs/ORIGIN_PAKHETA_CALCULUS.md` - first usable Origin-Pakheta calculus: exact contexts, path commutators, and path-sensitivity theorem targets.
 - `docs/SEMANTIC_VOLTAGE_RESEARCH.md` - broader semantic-voltage hypothesis material; useful for generating tests, not evidence by itself.
 - `docs/origin_theory/README.md` - wider Origin Theory corpus and translation language.
 - `docs/pakheta_layer/README.md` - Pakheta relationship-field material; useful for designing anchor, context, false-partition, and coherence tests.
@@ -49,6 +50,7 @@ See `docs/EMANATION_RESEARCH_GUIDELINES.md` for the narrow Emanation-from-`1` sc
 - `emanation_depth(n)` is the total number of prime factors of `n`, counted with multiplicity.
 - `return_path_to_one(n)` repeatedly removes the smallest prime factor until the path reaches `1`.
 - `modular_return_decomposition(n)` separates `lambda(n) / phi(n)` into exact local prime-power defect and Carmichael lcm-overlap terms, with radical compression retained as the Origin-facing concentration proxy.
+- `Delta(A,B;n) = A(B(n)) / B(A(n))` is the first Origin-Pakheta path commutator for exact arithmetic contexts.
 - Classical conjectures are downstream tests for whether Origin metrics transfer beyond their native factor-path setting.
 
 ## Quick Start
@@ -111,6 +113,12 @@ Run the anchor residual transfer pressure test:
 
 ```powershell
 python experiments\origin_anchor_residual_transfer.py
+```
+
+Run the first Origin-Pakheta calculus scan:
+
+```powershell
+python experiments\origin_pakheta_calculus.py
 ```
 
 Run the broader initial scan:
@@ -178,6 +186,7 @@ docs/
   EMANATION_RESEARCH_GUIDELINES.md
   MODULAR_RETURN_THEOREM_CANDIDATE.md
   ORIGIN_THEORY_RESEARCH_BRIDGE.md
+  ORIGIN_PAKHETA_CALCULUS.md
   ORIGIN_FIRST_RESEARCH_POSTURE.md
   THE_ORIGIN_REFRAME.md
   pakheta_layer/
@@ -206,6 +215,7 @@ experiments/
   origin_modular_theorem_probe.py
   origin_anchor_echo_fixed_points.py
   origin_anchor_residual_transfer.py
+  origin_pakheta_calculus.py
   origin_size_banded_controls.py
   origin_structure_scan.py
   prime_gap_overlap_transfer.py
@@ -229,6 +239,7 @@ reports/
   ORIGIN_MODULAR_THEOREM_PROBE.md
   ORIGIN_ANCHOR_ECHO_FIXED_POINTS.md
   ORIGIN_ANCHOR_RESIDUAL_TRANSFER.md
+  ORIGIN_PAKHETA_CALCULUS.md
   ORIGIN_SIZE_BANDED_CONTROLS.md
   ORIGIN_STRUCTURE_SCAN.md
   PRIME_GAP_OVERLAP_TRANSFER.md

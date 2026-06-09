@@ -42,7 +42,7 @@ not count as evidence until those terms become exact repo objects.
 | Pakheta relationship-field | Exact structure preserved across representations | Useful as a test-design grammar; not evidence by itself |
 | Pakheta anchor | Fixed point, invariant, basis, or stable access point | First local test added in `reports/ORIGIN_ANCHOR_ECHO_FIXED_POINTS.md` |
 | False partition | Break the real relation while preserving shell or size | Implemented as shell shuffles for fixed-point targets |
-| Context/path sensitivity | Order of transformations should leave measurable residue | Not yet tested in Origin arithmetic |
+| Context/path sensitivity | Order of transformations should leave measurable residue | First calculus added in `reports/ORIGIN_PAKHETA_CALCULUS.md` |
 | Phi load balance | Proportional weighting should beat over-fused or over-split controls | Hypothesis only; needs non-circular targets |
 | Resolution translation | Semantic claim -> exact formula -> finite controls | Best example so far is Carmichael overlap decomposition |
 | Primes as irreducibles | First-layer departures from `1` | Operationalized, but semantic claims remain hypothesis material |
@@ -92,6 +92,36 @@ It removed the exact fixed-point formulas first, then tried to transfer any
 remaining anchor residual into modular-return targets. The residuals were zero
 or floating-point roundoff. This means the fixed-point anchor line is exhausted
 by its exact CRT mechanism unless a new, non-exhausted anchor metric is defined.
+
+The first Origin-Pakheta calculus now exists:
+
+- `docs/ORIGIN_PAKHETA_CALCULUS.md`
+- `experiments/origin_pakheta_calculus.py`
+- `reports/ORIGIN_PAKHETA_CALCULUS.md`
+
+It defines exact context operators over positive integers:
+
+```text
+C(n) = rad(n)
+R_min(n) = n / spf(n)
+G_p(n) = p * n
+Delta(A, B; n) = A(B(n)) / B(A(n))
+```
+
+The first exact path identity is:
+
+```text
+C(R_min(n)) / R_min(C(n))
+  =
+  spf(n), if the least-prime layer is repeated
+  1,      otherwise
+```
+
+Plainly:
+
+> context order has an exact arithmetic residue.
+
+This is the first usable calculus surface for Origin-Pakheta work.
 
 ## What Pakheta Adds
 
@@ -241,22 +271,22 @@ large interpretive claim.
 
 ## Recommended Next Experiment
 
-The fixed-point anchor and residual-transfer tests have been added. The cleanest
-next executable experiment is now:
+The fixed-point anchor, residual-transfer, and v0 path-commutator calculus have
+been added. The cleanest next executable experiment is now:
 
-> Test Pakheta path sensitivity in Origin arithmetic.
+> Extend the path-commutator calculus beyond `C`, `R_min`, and `G_p`.
 
 Pre-registered question:
 
-> Do two exact arithmetic contexts applied in different orders leave different
-> residual signatures after size, shell, and known mechanism baselines?
+> Do richer exact arithmetic contexts produce path residues that predict an
+> independent target after their local commutation laws are accounted for?
 
 Candidate targets:
 
-- `return_then_compress(n)` versus `compress_then_return(n)`;
-- `factor_reduce_then_project(n)` versus `project_then_factor_reduce(n)`;
-- modular-return residuals after ordered transformations of `n`, `radical(n)`,
-  and prime-power components.
+- modular-return context before/after compression;
+- divisor-branching projection before/after return;
+- prime-neighborhood transforms around `p - 1` and `p + 1`;
+- fixed-point anchor projection before/after gather or return.
 
 Metrics:
 
@@ -280,7 +310,7 @@ Why this is the best next move:
 - It follows directly from the theory and Pakheta corpus.
 - It remains inside conventional arithmetic.
 - It does not re-count the fixed-point theorem we already exhausted.
-- It tests a different Pakheta claim: context order and path memory.
+- It builds from an actual calculus object: the path commutator.
 
 ## Current Research Posture
 

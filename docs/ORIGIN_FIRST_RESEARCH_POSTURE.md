@@ -74,6 +74,7 @@ The center now moves back to:
 - `reports/ORIGIN_MODULAR_SIGNAL_DECOMPOSITION.md`
 - `reports/ORIGIN_ANCHOR_ECHO_FIXED_POINTS.md`
 - `reports/ORIGIN_ANCHOR_RESIDUAL_TRANSFER.md`
+- `reports/ORIGIN_PAKHETA_CALCULUS.md`
 - `reports/PRIME_GAP_OVERLAP_TRANSFER.md`
 - `docs/ORIGIN_THEORY_RESEARCH_BRIDGE.md`
 - `docs/MODULAR_RETURN_THEOREM_CANDIDATE.md`
@@ -82,6 +83,7 @@ The center now moves back to:
 
 Additional theory-source material now lives in:
 
+- `docs/ORIGIN_PAKHETA_CALCULUS.md`
 - `docs/origin_theory/README.md`
 - `docs/SEMANTIC_VOLTAGE_RESEARCH.md`
 - `docs/pakheta_layer/README.md`

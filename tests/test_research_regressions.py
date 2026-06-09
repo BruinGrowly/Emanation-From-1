@@ -33,6 +33,11 @@ from experiments.origin_anchor_residual_transfer import (  # noqa: E402
     anchor_residual_transfer_dataset,
     residual_summary,
 )
+from experiments.origin_pakheta_calculus import (  # noqa: E402
+    calculus_dataset,
+    formula_check,
+    path_control,
+)
 
 
 class ResearchRegressionTests(unittest.TestCase):
@@ -137,6 +142,23 @@ class ResearchRegressionTests(unittest.TestCase):
             with self.subTest(residual=key):
                 summary = residual_summary(dataset, key)
                 self.assertLessEqual(summary["max_abs"], ZERO_TOLERANCE)
+
+    def test_origin_pakheta_calculus_path_identity_matches_ledger(self) -> None:
+        check = formula_check(512)
+        self.assertEqual(check["compression_return_mismatches"], 0)
+        self.assertEqual(check["gather_2_mismatches"], 0)
+        self.assertEqual(check["gather_3_mismatches"], 0)
+        self.assertEqual(check["gather_5_mismatches"], 0)
+
+        dataset = calculus_dataset(1000)
+        control = path_control(
+            dataset,
+            "compression_return_log_gap",
+            "radical_compression",
+            trials=5,
+            seed=62226,
+        )
+        self.assertGreater(control["observed_r"], 0.5)
 
 
 if __name__ == "__main__":

@@ -181,6 +181,10 @@ python experiments\origin_anchor_echo_fixed_points.py
 python experiments\origin_anchor_residual_transfer.py
 ```
 
+```powershell
+python experiments\origin_pakheta_calculus.py
+```
+
 Current local reading:
 
 - The pre-declared shell metric `emanation_depth` beats size-banded controls on modular-return targets in the default scan through `5000`.
@@ -195,6 +199,7 @@ Current local reading:
 - The signal-decomposition probe shows the conditioned log return-compression identity remains exact after shell-centering and group-baseline residualization. In the default scan through `10000`, Carmichael lcm-overlap accounts for `99.88%` of the exact covariance contribution, local prime-power defect accounts for `0.12%`, and Origin-facing concentration/splitting proxies capture `33.33%` of the conditioned log-signal variance before exact mechanism terms are added.
 - Pakheta-informed fixed-point anchor tests are exact but bounded: idempotent richness is fully explained by component count, and involution richness is fully explained by odd component count plus the special `2^a` correction.
 - The anchor residual transfer test is constraining. After subtracting those exact fixed-point formulas, no measurable anchor residual remains (`max_abs <= 8.693e-16`), so this anchor definition has no leftover signal to transfer into modular-return targets.
+- The first Origin-Pakheta calculus defines exact context operators and path commutators. In the default scan through `10000`, `C/R_min` path order is nonzero for `3302/9999` rows, and the identity `C(R_min(n)) / R_min(C(n)) = spf(n)` when the least-prime layer is repeated has `0` mismatches. Shell-controlled `radical_compression -> C/R_min path gap` has `r = 0.6819`, with `0/250` controls matching or exceeding.
 
 Evidence value:
 
@@ -207,6 +212,7 @@ Next proof target after signal decomposition:
 - Prove bounded statements explaining when concentration and splitting proxies do, or do not, track overlap pressure inside fixed shells.
 - Since the first pre-registered overlap-pressure transfer to prime gaps was constraining, do not assume overlap pressure generalizes. Any next transfer should use a sharper target and a pre-declared failure condition.
 - Since fixed-point anchor residuals are exhausted by exact CRT formulas, do not keep retesting those residuals as if they contained hidden signal. The next Pakheta move should test a different primitive, such as context/path sensitivity.
+- Since the v0 path commutator is exact but local, extend the calculus to richer contexts and test whether path residues transfer beyond their local commutation laws.
 
 ## Priority 3: Boundary-Return Probes
 
