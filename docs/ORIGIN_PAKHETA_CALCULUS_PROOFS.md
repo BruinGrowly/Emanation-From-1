@@ -818,7 +818,8 @@ lambda(n) = lcm_{i=1}^k lambda(p_i^{a_i})
 where the component lambdas are:
 ```text
 lambda(p_i^{a_i}) = (p_i - 1) * p_i^{a_i - 1}  (if p_i is odd)
-lambda(2^{a_i}) = 2^{max(0, a_i - 2)} * 2^min(1, a_i - 1)  (if p_i = 2)
+lambda(2^{a_i}) = 2^{a_i - 1}  (if p_i = 2 and a_i <= 2)
+lambda(2^{a_i}) = 2^{a_i - 2}  (if p_i = 2 and a_i >= 3)
 ```
 In both cases, notice that for any prime component $p_i$, the component lambda $\lambda(p_i^{a_i})$ is divisible by $p_i - 1$.
 
