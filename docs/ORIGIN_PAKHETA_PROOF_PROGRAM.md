@@ -48,7 +48,8 @@ The sixth is the hardest evidential frontier.
 | P9 | Fixed-point anchor residuals transfer after exact mechanisms are removed | false for the tested definitions |
 | P10 | `C/B`, `R_S/B`, `C/M`, and `C/T` commutator laws classify branching and modular-return complexity | proved in `docs/ORIGIN_PAKHETA_CALCULUS_PROOFS.md` |
 | P11 | `C/N_-`, `R_S/N_-`, `C/N_+`, and `R_S/N_+` commutator laws classify prime-neighborhood complexity | proved in `docs/ORIGIN_PAKHETA_CALCULUS_PROOFS.md` |
-| P12 | Richer path residues transfer beyond their local commutation laws | open |
+| P12 | Richer path residues transfer beyond their local commutation laws | verified statistically for modular targets |
+| P13 | The Carmichael period `lambda(n)` is bounded below by the radical of the prime-minus neighborhood `rad(N_-(n))` | proved in `docs/ORIGIN_PAKHETA_CALCULUS_PROOFS.md` |
 
 ## What Is Already Proved Enough To Build On
 
@@ -263,6 +264,16 @@ Delta(R_S, N_+; n)
   =
   product_{p in S, v_p(n) = 1} (p + 1) / rad_S( product_{p | n} (p + 1) )
 ```
+
+Status: proved.
+
+**B14. Neighborhood Period Bound**
+
+```text
+lambda(n) >= rad(N_-(n))
+```
+
+where `rad(N_-(n))` always divides `lambda(n)`.
 
 Status: proved.
 

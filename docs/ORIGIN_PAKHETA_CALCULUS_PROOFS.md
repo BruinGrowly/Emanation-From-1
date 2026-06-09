@@ -795,7 +795,63 @@ Delta(R_S, N_+; n) = R_S(N_+(n)) / N_+(R_S(n))
 
 QED.
 
+## Theorem 15: Neighborhood Period Bound
+
+**Statement.**
+
+Let $N_-(n) = \prod_{p | n} (p - 1)$ be the prime-minus neighborhood context, and $\lambda(n)$ be the Carmichael lambda function. For any positive integer $n \ge 2$:
+
+```text
+lambda(n) >= rad(N_-(n))
+```
+
+Furthermore, the radical of the prime-minus neighborhood, $\text{rad}(N_-(n))$, always divides the Carmichael lambda, $\lambda(n)$.
+
+**Proof.**
+
+Let $n = \prod_{i=1}^k p_i^{a_i}$ be the prime factorization of $n$, where $p_i$ are distinct prime factors of $n$ and $a_i \ge 1$.
+
+By definition, the Carmichael lambda of $n$ is the least common multiple of the lambdas of its prime power components:
+```text
+lambda(n) = lcm_{i=1}^k lambda(p_i^{a_i})
+```
+where the component lambdas are:
+```text
+lambda(p_i^{a_i}) = (p_i - 1) * p_i^{a_i - 1}  (if p_i is odd)
+lambda(2^{a_i}) = 2^{max(0, a_i - 2)} * 2^min(1, a_i - 1)  (if p_i = 2)
+```
+In both cases, notice that for any prime component $p_i$, the component lambda $\lambda(p_i^{a_i})$ is divisible by $p_i - 1$.
+
+The prime-minus neighborhood is defined as the product of $p_i - 1$ over the distinct prime factors:
+```text
+N_-(n) = product_{i=1}^k (p_i - 1)
+```
+Let $q$ be any prime factor of $N_-(n)$. Since $q$ divides the product $\prod_{i=1}^k (p_i - 1)$, it must divide at least one of the terms $(p_j - 1)$ for some $j \in \{1, \dots, k\}$.
+
+Since $(p_j - 1)$ divides $\lambda(p_j^{a_j})$, $q$ must divide $\lambda(p_j^{a_j})$.
+
+Since $\lambda(n)$ is the least common multiple:
+```text
+lambda(n) = lcm( lambda(p_1^{a_1}), ..., lambda(p_k^{a_k}) )
+```
+and $q$ divides the component $\lambda(p_j^{a_j})$, it must divide the least common multiple $\lambda(n)$.
+
+Since this holds for every prime factor $q$ of $N_-(n)$, the set of prime factors of $N_-(n)$ is a subset of the prime factors of $\lambda(n)$. 
+
+The radical operator $\text{rad}(x)$ is the product of the distinct prime factors of $x$. Thus:
+```text
+rad(N_-(n)) = product_{q | N_-(n)} q
+```
+Since every such prime factor $q$ divides $\lambda(n)$, and they are all distinct primes, their product $\text{rad}(N_-(n))$ must divide $\lambda(n)$ (since any set of distinct primes that divide a number also has their product dividing that number).
+
+Because $\text{rad}(N_-(n))$ divides $\lambda(n)$, and both are positive integers for $n \ge 2$, we have:
+```text
+lambda(n) >= rad(N_-(n))
+```
+QED.
+
 ## Next Proof Target
 
-The calculus now classifies prime-neighborhood commutators ($N_-, N_+$). The next proof target should investigate fixed-point anchor projections before and after divisor branching or prime-neighborhood context operators, exploring resolution translation to identify non-trivial transfer behaviors.
+The calculus now establishes the Neighborhood Period Bound (Theorem 15), linking modular return periods directly to boundary contexts. Future proof targets should extend this bounding method to other modular and additive targets, such as formulating bounds on divisors and Goldbach witness densities using compositions of return and neighborhood operators.
+
 

@@ -223,6 +223,14 @@ class OriginPakhetaCalculusTests(unittest.TestCase):
                     return_prime_set_prime_plus_neighborhood_gap_factor(n, prime_set),
                 )
 
+    def test_neighborhood_period_bound(self) -> None:
+        for n in range(2, 5000):
+            lam = carmichael_lambda_context(n)
+            nm = prime_minus_neighborhood_context(n)
+            rad_nm = compression_context(nm)
+            self.assertTrue(lam >= rad_nm)
+            self.assertEqual(lam % rad_nm, 0)
+
 
 if __name__ == "__main__":
     unittest.main()

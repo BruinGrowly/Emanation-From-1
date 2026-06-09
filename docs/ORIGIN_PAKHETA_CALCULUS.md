@@ -332,6 +332,17 @@ For any finite set $S$ of primes, and $N_+(n) = \prod_{p | n} (p + 1)$:
 R_S(N_+(n)) / N_+(R_S(n)) = product_{p in S, p | n} (p + 1) / rad_S( product_{p | n} (p + 1) )
 ```
 
+### Neighborhood Period Bound
+
+For any positive integer $n \ge 2$:
+
+```text
+lambda(n) >= rad(N_-(n))
+```
+
+where $\lambda(n)$ is the Carmichael lambda function, and $\text{rad}(N_-(n))$ is the radical of the prime-minus neighborhood context.
+
+
 ## Why This Is A Calculus
 
 It has:
