@@ -3,7 +3,8 @@
 **Status:** Working calculus  
 **Scope:** Positive integers  
 **Companion scan:** `experiments/origin_pakheta_calculus.py`  
-**Report:** `reports/ORIGIN_PAKHETA_CALCULUS.md`
+**Report:** `reports/ORIGIN_PAKHETA_CALCULUS.md`  
+**Milestone note:** `docs/ORIGIN_PAKHETA_CALCULUS_MILESTONE.md`
 
 This document defines the first usable Origin-Pakheta calculus for the repo.
 

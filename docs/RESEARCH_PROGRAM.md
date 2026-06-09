@@ -177,6 +177,7 @@ Theory-to-test bridge:
 
 - `docs/ORIGIN_THEORY_RESEARCH_BRIDGE.md`
 - `docs/ORIGIN_PAKHETA_CALCULUS.md`
+- `docs/ORIGIN_PAKHETA_CALCULUS_MILESTONE.md`
 - `docs/pakheta_layer/README.md`
 
 Planned tests:
