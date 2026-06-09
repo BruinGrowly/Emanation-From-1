@@ -32,6 +32,10 @@ from emanation_from_1.origin_pakheta import (  # noqa: E402
     compression_euler_totient_gap_factor,
     compression_gather_commutator,
     compression_gather_gap_factor,
+    compression_prime_minus_neighborhood_commutator,
+    compression_prime_minus_neighborhood_gap_factor,
+    compression_prime_plus_neighborhood_commutator,
+    compression_prime_plus_neighborhood_gap_factor,
     compression_prime_return_commutator,
     compression_prime_return_gap_factor,
     compression_prime_set_return_commutator,
@@ -40,6 +44,10 @@ from emanation_from_1.origin_pakheta import (  # noqa: E402
     compression_return_gap_factor,
     return_prime_set_divisor_branching_commutator,
     return_prime_set_divisor_branching_gap_factor,
+    return_prime_set_prime_minus_neighborhood_commutator,
+    return_prime_set_prime_minus_neighborhood_gap_factor,
+    return_prime_set_prime_plus_neighborhood_commutator,
+    return_prime_set_prime_plus_neighborhood_gap_factor,
 )
 from emanation_from_1.statistics import mean, pearson_correlation  # noqa: E402
 from experiments.origin_modular_shell_transfer import (  # noqa: E402
@@ -64,6 +72,8 @@ PATH_TARGETS = [
     ("compression_divisor_branching_log_gap", "radical_compression"),
     ("compression_carmichael_lambda_log_gap", "radical_compression"),
     ("compression_totient_log_gap", "radical_compression"),
+    ("compression_prime_minus_neighborhood_log_gap", "radical_compression"),
+    ("compression_prime_plus_neighborhood_log_gap", "radical_compression"),
 ]
 
 
@@ -144,6 +154,14 @@ def calculus_dataset(limit: int) -> list[dict[str, float]]:
         row["compression_totient_log_gap"] = c_t.log_abs_gap
         row["compression_totient_commutes"] = 1.0 if c_t.commutes else 0.0
 
+        c_nm = compression_prime_minus_neighborhood_commutator(n)
+        row["compression_prime_minus_neighborhood_log_gap"] = c_nm.log_abs_gap
+        row["compression_prime_minus_neighborhood_commutes"] = 1.0 if c_nm.commutes else 0.0
+
+        c_np = compression_prime_plus_neighborhood_commutator(n)
+        row["compression_prime_plus_neighborhood_log_gap"] = c_np.log_abs_gap
+        row["compression_prime_plus_neighborhood_commutes"] = 1.0 if c_np.commutes else 0.0
+
         rows.append(row)
     return rows
 
@@ -165,6 +183,14 @@ def formula_check(limit: int) -> dict[str, int]:
     }
     compression_carmichael_lambda_mismatches = 0
     compression_totient_mismatches = 0
+    compression_prime_minus_neighborhood_mismatches = 0
+    return_prime_set_prime_minus_neighborhood_mismatches = {
+        prime_set: 0 for prime_set in RETURN_PRIME_SETS
+    }
+    compression_prime_plus_neighborhood_mismatches = 0
+    return_prime_set_prime_plus_neighborhood_mismatches = {
+        prime_set: 0 for prime_set in RETURN_PRIME_SETS
+    }
     for n in range(1, limit + 1):
         compression_return = compression_return_commutator(n)
         expected_return = Fraction(compression_return_gap_factor(n), 1)
@@ -192,6 +218,7 @@ def formula_check(limit: int) -> dict[str, int]:
             if selected_set_return.ratio != expected_selected_set:
                 selected_set_return_mismatches[prime_set] += 1
 
+        for prime in GATHER_PRIMES:
             gather = compression_gather_commutator(n, prime)
             if gather.ratio != compression_gather_gap_factor(n, prime):
                 gather_mismatches[prime] += 1
@@ -212,6 +239,24 @@ def formula_check(limit: int) -> dict[str, int]:
         c_t = compression_euler_totient_commutator(n)
         if c_t.ratio != compression_euler_totient_gap_factor(n):
             compression_totient_mismatches += 1
+
+        c_nm = compression_prime_minus_neighborhood_commutator(n)
+        if c_nm.ratio != compression_prime_minus_neighborhood_gap_factor(n):
+            compression_prime_minus_neighborhood_mismatches += 1
+
+        for prime_set in RETURN_PRIME_SETS:
+            r_s_nm = return_prime_set_prime_minus_neighborhood_commutator(n, prime_set)
+            if r_s_nm.ratio != return_prime_set_prime_minus_neighborhood_gap_factor(n, prime_set):
+                return_prime_set_prime_minus_neighborhood_mismatches[prime_set] += 1
+
+        c_np = compression_prime_plus_neighborhood_commutator(n)
+        if c_np.ratio != compression_prime_plus_neighborhood_gap_factor(n):
+            compression_prime_plus_neighborhood_mismatches += 1
+
+        for prime_set in RETURN_PRIME_SETS:
+            r_s_np = return_prime_set_prime_plus_neighborhood_commutator(n, prime_set)
+            if r_s_np.ratio != return_prime_set_prime_plus_neighborhood_gap_factor(n, prime_set):
+                return_prime_set_prime_plus_neighborhood_mismatches[prime_set] += 1
 
     return {
         "limit": limit,
@@ -239,6 +284,20 @@ def formula_check(limit: int) -> dict[str, int]:
         },
         "compression_carmichael_lambda_mismatches": compression_carmichael_lambda_mismatches,
         "compression_totient_mismatches": compression_totient_mismatches,
+        "compression_prime_minus_neighborhood_mismatches": compression_prime_minus_neighborhood_mismatches,
+        **{
+            f"return_set_prime_minus_neighborhood_{prime_set_key(prime_set)}_mismatches": (
+                return_prime_set_prime_minus_neighborhood_mismatches[prime_set]
+            )
+            for prime_set in RETURN_PRIME_SETS
+        },
+        "compression_prime_plus_neighborhood_mismatches": compression_prime_plus_neighborhood_mismatches,
+        **{
+            f"return_set_prime_plus_neighborhood_{prime_set_key(prime_set)}_mismatches": (
+                return_prime_set_prime_plus_neighborhood_mismatches[prime_set]
+            )
+            for prime_set in RETURN_PRIME_SETS
+        },
     }
 
 
@@ -389,6 +448,32 @@ def formula_rows(check: dict[str, int]) -> list[list[object]]:
             "C/T",
             "`C(T(n)) / T(C(n)) = rad(phi(n)) / phi(rad(n))`",
             check["compression_totient_mismatches"],
+        ],
+        [
+            "C/N_-",
+            "`C(N_-(n)) / N_-(C(n)) = rad(N_-(n)) / N_-(n)`",
+            check["compression_prime_minus_neighborhood_mismatches"],
+        ],
+        *[
+            [
+                f"R_{prime_set_symbol(prime_set)}/N_-",
+                "`R_S(N_-(n)) / N_-(R_S(n)) = formula with rad_S(N_-(n))`",
+                check[f"return_set_prime_minus_neighborhood_{prime_set_key(prime_set)}_mismatches"],
+            ]
+            for prime_set in RETURN_PRIME_SETS
+        ],
+        [
+            "C/N_+",
+            "`C(N_+(n)) / N_+(C(n)) = rad(N_+(n)) / N_+(n)`",
+            check["compression_prime_plus_neighborhood_mismatches"],
+        ],
+        *[
+            [
+                f"R_{prime_set_symbol(prime_set)}/N_+",
+                "`R_S(N_+(n)) / N_+(R_S(n)) = formula with rad_S(N_+(n))`",
+                check[f"return_set_prime_plus_neighborhood_{prime_set_key(prime_set)}_mismatches"],
+            ]
+            for prime_set in RETURN_PRIME_SETS
         ],
     ]
 

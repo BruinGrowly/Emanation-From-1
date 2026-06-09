@@ -387,3 +387,154 @@ def compression_euler_totient_gap_factor(n: int) -> Fraction:
     phi_rad = euler_totient(rad_n)
     return Fraction(rad_phi, phi_rad)
 
+
+def prime_minus_neighborhood_context(n: int) -> int:
+    """Return the product of p - 1 for distinct prime factors of n."""
+    if n < 1:
+        raise ValueError("prime minus neighborhood is defined for positive integers")
+    if n == 1:
+        return 1
+    prod = 1
+    for p in factor_counter(n):
+        prod *= (p - 1)
+    return prod
+
+
+def prime_plus_neighborhood_context(n: int) -> int:
+    """Return the product of p + 1 for distinct prime factors of n."""
+    if n < 1:
+        raise ValueError("prime plus neighborhood is defined for positive integers")
+    if n == 1:
+        return 1
+    prod = 1
+    for p in factor_counter(n):
+        prod *= (p + 1)
+    return prod
+
+
+def compression_prime_minus_neighborhood_commutator(n: int) -> PathCommutator:
+    """Compare compress-after-N_- with N_--after-compress."""
+    return path_commutator(
+        n,
+        compression_context,
+        "C",
+        prime_minus_neighborhood_context,
+        "N_-",
+    )
+
+
+def compression_prime_minus_neighborhood_gap_factor(n: int) -> Fraction:
+    """Return the exact C/N_- path gap factor."""
+    if n < 1:
+        raise ValueError("path gap factor is defined for positive integers")
+    if n == 1:
+        return Fraction(1, 1)
+    
+    val = prime_minus_neighborhood_context(n)
+    return Fraction(radical(val), val)
+
+
+def return_prime_set_prime_minus_neighborhood_commutator(
+    n: int,
+    primes: Iterable[int],
+) -> PathCommutator:
+    """Compare return_S-after-N_- with N_--after-return_S."""
+    selected_primes = _validated_prime_set(primes)
+    label = ",".join(str(prime) for prime in selected_primes)
+    return path_commutator(
+        n,
+        return_prime_set_context(selected_primes),
+        f"R_{{{label}}}",
+        prime_minus_neighborhood_context,
+        "N_-",
+    )
+
+
+def return_prime_set_prime_minus_neighborhood_gap_factor(
+    n: int,
+    primes: Iterable[int],
+) -> Fraction:
+    """Return the exact R_S/N_- path gap factor."""
+    if n < 1:
+        raise ValueError("path gap factor is defined for positive integers")
+    
+    selected_primes = _validated_prime_set(primes)
+    counter = factor_counter(n)
+    
+    val = prime_minus_neighborhood_context(n)
+    rad_s = 1
+    for prime in selected_primes:
+        if val % prime == 0:
+            rad_s *= prime
+            
+    prod = 1
+    for prime in selected_primes:
+        if counter.get(prime, 0) == 1:
+            prod *= (prime - 1)
+            
+    return Fraction(prod, rad_s)
+
+
+def compression_prime_plus_neighborhood_commutator(n: int) -> PathCommutator:
+    """Compare compress-after-N_+ with N_+-after-compress."""
+    return path_commutator(
+        n,
+        compression_context,
+        "C",
+        prime_plus_neighborhood_context,
+        "N_+",
+    )
+
+
+def compression_prime_plus_neighborhood_gap_factor(n: int) -> Fraction:
+    """Return the exact C/N_+ path gap factor."""
+    if n < 1:
+        raise ValueError("path gap factor is defined for positive integers")
+    if n == 1:
+        return Fraction(1, 1)
+        
+    val = prime_plus_neighborhood_context(n)
+    return Fraction(radical(val), val)
+
+
+def return_prime_set_prime_plus_neighborhood_commutator(
+    n: int,
+    primes: Iterable[int],
+) -> PathCommutator:
+    """Compare return_S-after-N_+ with N_+-after-return_S."""
+    selected_primes = _validated_prime_set(primes)
+    label = ",".join(str(prime) for prime in selected_primes)
+    return path_commutator(
+        n,
+        return_prime_set_context(selected_primes),
+        f"R_{{{label}}}",
+        prime_plus_neighborhood_context,
+        "N_+",
+    )
+
+
+def return_prime_set_prime_plus_neighborhood_gap_factor(
+    n: int,
+    primes: Iterable[int],
+) -> Fraction:
+    """Return the exact R_S/N_+ path gap factor."""
+    if n < 1:
+        raise ValueError("path gap factor is defined for positive integers")
+        
+    selected_primes = _validated_prime_set(primes)
+    counter = factor_counter(n)
+    
+    val = prime_plus_neighborhood_context(n)
+    rad_s = 1
+    for prime in selected_primes:
+        if val % prime == 0:
+            rad_s *= prime
+            
+    prod = 1
+    for prime in selected_primes:
+        if counter.get(prime, 0) == 1:
+            prod *= (prime + 1)
+            
+    return Fraction(prod, rad_s)
+
+

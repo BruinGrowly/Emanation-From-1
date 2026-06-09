@@ -625,11 +625,177 @@ T(C(n)) = phi(rad(n))
 
 Dividing the two yields the theorem. QED.
 
-## Next Proof Target
+## Theorem 11: Compression-Prime Minus Commutator
 
-The calculus now classifies divisor-branching, Carmichael lambda, and Euler totient context commutators. The next proof target should study these path residues in modular neighborhoods, particularly:
+**Statement.**
+
+Let $N_-(n) = \prod_{p | n} (p - 1)$ be the prime-minus neighborhood context. For any positive integer $n$:
 
 ```text
-N_p(n) = prime-neighborhood context around p - 1 and p + 1
+Delta(C, N_-; n) = rad( product_{p | n} (p - 1) ) / product_{p | n} (p - 1)
 ```
+
+**Proof.**
+
+Let $P$ be the set of distinct prime factors of $n$.
+
+By definition:
+
+```text
+N_-(n) = product_{p in P} (p - 1)
+```
+
+Taking the radical/compression:
+
+```text
+C(N_-(n)) = rad( product_{p in P} (p - 1) )
+```
+
+For the alternative path:
+
+```text
+C(n) = rad(n) = product_{p in P} p
+```
+
+Since the distinct prime factors of $\text{rad}(n)$ are exactly the set $P$, we have:
+
+```text
+N_-(C(n)) = product_{p in P} (p - 1)
+```
+
+Dividing the two values yields the statement. QED.
+
+## Theorem 12: Return-Prime Minus Commutator
+
+**Statement.**
+
+For any finite set $S$ of primes, and $N_-(n) = \prod_{p | n} (p - 1)$:
+
+```text
+Delta(R_S, N_-; n) = product_{p in S, v_p(n) = 1} (p - 1) / rad_S( product_{p | n} (p - 1) )
+```
+
+where `rad_S(x) = product_{q in S, q | x} q`.
+
+**Proof.**
+
+Let $P$ be the set of distinct prime factors of $n$.
+
+Primes in $S$ are removed from the prime factors of $R_S(n)$ if and only if they appear in $n$ with multiplicity exactly 1. Primes in $S$ with multiplicity greater than 1 remain prime factors of $R_S(n)$. Thus:
+
+```text
+N_-(R_S(n)) = product_{p in P \ (S \cap {q | v_q(n) = 1})} (p - 1)
+```
+
+Dividing the full product $N_-(n)$ by $N_-(R_S(n))$ leaves:
+
+```text
+N_-(n) / N_-(R_S(n)) = product_{p in S, v_p(n) = 1} (p - 1)
+```
+
+The alternative path return-set on the prime-minus context is:
+
+```text
+R_S(N_-(n)) = N_-(n) / rad_S(N_-(n))
+```
+
+Taking the ratio:
+
+```text
+Delta(R_S, N_-; n) = R_S(N_-(n)) / N_-(R_S(n))
+                   = [ N_-(n) / rad_S(N_-(n)) ] / N_-(R_S(n))
+                   = [ N_-(n) / N_-(R_S(n)) ] / rad_S(N_-(n))
+                   = product_{p in S, v_p(n) = 1} (p - 1) / rad_S( product_{p | n} (p - 1) )
+```
+
+QED.
+
+## Theorem 13: Compression-Prime Plus Commutator
+
+**Statement.**
+
+Let $N_+(n) = \prod_{p | n} (p + 1)$ be the prime-plus neighborhood context. For any positive integer $n$:
+
+```text
+Delta(C, N_+; n) = rad( product_{p | n} (p + 1) ) / product_{p | n} (p + 1)
+```
+
+**Proof.**
+
+Let $P$ be the set of distinct prime factors of $n$.
+
+By definition:
+
+```text
+N_+(n) = product_{p in P} (p + 1)
+```
+
+Taking the radical/compression:
+
+```text
+C(N_+(n)) = rad( product_{p in P} (p + 1) )
+```
+
+For the alternative path:
+
+```text
+C(n) = rad(n) = product_{p in P} p
+```
+
+Since the distinct prime factors of $\text{rad}(n)$ are exactly $P$:
+
+```text
+N_+(C(n)) = product_{p in P} (p + 1)
+```
+
+Dividing the two yields the statement. QED.
+
+## Theorem 14: Return-Prime Plus Commutator
+
+**Statement.**
+
+For any finite set $S$ of primes, and $N_+(n) = \prod_{p | n} (p + 1)$:
+
+```text
+Delta(R_S, N_+; n) = product_{p in S, v_p(n) = 1} (p + 1) / rad_S( product_{p | n} (p + 1) )
+```
+
+where `rad_S(x) = product_{q in S, q | x} q`.
+
+**Proof.**
+
+Let $P$ be the set of distinct prime factors of $n$.
+
+Primes in $S$ are removed from the prime factors of $R_S(n)$ if and only if they appear in $n$ with multiplicity exactly 1. Primes in $S$ with multiplicity greater than 1 remain prime factors of $R_S(n)$. Thus:
+
+```text
+N_+(R_S(n)) = product_{p in P \ (S \cap {q | v_q(n) = 1})} (p + 1)
+```
+
+Dividing the full product $N_+(n)$ by $N_+(R_S(n))$ leaves:
+
+```text
+N_+(n) / N_+(R_S(n)) = product_{p in S, v_p(n) = 1} (p + 1)
+```
+
+The alternative path return-set on the prime-plus context is:
+
+```text
+R_S(N_+(n)) = N_+(n) / rad_S(N_+(n))
+```
+
+Taking the ratio:
+
+```text
+Delta(R_S, N_+; n) = R_S(N_+(n)) / N_+(R_S(n))
+                   = [ N_+(n) / rad_S(N_+(n)) ] / N_+(R_S(n))
+                   = [ N_+(n) / N_+(R_S(n)) ] / rad_S(N_+(n))
+                   = product_{p in S, v_p(n) = 1} (p + 1) / rad_S( product_{p | n} (p + 1) )
+```
+
+QED.
+
+## Next Proof Target
+
+The calculus now classifies prime-neighborhood commutators ($N_-, N_+$). The next proof target should investigate fixed-point anchor projections before and after divisor branching or prime-neighborhood context operators, exploring resolution translation to identify non-trivial transfer behaviors.
 

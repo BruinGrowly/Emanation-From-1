@@ -19,6 +19,10 @@ from emanation_from_1.origin_pakheta import (
     compression_euler_totient_gap_factor,
     compression_gather_commutator,
     compression_gather_gap_factor,
+    compression_prime_minus_neighborhood_commutator,
+    compression_prime_minus_neighborhood_gap_factor,
+    compression_prime_plus_neighborhood_commutator,
+    compression_prime_plus_neighborhood_gap_factor,
     compression_prime_return_commutator,
     compression_prime_return_gap_factor,
     compression_prime_set_return_commutator,
@@ -28,11 +32,17 @@ from emanation_from_1.origin_pakheta import (
     divisor_branching_context,
     euler_totient_context,
     gather_context,
+    prime_minus_neighborhood_context,
+    prime_plus_neighborhood_context,
     return_min_context,
     return_prime_context,
     return_prime_set_context,
     return_prime_set_divisor_branching_commutator,
     return_prime_set_divisor_branching_gap_factor,
+    return_prime_set_prime_minus_neighborhood_commutator,
+    return_prime_set_prime_minus_neighborhood_gap_factor,
+    return_prime_set_prime_plus_neighborhood_commutator,
+    return_prime_set_prime_plus_neighborhood_gap_factor,
 )
 
 
@@ -174,6 +184,44 @@ class OriginPakhetaCalculusTests(unittest.TestCase):
                 commutator.ratio,
                 compression_euler_totient_gap_factor(n),
             )
+
+    def test_prime_neighborhood_contexts(self) -> None:
+        self.assertEqual(prime_minus_neighborhood_context(12), 1 * 2)  # (2-1)*(3-1) = 2
+        self.assertEqual(prime_plus_neighborhood_context(12), 3 * 4)   # (2+1)*(3+1) = 12
+
+    def test_compression_prime_minus_neighborhood_gap_formula(self) -> None:
+        for n in range(1, 200):
+            commutator = compression_prime_minus_neighborhood_commutator(n)
+            self.assertEqual(
+                commutator.ratio,
+                compression_prime_minus_neighborhood_gap_factor(n),
+            )
+
+    def test_return_prime_set_prime_minus_neighborhood_gap_formula(self) -> None:
+        for prime_set in ((2, 3), (2, 5), (2, 3, 5), (3, 5, 7)):
+            for n in range(1, 200):
+                commutator = return_prime_set_prime_minus_neighborhood_commutator(n, prime_set)
+                self.assertEqual(
+                    commutator.ratio,
+                    return_prime_set_prime_minus_neighborhood_gap_factor(n, prime_set),
+                )
+
+    def test_compression_prime_plus_neighborhood_gap_formula(self) -> None:
+        for n in range(1, 200):
+            commutator = compression_prime_plus_neighborhood_commutator(n)
+            self.assertEqual(
+                commutator.ratio,
+                compression_prime_plus_neighborhood_gap_factor(n),
+            )
+
+    def test_return_prime_set_prime_plus_neighborhood_gap_formula(self) -> None:
+        for prime_set in ((2, 3), (2, 5), (2, 3, 5), (3, 5, 7)):
+            for n in range(1, 200):
+                commutator = return_prime_set_prime_plus_neighborhood_commutator(n, prime_set)
+                self.assertEqual(
+                    commutator.ratio,
+                    return_prime_set_prime_plus_neighborhood_gap_factor(n, prime_set),
+                )
 
 
 if __name__ == "__main__":

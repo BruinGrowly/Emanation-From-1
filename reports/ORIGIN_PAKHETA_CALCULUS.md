@@ -52,6 +52,14 @@ integer field remembers the path order.
 | R_{3,5,7}/B | `R_S(B(n)) / B(R_S(n)) = formula with rad_S(d(n))` | 0 |
 | C/M | `C(M(n)) / M(C(n)) = lcm formula` | 0 |
 | C/T | `C(T(n)) / T(C(n)) = rad(phi(n)) / phi(rad(n))` | 0 |
+| C/N_- | `C(N_-(n)) / N_-(C(n)) = rad(N_-(n)) / N_-(n)` | 0 |
+| R_{2,3}/N_- | `R_S(N_-(n)) / N_-(R_S(n)) = formula with rad_S(N_-(n))` | 0 |
+| R_{2,3,5}/N_- | `R_S(N_-(n)) / N_-(R_S(n)) = formula with rad_S(N_-(n))` | 0 |
+| R_{3,5,7}/N_- | `R_S(N_-(n)) / N_-(R_S(n)) = formula with rad_S(N_-(n))` | 0 |
+| C/N_+ | `C(N_+(n)) / N_+(C(n)) = rad(N_+(n)) / N_+(n)` | 0 |
+| R_{2,3}/N_+ | `R_S(N_+(n)) / N_+(R_S(n)) = formula with rad_S(N_+(n))` | 0 |
+| R_{2,3,5}/N_+ | `R_S(N_+(n)) / N_+(R_S(n)) = formula with rad_S(N_+(n))` | 0 |
+| R_{3,5,7}/N_+ | `R_S(N_+(n)) / N_+(R_S(n)) = formula with rad_S(N_+(n))` | 0 |
 
 ## Path-Sensitivity Summary
 
@@ -68,6 +76,8 @@ integer field remembers the path order.
 | compression_divisor_branching_log_gap | 826/999 | 0.8268 | 0.6373 | 2.0794 |
 | compression_carmichael_lambda_log_gap | 711/999 | 0.7117 | 0.9902 | 4.8520 |
 | compression_totient_log_gap | 836/999 | 0.8368 | 1.4591 | 5.5452 |
+| compression_prime_minus_neighborhood_log_gap | 794/999 | 0.7948 | 1.4664 | 5.5452 |
+| compression_prime_plus_neighborhood_log_gap | 889/999 | 0.8899 | 2.2216 | 6.2383 |
 
 ## Shell-Controlled Signals
 
@@ -87,6 +97,8 @@ Targets and metrics are shell-centered and residualized against
 | compression_divisor_branching_log_gap | radical_compression | -0.7231 | 0.0307 | 0.1082 | 0/250 | 0.0040 |
 | compression_carmichael_lambda_log_gap | radical_compression | 0.1004 | 0.0242 | 0.0787 | 0/250 | 0.0040 |
 | compression_totient_log_gap | radical_compression | -0.2414 | 0.0255 | 0.0830 | 0/250 | 0.0040 |
+| compression_prime_minus_neighborhood_log_gap | radical_compression | -0.2575 | 0.0246 | 0.0891 | 0/250 | 0.0040 |
+| compression_prime_plus_neighborhood_log_gap | radical_compression | -0.3939 | 0.0270 | 0.1092 | 0/250 | 0.0040 |
 
 ## Largest C/R_min Path Gaps
 

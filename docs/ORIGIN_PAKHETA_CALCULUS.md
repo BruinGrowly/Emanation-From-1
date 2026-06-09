@@ -52,7 +52,7 @@ define its Origin-Pakheta field as:
 
 ## v0 Context Operators
 
-The context operators include the base set and new branching/modular projections.
+The context operators include the base set, branching/modular projections, and prime-neighborhoods.
 
 | Symbol | Definition | Pakheta Function |
 | --- | --- | --- |
@@ -64,6 +64,8 @@ The context operators include the base set and new branching/modular projections
 | `B(n)` | `divisor_count(n)` | divisor-branching context |
 | `M(n)` | `carmichael_lambda(n)` | modular-return exponent/period context |
 | `T(n)` | `euler_totient(n)` | modular-return size/density context |
+| `N_-(n)` | `product_{p | n} (p - 1)` | prime-minus neighborhood context |
+| `N_+(n)` | `product_{p | n} (p + 1)` | prime-plus neighborhood context |
 
 These are not metaphors. They are exact maps on positive integers.
 
@@ -298,12 +300,44 @@ Let $T(n) = \phi(n)$ be Euler's totient of $n$. For any positive integer $n$:
 C(T(n)) / T(C(n)) = rad(phi(n)) / phi(rad(n))
 ```
 
+### Compression-Prime Minus Identity
+
+Let $N_-(n) = \prod_{p | n} (p - 1)$. For any positive integer $n$:
+
+```text
+C(N_-(n)) / N_-(C(n)) = rad( product_{p | n} (p - 1) ) / product_{p | n} (p - 1)
+```
+
+### Return-Prime Minus Identity
+
+For any finite set $S$ of primes, and $N_-(n) = \prod_{p | n} (p - 1)$:
+
+```text
+R_S(N_-(n)) / N_-(R_S(n)) = product_{p in S, p | n} (p - 1) / rad_S( product_{p | n} (p - 1) )
+```
+
+### Compression-Prime Plus Identity
+
+Let $N_+(n) = \prod_{p | n} (p + 1)$. For any positive integer $n$:
+
+```text
+C(N_+(n)) / N_+(C(n)) = rad( product_{p | n} (p + 1) ) / product_{p | n} (p + 1)
+```
+
+### Return-Prime Plus Identity
+
+For any finite set $S$ of primes, and $N_+(n) = \prod_{p | n} (p + 1)$:
+
+```text
+R_S(N_+(n)) / N_+(R_S(n)) = product_{p in S, p | n} (p + 1) / rad_S( product_{p | n} (p + 1) )
+```
+
 ## Why This Is A Calculus
 
 It has:
 
 - objects: positive integer fields;
-- operators: `C`, `R_min`, `R_p`, `R_S`, `G_p`, `B`, `M`, `T`;
+- operators: `C`, `R_min`, `R_p`, `R_S`, `G_p`, `B`, `M`, `T`, `N_-`, `N_+`;
 - observables: shell, branching, compression, path gap;
 - equations: exact commutator identities;
 - controls: shell shuffles and size residuals;
@@ -315,7 +349,7 @@ That is enough to start doing mathematics with it.
 
 | Claim Type | Status |
 | --- | --- |
-| `C`, `R_min`, `R_p`, `R_S`, and `G_p` are exact maps | definition |
+| `C`, `R_min`, `R_p`, `R_S`, `G_p`, `B`, `M`, `T`, `N_-`, and `N_+` are exact maps | definition |
 | path commutator `Delta(A,B;n)` is exact | definition |
 | v0 commutator identities | proved in proof appendix with finite regression coverage |
 | shell-controlled path signals | local finite evidence |
@@ -325,10 +359,9 @@ That is enough to start doing mathematics with it.
 ## Next Calculus Extensions
 
 1. Add more context operators:
-   - modular-return context;
-   - prime-neighborhood context;
-   - divisor-branching projection;
-   - fixed-point anchor projection.
+   - prime-neighborhood quadratic extension fields;
+   - divisor-branching projection divisor topology;
+   - fixed-point anchor projection before/after branching.
 2. Classify operator pairs by commutation law.
 3. Define false-partition controls as broken recombinations of the same field.
 4. Define path coherence as low commutator gap under relation-preserving paths.

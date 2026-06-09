@@ -37,6 +37,14 @@ class OriginPakhetaCalculusScanTests(unittest.TestCase):
         self.assertEqual(check["return_set_divisor_branching_3_5_7_mismatches"], 0)
         self.assertEqual(check["compression_carmichael_lambda_mismatches"], 0)
         self.assertEqual(check["compression_totient_mismatches"], 0)
+        self.assertEqual(check["compression_prime_minus_neighborhood_mismatches"], 0)
+        self.assertEqual(check["return_set_prime_minus_neighborhood_2_3_mismatches"], 0)
+        self.assertEqual(check["return_set_prime_minus_neighborhood_2_3_5_mismatches"], 0)
+        self.assertEqual(check["return_set_prime_minus_neighborhood_3_5_7_mismatches"], 0)
+        self.assertEqual(check["compression_prime_plus_neighborhood_mismatches"], 0)
+        self.assertEqual(check["return_set_prime_plus_neighborhood_2_3_mismatches"], 0)
+        self.assertEqual(check["return_set_prime_plus_neighborhood_2_3_5_mismatches"], 0)
+        self.assertEqual(check["return_set_prime_plus_neighborhood_3_5_7_mismatches"], 0)
 
     def test_calculus_dataset_exposes_path_gaps(self) -> None:
         dataset = calculus_dataset(12)

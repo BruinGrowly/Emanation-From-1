@@ -47,7 +47,8 @@ The sixth is the hardest evidential frontier.
 | P8 | Fixed-point anchor richness is exactly CRT component branching for idempotents and involutions | theorem-level, implemented and regression-tested |
 | P9 | Fixed-point anchor residuals transfer after exact mechanisms are removed | false for the tested definitions |
 | P10 | `C/B`, `R_S/B`, `C/M`, and `C/T` commutator laws classify branching and modular-return complexity | proved in `docs/ORIGIN_PAKHETA_CALCULUS_PROOFS.md` |
-| P11 | Richer path residues transfer beyond their local commutation laws | open |
+| P11 | `C/N_-`, `R_S/N_-`, `C/N_+`, and `R_S/N_+` commutator laws classify prime-neighborhood complexity | proved in `docs/ORIGIN_PAKHETA_CALCULUS_PROOFS.md` |
+| P12 | Richer path residues transfer beyond their local commutation laws | open |
 
 ## What Is Already Proved Enough To Build On
 
@@ -135,6 +136,8 @@ G_p(n) = p * n
 B(n) = divisor_count(n)
 M(n) = carmichael_lambda(n)
 T(n) = euler_totient(n)
+N_-(n) = product_{p | n} (p - 1)
+N_+(n) = product_{p | n} (p + 1)
 ```
 
 All are exact maps on positive integers.
@@ -219,6 +222,46 @@ Status: proved.
 Delta(C, T; n)
   =
   rad(phi(n)) / phi(rad(n))
+```
+
+Status: proved.
+
+**B10. Compression-Prime Minus Law**
+
+```text
+Delta(C, N_-; n)
+  =
+  rad( product_{p | n} (p - 1) ) / product_{p | n} (p - 1)
+```
+
+Status: proved.
+
+**B11. Return-Prime Minus Law**
+
+```text
+Delta(R_S, N_-; n)
+  =
+  product_{p in S, v_p(n) = 1} (p - 1) / rad_S( product_{p | n} (p - 1) )
+```
+
+Status: proved.
+
+**B12. Compression-Prime Plus Law**
+
+```text
+Delta(C, N_+; n)
+  =
+  rad( product_{p | n} (p + 1) ) / product_{p | n} (p + 1)
+```
+
+Status: proved.
+
+**B13. Return-Prime Plus Law**
+
+```text
+Delta(R_S, N_+; n)
+  =
+  product_{p in S, v_p(n) = 1} (p + 1) / rad_S( product_{p | n} (p + 1) )
 ```
 
 Status: proved.
