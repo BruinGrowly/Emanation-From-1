@@ -4,7 +4,7 @@
 **Status:** Preprint Draft  
 **Version:** 1.0 (v0 Positive-Integer Calculus)  
 **Date:** June 2026  
-**Repository Reference:** [docs/ORIGIN_PAKHETA_CALCULUS.md](file:///C:/Users/Well/Crush/Projects/Emanation-From-1/docs/ORIGIN_PAKHETA_CALCULUS.md)
+**Repository Reference:** [docs/ORIGIN_PAKHETA_CALCULUS.md](ORIGIN_PAKHETA_CALCULUS.md)
 
 ---
 
@@ -226,7 +226,7 @@ $$\Delta(C, M; n) = \frac{\text{lcm}_{p \mid n} \left( \text{rad}(p - 1) \cdot p
 Let $n = \prod p_i^{a_i}$. The Carmichael lambda function is:
 $$\lambda(n) = \text{lcm}_{p_i \mid n} \lambda(p_i^{a_i})$$
 For any prime power $p^a$:
-$$\lambda(p^a) = \begin{cases} (p - 1)p^{a-1} & \text{if } p > 2 \\ 2^{a-2} \cdot 2^{\min(1, a-1)} & \text{if } p = 2 \end{cases}$$
+$$\lambda(p^a) = \begin{cases} (p - 1)p^{a-1} & \text{if } p > 2 \\ 2^{a-1} & \text{if } p = 2, \; a \le 2 \\ 2^{a-2} & \text{if } p = 2, \; a \ge 3 \end{cases}$$
 In both cases, the distinct prime factors of $\lambda(p^a)$ are those dividing $p - 1$, plus $p$ itself if $a > 1$. Thus, taking the radical/compression:
 $$\text{rad}(\lambda(p^a)) = \text{rad}(p-1) \cdot p^{\min(1, a-1)}$$
 Since the radical of a least common multiple is the least common multiple of the radicals:
@@ -319,7 +319,7 @@ Let $n = \prod_{i=1}^k p_i^{a_i}$ be the prime factorization of $n \ge 2$, where
 The Carmichael lambda of $n$ is defined as:
 $$\lambda(n) = \text{lcm}_{i=1}^k \lambda(p_i^{a_i})$$
 For any component prime power $p^a$:
-$$\lambda(p^a) = \begin{cases} (p - 1)p^{a-1} & \text{if } p > 2 \\ 2^{\max(0, a-2)} \cdot 2^{\min(1, a-1)} & \text{if } p = 2 \end{cases}$$
+$$\lambda(p^a) = \begin{cases} (p - 1)p^{a-1} & \text{if } p > 2 \\ 2^{a-1} & \text{if } p = 2, \; a \le 2 \\ 2^{a-2} & \text{if } p = 2, \; a \ge 3 \end{cases}$$
 In both cases, $(p - 1)$ divides $\lambda(p^a)$ for each prime component of $n$.
 
 The prime-minus neighborhood is defined as:
@@ -366,10 +366,10 @@ The experiment showed extremely strong, statistically significant correlations:
 
 | Metric | Target | Observed $r$ | Max Ctrl $|r|$ | $p$-value |
 | :--- | :--- | :---: | :---: | :---: |
-| $C/N_-$ path gap | $\log(\lambda / \phi)$ | **$-0.4659$** | $0.1691$ | **$< 0.004$** ($0/250$ crossings) |
-| $C/N_+$ path gap | $1 - \text{rad}(n)/n$ | **$-0.3939$** | $0.1554$ | **$< 0.004$** ($0/250$ crossings) |
+| $C/N_-$ path gap | $\log(\lambda / \phi)$ | **$-0.4659$** | $0.1070$ | **$< 0.004$** ($0/250$ crossings) |
+| $C/N_+$ path gap | $1 - \text{rad}(n)/n$ | **$-0.3939$** | $0.0915$ | **$< 0.004$** ($0/250$ crossings) |
 
-A premium dark-mode scatter plot showing the strong coupling between the $C/N_-$ path gap and the modular return exponent residuals is saved in the repository at [reports/prime_neighborhood_transfer_scatter.png](file:///C:/Users/Well/Crush/Projects/Emanation-From-1/reports/prime_neighborhood_transfer_scatter.png).
+A premium dark-mode scatter plot showing the strong coupling between the $C/N_-$ path gap and the modular return exponent residuals is saved in the repository at [reports/prime_neighborhood_transfer_scatter.png](../reports/prime_neighborhood_transfer_scatter.png).
 
 #### Interpretation:
 The highly significant negative correlations prove that the boundary path gaps of $N_-$ and $N_+$ capture structural properties of the integer field that govern modular period contraction. Specifically, larger boundary path gaps (which indicate more complex prime-minus structures) strongly correspond to smaller modular returns relative to the group size, a coupling that cannot be explained by integer size or prime count alone.
@@ -400,7 +400,7 @@ Although the predictive AUC is very close to $0.5$ (indicating that composite bo
   $$\mathfrak{S}(n) = 2 \prod_{p > 2} \left( 1 - \frac{1}{(p-1)^2} \right) \prod_{p \mid n, p > 2} \frac{p-1}{p-2}$$
 
 #### Results:
-The experiment generated the following transfer statistics (recorded in [reports/GOLDBACH_NEIGHBORHOOD_TRANSFER.md](file:///C:/Users/Well/Crush/Projects/Emanation-From-1/reports/GOLDBACH_NEIGHBORHOOD_TRANSFER.md)):
+The experiment generated the following transfer statistics (recorded in [reports/GOLDBACH_NEIGHBORHOOD_TRANSFER.md](../reports/GOLDBACH_NEIGHBORHOOD_TRANSFER.md)):
 
 | Metric | Target | Observed $r$ | Mean Ctrl $|r|$ | Max Ctrl $|r|$ | $p$-value |
 | :--- | :--- | :---: | :---: | :---: | :---: |

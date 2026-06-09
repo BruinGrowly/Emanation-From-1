@@ -120,10 +120,10 @@ def monotonicity_counterexamples(limit: int, max_shell: int) -> list[list[object
                         shell,
                         best_item[2],
                         f"{best_item[0]:.4f}",
-                        f"{best_item[1]:.4f}",
+                        f"{float(best_item[1]):.4f}",
                         n,
                         f"{compression:.4f}",
-                        f"{ratio:.4f}",
+                        f"{float(ratio):.4f}",
                     ]
                 )
                 break
@@ -149,11 +149,11 @@ def endpoint_rows(max_shell: int) -> list[list[object]]:
                 shell,
                 odd_prime_power,
                 f"{1 - radical(odd_prime_power) / odd_prime_power:.4f}",
-                f"{lambda_phi_ratio(odd_prime_power):.4f}",
+                f"{float(lambda_phi_ratio(odd_prime_power)):.4f}",
                 odd_squarefree,
                 f"{1 - radical(odd_squarefree) / odd_squarefree:.4f}",
-                f"{lambda_phi_ratio(odd_squarefree):.4f}",
-                f"{distinct_odd_prime_bound(odd_squarefree):.4f}",
+                f"{float(lambda_phi_ratio(odd_squarefree)):.4f}",
+                f"{float(distinct_odd_prime_bound(odd_squarefree)):.4f}",
             ]
         )
     return rows
@@ -170,7 +170,7 @@ def pressure_decomposition_rows(values: list[int]) -> list[list[object]]:
                 decomposition.shell_depth,
                 decomposition.component_count,
                 decomposition.odd_component_count,
-                f"{decomposition.radical_compression:.4f}",
+                f"{float(decomposition.radical_compression):.4f}",
                 format_fraction(decomposition.local_defect_ratio),
                 format_fraction(decomposition.overlap_penalty),
                 format_fraction(decomposition.lambda_phi_ratio),
