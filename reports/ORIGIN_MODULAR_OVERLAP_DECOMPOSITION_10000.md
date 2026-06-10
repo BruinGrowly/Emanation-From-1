@@ -1,8 +1,8 @@
-# Modular Overlap Knockout Test (C2 Counter-Test)
+# Modular Overlap Decomposition Test (C2 Counter-Test)
 
 **Generated (UTC):** 2026-06-10
-**Script:** `experiments/origin_modular_overlap_knockout.py`
-**Range:** `2..10000`
+**Script:** `experiments/origin_modular_overlap_decomposition.py`
+**Range:** `2..{limit}`
 **Controls:** `250` shell shuffles, seed `62326`
 
 ## Purpose
@@ -29,7 +29,7 @@ On this subpopulation the transfer target is a deterministic function of
 the same generator multiset `{p-1 : p | n}` from which the `C/N_-` gap is
 computed, so conditioning on `Z` leaves it zero residual variance there.
 
-## Knockout Ladder
+## Decomposition Stages
 
 All variables are shell-conditioned and residualized against the listed
 baselines. Controls shuffle target residuals within emanation shells.
@@ -38,9 +38,9 @@ baselines. Controls shuffle target residuals within emanation shells.
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | replication | path_gap | log_n | -0.5804 | 0.0078 | 0.0319 | 0/250 | 0.0040 |
 | classical_baseline_Z | kernel_overlap | log_n | -0.8631 | 0.0079 | 0.0443 | 0/250 | 0.0040 |
-| knockout_Z | path_gap | log_n+kernel_overlap | -0.0868 | 0.0064 | 0.0254 | 0/250 | 0.0040 |
-| knockout_Z_plus_2adic | path_gap | log_n+kernel_overlap+two_adic_defect | -0.0717 | 0.0064 | 0.0240 | 0/250 | 0.0040 |
-| knockout_full_ladder | path_gap | log_n+kernel_overlap+two_adic_defect+power_kernel_overlap | 0.0152 | 0.0060 | 0.0328 | 10/250 | 0.0438 |
+| control_Z | path_gap | log_n+kernel_overlap | -0.0868 | 0.0064 | 0.0254 | 0/250 | 0.0040 |
+| control_Z_plus_2adic | path_gap | log_n+kernel_overlap+two_adic_defect | -0.0717 | 0.0064 | 0.0240 | 0/250 | 0.0040 |
+| control_full_decomposition | path_gap | log_n+kernel_overlap+two_adic_defect+power_kernel_overlap | 0.0152 | 0.0060 | 0.0328 | 10/250 | 0.0438 |
 
 Ancestry of predictor and covariate: `r(path_gap, Z | log n, shells) = 0.6331`.
 
@@ -52,7 +52,7 @@ Ancestry of predictor and covariate: `r(path_gap, Z | log n, shells) = 0.6331`.
 3. Conditioning on `Z` removes most of the path-gap signal
    (`r = -0.0868`), and adding the one-bit 2-adic defect
    takes the remainder to `r = -0.0717`.
-4. Adding the power-kernel overlap `W` completes the classical ladder and
+4. Adding the power-kernel overlap `W` completes the classical controls and
    takes the residual to `r = 0.0152`
    (`p_upper = 0.0438`), which still formally clears the repo's `p < 0.05` shuffle bar at this range; compare its magnitude and sign stability across ranges before treating it as signal.
 
@@ -63,7 +63,7 @@ overlap -- none of which require the path calculus to define. It is
 not evidence that path-order residue carries novel information about
 modular contraction. Any future transfer claim for the v0 neighborhood
 operators should be required to beat this three-covariate classical
-ladder, not only size and shell controls. Extending the ladder further
+control, not only size and shell controls. Extending the conditioning further
 approaches the circularity boundary noted in the script docstring, so
 a sharper test needs a genuinely independent target.
 

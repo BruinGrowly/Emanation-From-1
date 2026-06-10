@@ -356,7 +356,7 @@ We evaluate this using the **C2 Transfer After Mechanism** protocol:
 
 We report results from three distinct experiments under this protocol.
 
-### 5.1. Modular Return Transfer (Decomposition & Knockout)
+### 5.1. Modular Return Transfer (Decomposition & Control)
 * **Goal:** Test whether prime-neighborhood path gaps predict modular return exponents.
 * **Range:** $n \in [2, 1000]$, $250$ shell-conditioned trials.
 * **Metrics:** $\log$ gaps of $C/N_-$ and $C/N_+$ commutators.
@@ -415,7 +415,7 @@ This negative result is highly instructive. The Hardy-Littlewood singular series
 
 The development of the v0 Origin-Pakheta calculus establishes a sound framework for verifying exact commutation loci and path identities on the positive integers. We have shown that:
 1. **Algebraic exactness is achievable:** Context operators and path commutators yield precise, closed-form formulas (Theorems 1–14) and rigorous bounds (Theorem 15) that require no approximations.
-2. **Transfer reach is absent under control:** Under classical factorization controls (modular overlap knockout) and scaled verification tests, the initial transfer signals (to modular return periods and prime gaps) are fully absorbed by standard baselines or dissolve to pure chance.
+2. **Transfer reach is absent under control:** Under classical factorization controls (modular overlap decomposition) and scaled verification tests, the initial transfer signals (to modular return periods and prime gaps) are fully absorbed by standard baselines or dissolve to pure chance.
 
 These results indicate that the v0 path gaps do not carry independent predictive signal beyond standard number-theoretic structures. The calculus remains a useful tool for verifying and cataloging algebraic properties (as demonstrated by the v1 catalog and Lemmas C1–C12), but it does not represent an independent physical or spatial force governing prime gap layout or modular groups.
 

@@ -1,4 +1,4 @@
-"""Knockout test: condition the C/N_- modular transfer on classical overlap baselines.
+"""Decomposition test: condition the C/N_- modular transfer on classical overlap baselines.
 
 The prime-neighborhood transfer experiment found a strong shell-conditioned
 coupling between the C/N_- path-commutator gap and log(lambda/phi)
@@ -16,7 +16,7 @@ paths, or Pakheta vocabulary:
 All three are functions of the factorization built without lambda, phi,
 or any path-calculus machinery. The circularity boundary is deliberate:
 conditioning on the full lambda components (p-1)p^(a-1) would determine
-the target exactly for all odd n, so this ladder of named overlap
+the target exactly for all odd n, so this sequence of named overlap
 channels is the maximal fair classical test.
 
 The experiment also verifies the exact identity that motivates the test:
@@ -59,10 +59,10 @@ from experiments.origin_modular_shell_transfer import (  # noqa: E402
 STAGES = [
     ("replication", "path_gap", ["log_n"]),
     ("classical_baseline_Z", "kernel_overlap", ["log_n"]),
-    ("knockout_Z", "path_gap", ["log_n", "kernel_overlap"]),
-    ("knockout_Z_plus_2adic", "path_gap", ["log_n", "kernel_overlap", "two_adic_defect"]),
+    ("control_Z", "path_gap", ["log_n", "kernel_overlap"]),
+    ("control_Z_plus_2adic", "path_gap", ["log_n", "kernel_overlap", "two_adic_defect"]),
     (
-        "knockout_full_ladder",
+        "control_full_decomposition",
         "path_gap",
         ["log_n", "kernel_overlap", "two_adic_defect", "power_kernel_overlap"],
     ),
@@ -129,7 +129,7 @@ def power_kernel_overlap(n: int) -> float:
     return total
 
 
-def overlap_knockout_dataset(limit: int) -> list[dict[str, float]]:
+def overlap_decomposition_dataset(limit: int) -> list[dict[str, float]]:
     """Return dataset rows with the path gap, target, and classical covariates."""
     if limit < 2:
         raise ValueError("limit must be >= 2")
@@ -257,10 +257,10 @@ def write_report(
     odd_squarefree, matches = identity_counts
     replication = stages[0]
     baseline = stages[1]
-    knockout = stages[2]
-    knockout_2adic = stages[3]
-    full_ladder = stages[4]
-    final_p = full_ladder["p_upper"]
+    control_stage_z = stages[2]
+    control_stage_2adic = stages[3]
+    full_decomposition = stages[4]
+    final_p = full_decomposition["p_upper"]
     assert isinstance(final_p, float)
     verdict = (
         "still formally clears the repo's `p < 0.05` shuffle bar at this"
@@ -273,11 +273,11 @@ def write_report(
     report_path.write_text(
         "\n".join(
             [
-                "# Modular Overlap Knockout Test (C2 Counter-Test)",
+                "# Modular Overlap Decomposition Test (C2 Counter-Test)",
                 "",
                 f"**Generated (UTC):** {datetime.now(timezone.utc).date().isoformat()}",
-                "**Script:** `experiments/origin_modular_overlap_knockout.py`",
-                f"**Range:** `2..{limit}`",
+                "**Script:** `experiments/origin_modular_overlap_decomposition.py`",
+                "**Range:** `2..{limit}`",
                 f"**Controls:** `{trials}` shell shuffles, seed `{seed}`",
                 "",
                 "## Purpose",
@@ -304,7 +304,7 @@ def write_report(
                 "the same generator multiset `{p-1 : p | n}` from which the `C/N_-` gap is",
                 "computed, so conditioning on `Z` leaves it zero residual variance there.",
                 "",
-                "## Knockout Ladder",
+                "## Decomposition Stages",
                 "",
                 "All variables are shell-conditioned and residualized against the listed",
                 "baselines. Controls shuffle target residuals within emanation shells.",
@@ -331,11 +331,11 @@ def write_report(
                 f"2. The classical covariate `Z` alone is a stronger predictor of the target",
                 f"   (`r = {baseline['observed_r']:.4f}`) than the path gap itself.",
                 f"3. Conditioning on `Z` removes most of the path-gap signal",
-                f"   (`r = {knockout['observed_r']:.4f}`), and adding the one-bit 2-adic defect",
-                f"   takes the remainder to `r = {knockout_2adic['observed_r']:.4f}`.",
-                f"4. Adding the power-kernel overlap `W` completes the classical ladder and",
-                f"   takes the residual to `r = {full_ladder['observed_r']:.4f}`",
-                f"   (`p_upper = {full_ladder['p_upper']:.4f}`), which {verdict}.",
+                f"   (`r = {control_stage_z['observed_r']:.4f}`), and adding the one-bit 2-adic defect",
+                f"   takes the remainder to `r = {control_stage_2adic['observed_r']:.4f}`.",
+                f"4. Adding the power-kernel overlap `W` completes the classical controls and",
+                f"   takes the residual to `r = {full_decomposition['observed_r']:.4f}`",
+                f"   (`p_upper = {full_decomposition['p_upper']:.4f}`), which {verdict}.",
                 "",
                 "Read against the preprint's Section 5.1: the strong `C/N_-` modular",
                 "transfer decomposes into three named classical overlap channels --",
@@ -344,7 +344,7 @@ def write_report(
                 "not evidence that path-order residue carries novel information about",
                 "modular contraction. Any future transfer claim for the v0 neighborhood",
                 "operators should be required to beat this three-covariate classical",
-                "ladder, not only size and shell controls. Extending the ladder further",
+                "control, not only size and shell controls. Extending the conditioning further",
                 "approaches the circularity boundary noted in the script docstring, so",
                 "a sharper test needs a genuinely independent target.",
                 "",
@@ -361,7 +361,7 @@ def run_experiment(
     seed: int,
     report_path: Path,
 ) -> dict[str, object]:
-    dataset = overlap_knockout_dataset(limit)
+    dataset = overlap_decomposition_dataset(limit)
     labels = [label for label, _, _ in STAGES]
     stages = [
         conditioned_transfer_control(
@@ -404,7 +404,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--report",
         type=Path,
-        default=ROOT / "reports" / "ORIGIN_MODULAR_OVERLAP_KNOCKOUT.md",
+        default=ROOT / "reports" / "ORIGIN_MODULAR_OVERLAP_DECOMPOSITION.md",
     )
     return parser.parse_args()
 

@@ -1,4 +1,4 @@
-"""Tests for the modular overlap knockout experiment."""
+"""Tests for the modular overlap decomposition experiment."""
 
 from __future__ import annotations
 
@@ -12,20 +12,20 @@ for path in (ROOT, ROOT / "src"):
     if str(path) not in sys.path:
         sys.path.insert(0, str(path))
 
-from experiments.origin_modular_overlap_knockout import (  # noqa: E402
+from experiments.origin_modular_overlap_decomposition import (  # noqa: E402
     TARGET,
     conditioned_transfer_control,
     kernel_overlap,
     odd_squarefree_identity_check,
-    overlap_knockout_dataset,
+    overlap_decomposition_dataset,
     power_kernel_overlap,
     two_adic_defect,
 )
 
 
-class OverlapKnockoutTests(unittest.TestCase):
+class OverlapDecompositionTests(unittest.TestCase):
     def test_dataset_shape_and_keys(self) -> None:
-        dataset = overlap_knockout_dataset(300)
+        dataset = overlap_decomposition_dataset(300)
         self.assertEqual(len(dataset), 299)
         expected_keys = {
             "n",
@@ -72,12 +72,12 @@ class OverlapKnockoutTests(unittest.TestCase):
         self.assertEqual(odd_squarefree, 403)
         self.assertEqual(matches, odd_squarefree)
 
-    def test_knockout_reduces_correlation(self) -> None:
-        dataset = overlap_knockout_dataset(300)
+    def test_decomposition_reduces_correlation(self) -> None:
+        dataset = overlap_decomposition_dataset(300)
         replication = conditioned_transfer_control(
             dataset, "path_gap", TARGET, ["log_n"], trials=5, seed=62326
         )
-        knockout = conditioned_transfer_control(
+        decomposition_control = conditioned_transfer_control(
             dataset,
             "path_gap",
             TARGET,
@@ -86,12 +86,12 @@ class OverlapKnockoutTests(unittest.TestCase):
             seed=62326,
         )
         self.assertLess(
-            abs(knockout["observed_r"]),
+            abs(decomposition_control["observed_r"]),
             abs(replication["observed_r"]),
         )
 
     def test_controls_are_deterministic(self) -> None:
-        dataset = overlap_knockout_dataset(200)
+        dataset = overlap_decomposition_dataset(200)
         first = conditioned_transfer_control(
             dataset, "path_gap", TARGET, ["log_n"], trials=10, seed=99
         )

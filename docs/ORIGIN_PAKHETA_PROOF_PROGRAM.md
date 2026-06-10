@@ -72,9 +72,9 @@ We can already use:
 This is enough to build new mathematics. The open question is how far the new
 objects transfer.
 
-## Core Theorem Ladder
+## Core Theorem Hierarchy
 
-### Theorem Ladder A: Origin Coordinates
+### Theorem Hierarchy A: Origin Coordinates
 
 **A1. Unique Field Representation**
 
@@ -122,7 +122,7 @@ Omega(n)
 
 Status: proved in `docs/ORIGIN_PAKHETA_CALCULUS_PROOFS.md`.
 
-### Theorem Ladder B: Path Calculus
+### Theorem Hierarchy B: Path Calculus
 
 **B1. Context Operators**
 
@@ -277,7 +277,7 @@ where `rad(N_-(n))` always divides `lambda(n)`.
 
 Status: proved.
 
-### Theorem Ladder C: Mechanism And Transfer
+### Theorem Hierarchy C: Mechanism And Transfer
 
 **C1. Local Mechanism Removal**
 
