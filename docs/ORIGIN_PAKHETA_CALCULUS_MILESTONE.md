@@ -236,14 +236,12 @@ Pakheta terms now have arithmetic counterparts:
 This is the first usable bridge from Pakheta language into number-theoretic
 machinery.
 
-## What This Does Not Yet Prove
+## What This Does Not Yet Prove (and Subsequent Disproofs)
 
 This milestone does not prove:
-
 - the full Origin Reframe;
 - that Pakheta is a universal relation layer;
-- that path residues transfer to prime gaps, Goldbach, Gilbreath, or modular
-  behavior;
+- that path residues transfer to prime gaps, Goldbach, Gilbreath, or modular behavior (in fact, subsequent tests E31, E32, and E33 demonstrated that these transfer claims do not hold under rigorous controls);
 - that every Pakheta concept has a useful arithmetic counterpart.
 
 It does prove something narrower and important:
@@ -252,8 +250,7 @@ It does prove something narrower and important:
 Origin-Pakheta calculus is constructible.
 ```
 
-The first operators work. The first commutators are exact. The first path laws
-are testable and reproducible.
+The first operators work. The first commutators are exact. The first path laws are testable and reproducible. However, they are local algebraic properties of factorization fields and do not represent an independent predictive force for downstream prime distributions or modular exponent reduction.
 
 ## Research Posture From Here
 

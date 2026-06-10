@@ -14,10 +14,11 @@ We present the foundational mathematics and empirical results of the **Origin-Pa
 
 Within this framework, we define a family of context operators—including compression, selected prime returns, divisor branching, modular-return projections, and prime-neighborhood boundary contexts—and analyze their path-order sensitivity using path commutators of the form $\Delta(A, B; n) = A(B(n)) / B(A(n))$. We prove fifteen core theorems (Theorems 1–15) detailing exact commutator identities, commutation conditions, and a novel period bounding law: the Carmichael lambda period of $n$ is bounded below and divisible by the radical of its prime-minus neighborhood ($\lambda(n) \ge \text{rad}(N_-(n))$).
 
-Finally, we test the reach of these boundary commutator gaps across three empirical transfer regimes:
-1. **Modular Return Transfer:** We find a strong statistical coupling between path gaps and modular returns ($r = -0.4659$, control-crossing $p < 0.004$).
-2. **Prime Gap Prediction:** We observe a weak but statistically significant coupling between adjacent composite boundary gaps and next-prime gap distributions ($p \approx 0.0198$).
-3. **Goldbach Witness Density Transfer:** We show that once local singular series effects are factored out, prime-neighborhood boundary gaps show no correlation with size-residualized Goldbach witness densities ($p \approx 0.6335$), demonstrating the limits of boundary transfer to purely additive targets.
+Finally, we test the reach of these boundary commutator gaps across three empirical transfer regimes under classical factorization-based controls:
+1. **Modular Return Transfer:** While initial tests showed a statistical coupling between path gaps and modular returns ($r = -0.4659$, control-crossing $p < 0.004$), subsequent conditioning on classical covariates (Carmichael kernel overlap, the 2-adic defect, and power-kernel overlap) completely absorbs this correlation, showing it is a re-measurement of classical factorization.
+2. **Prime Gap Prediction:** Initial marginal predictive correlations ($p \approx 0.0198$) dissolve at scale (sample size 32768, AUC $\approx 0.49$, $p \ge 0.5$) and are identified as multiple-comparisons artifacts.
+3. **Goldbach Witness Density Transfer:** Prime-neighborhood boundary gaps show no correlation with size-residualized Goldbach witness densities once singular series effects are removed ($p \approx 0.6335$).
+These results demonstrate that v0 boundary commutator gaps do not carry independent predictive signal beyond standard factorization structures, highlighting the limits of local boundary transfer.
 
 ---
 
@@ -355,40 +356,36 @@ We evaluate this using the **C2 Transfer After Mechanism** protocol:
 
 We report results from three distinct experiments under this protocol.
 
-### 5.1. Modular Return Transfer (C2 Success)
+### 5.1. Modular Return Transfer (Decomposition & Knockout)
 * **Goal:** Test whether prime-neighborhood path gaps predict modular return exponents.
 * **Range:** $n \in [2, 1000]$, $250$ shell-conditioned trials.
 * **Metrics:** $\log$ gaps of $C/N_-$ and $C/N_+$ commutators.
 * **Target:** $\log(\lambda(n) / \phi(n))$ and $1 - \text{rad}(n)/n$.
 
 #### Results:
-The experiment showed extremely strong, statistically significant correlations:
+Although the initial unconditioned experiment showed significant correlations ($r = -0.4659$ and $-0.3939$ for $C/N_-$ and $C/N_+$, respectively), conditioning the target on classical covariates reveals that the path-gap signal carries no independent predictive value. The exact modular target $\lambda(n)/\phi(n)$ is a deterministic function of the prime factors of $n$. We conditioned the correlation on three named classical overlap channels (E31, E32):
+1. **Carmichael kernel overlap:** $Z = \log(\prod(p-1)/\text{lcm}(p-1))$, which alone predicts the modular target more strongly ($r = -0.7890$).
+2. **2-adic defect:** $v_2(n) \ge 3$.
+3. **Power-kernel overlap:** $W = \sum \min(v_p(\prod_{q \ne p}(q - 1)), a - 1) \log(p)$.
 
-| Metric | Target | Observed $r$ | Max Ctrl $|r|$ | $p$-value |
-| :--- | :--- | :---: | :---: | :---: |
-| $C/N_-$ path gap | $\log(\lambda / \phi)$ | **$-0.4659$** | $0.1070$ | **$< 0.004$** ($0/250$ crossings) |
-| $C/N_+$ path gap | $1 - \text{rad}(n)/n$ | **$-0.3939$** | $0.0915$ | **$< 0.004$** ($0/250$ crossings) |
-
-A premium dark-mode scatter plot showing the strong coupling between the $C/N_-$ path gap and the modular return exponent residuals is saved in the repository at [reports/prime_neighborhood_transfer_scatter.png](../reports/prime_neighborhood_transfer_scatter.png).
+After residualizing the target against these classical group-structure variables, the path-gap correlation coefficient drops below the significance threshold (residual $r$ falls to sign-unstable and range-shrinking values such as $+0.0152$ at range $10^4$).
 
 #### Interpretation:
-The highly significant negative correlations prove that the boundary path gaps of $N_-$ and $N_+$ capture structural properties of the integer field that govern modular period contraction. Specifically, larger boundary path gaps (which indicate more complex prime-minus structures) strongly correspond to smaller modular returns relative to the group size, a coupling that cannot be explained by integer size or prime count alone.
+The initial apparent "success" of the modular transfer is a re-measurement of classical factorization-based Carmichael overlap and 2-adic defect channels. Because the commutator predictor is constructed from the same generator multiset $\{p-1\}$ that governs modular return-exponent contraction, the correlation is mathematically circular and does not represent a novel path-order signal.
 
 ---
 
-### 5.2. Prime Gap Transfer (Boundary Predictor)
+### 5.2. Prime Gap Transfer (Dissolution at Scale)
 * **Goal:** Test whether the boundary gaps of adjacent composites predict the size of next-prime gaps.
-* **Range:** Calibration and test windows of size $8192$, $100$ trials.
+* **Range:** Calibration and test windows of size $32768$, $200$ trials.
 * **Metric:** Composite boundary gap $\delta(p+1, p-1)$ calculated via $C/N_-$ gaps.
 * **Target:** Top $10\%$ largest prime gaps.
 
 #### Results:
-* **Observed AUC:** $0.5085$
-* **Enrichment factor:** $1.18\text{x}$
-* **Control $p$-value** (conditioned on residue class mod $30$ and size bins): **$0.0198$** ($1/100$ control crossings).
+While initial tests on a small window of $8192$ gaps showed a marginal control $p$-value of $0.0198$, scaling the check to a $4\text{x}$ larger window ($32768$ gaps) on later primes up to $\sim 1.28\text{M}$ (E33) completely dissolved the correlation. The observed AUCs fell to $0.4944$ and $0.4875$ (worse than pure chance), and all conditioned-control $p$-values rose to $\ge 0.5$ across all trials.
 
 #### Interpretation:
-Although the predictive AUC is very close to $0.5$ (indicating that composite boundary gaps are weak individual predictors), the control $p$-value is statistically significant ($p < 0.02$). This shows that local composite boundary structure holds a subtle but detectable coupling to the spatial distribution of primes. The small effect size highlights the limits of local boundary transfer: prime gaps are globally constrained, and local boundary calculus can only capture short-range boundary interactions.
+The initial apparent coupling between local composite boundary gaps and prime gap layout did not replicate at scale. The initial $p < 0.02$ result is identified as a multiple-comparisons artifact. The v0 boundary operators show no verified reach or predictive value for the spatial distribution of prime gaps.
 
 ---
 
@@ -416,11 +413,11 @@ This negative result is highly instructive. The Hardy-Littlewood singular series
 
 ## 6. Discussion and Future Work
 
-The development of the v0 Origin-Pakheta calculus represents a step toward an exact path-sensitive representation of positive integers. We have shown that:
+The development of the v0 Origin-Pakheta calculus establishes a sound framework for verifying exact commutation loci and path identities on the positive integers. We have shown that:
 1. **Algebraic exactness is achievable:** Context operators and path commutators yield precise, closed-form formulas (Theorems 1–14) and rigorous bounds (Theorem 15) that require no approximations.
-2. **Transfer reach is highly selective:** The path residues strongly couple to modular return exponents ($p < 0.004$) and weakly couple to adjacent prime gap distributions ($p < 0.02$), but completely decouple from additive Goldbach witness densities ($p \approx 0.63$).
+2. **Transfer reach is absent under control:** Under classical factorization controls (modular overlap knockout) and scaled verification tests, the initial transfer signals (to modular return periods and prime gaps) are fully absorbed by standard baselines or dissolve to pure chance.
 
-This selective transfer suggests that the path calculus is a natural grammar for **modular and multiplicative complexity**, but does not easily bridge the multiplicative-additive divide without explicit modular anchors.
+These results indicate that the v0 path gaps do not carry independent predictive signal beyond standard number-theoretic structures. The calculus remains a useful tool for verifying and cataloging algebraic properties (as demonstrated by the v1 catalog and Lemmas C1–C12), but it does not represent an independent physical or spatial force governing prime gap layout or modular groups.
 
 ### Future Research Directions:
 * **Quadratic Field Extensions:** Extending the operators to quadratic and higher number fields to see if the prime-plus neighborhood $N_+$ exhibits stronger transfer when paired with extension-field returns.
