@@ -138,6 +138,18 @@ class CatalogLemmaTests(unittest.TestCase):
             self.assertEqual(self.commutes("G_2", "B", n), n % 2 == 1, n)
             self.assertFalse(self.commutes("G_3", "B", n), n)
 
+    def test_lemma_c13_return_min_prime_plus(self) -> None:
+        for n in range(2, 400):
+            self.assertEqual(self.commutes("R_min", "N+", n), n == 2, n)
+
+    def test_lemma_c14_return_max_sigma(self) -> None:
+        for n in range(2, 400):
+            self.assertEqual(self.commutes("R_max", "S", n), n == 2, n)
+
+    def test_lemma_c15_return_max_prime_plus(self) -> None:
+        for n in range(2, 400):
+            self.assertEqual(self.commutes("R_max", "N+", n), n == 2, n)
+
     def test_corollary_7_1_locus_recovery(self) -> None:
         # C and B commute exactly on n = p^(2^m - 1): primes, p^3, p^7, ...
         expected = {n for n in range(2, 201) if is_prime(n)} | {8, 27, 125, 128}

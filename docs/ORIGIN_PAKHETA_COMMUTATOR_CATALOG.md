@@ -122,9 +122,28 @@ $a(p-1) = 2 - p$. For $p = 2$ this forces $a = 0$; for $p \ge 3$ it has no
 non-negative solution. Hence **$G_2$ and $B$ commute exactly when $n$ is
 odd, and $G_p$ and $B$ never commute for $p \ge 3$.** $\blacksquare$
 
+### Lemma C13 (Least-prime return vs prime-plus neighborhood)
+$R_{\min}$ and $N_+$ commute if and only if $n = 2$.
+For $n = 2$, $N_+(2) = 3 \implies R_{\min}(3) = 1$, and $R_{\min}(2) = 1 \implies N_+(1) = 1$.
+For prime powers $n = p^a \ge 3$, if $a=1$, $N_+(R_{\min}(p)) = 1 \ne (p+1)/2 = R_{\min}(N_+(p))$. If $a \ge 2$, $N_+(R_{\min}(p^a)) = p+1 \ne (p+1)/\mathrm{spf}(p+1) = R_{\min}(N_+(p^a))$.
+For $\omega(n) \ge 2$, let $p_1 = \mathrm{spf}(n)$. If $v_{p_1}(n) > 1$, $N_+(R_{\min}(n)) = N_+(n)$ while $R_{\min}(N_+(n)) = N_+(n)/\mathrm{spf}(N_+(n)) \ne N_+(n)$. If $v_{p_1}(n) = 1$, $N_+(R_{\min}(n)) = N_+(n)/(p_1 + 1)$ while $R_{\min}(N_+(n)) = N_+(n)/\mathrm{spf}(N_+(n))$, requiring $\mathrm{spf}(N_+(n)) = p_1 + 1$, which is impossible because $p_1 + 1$ is even and $\ge 3$ (since $n \ge 3$), meaning $N_+(n)$ is even so $\mathrm{spf}(N_+(n)) = 2 \ne p_1 + 1$.
+**$R_{\min}$ and $N_+$ commute exactly when $n = 2$.** $\blacksquare$
+
+### Lemma C14 (Greatest-prime return vs divisor sigma)
+$R_{\max}$ and $S$ commute if and only if $n = 2$.
+For $n = 2$, $\sigma(2) = 3 \implies R_{\max}(3) = 1$, and $R_{\max}(2) = 1 \implies \sigma(1) = 1$.
+For prime powers $n = p^a \ge 3$, if $a=1$, $\sigma(R_{\max}(p)) = 1 \ne (p+1)/\mathrm{gpf}(p+1) = R_{\max}(\sigma(p))$. If $a \ge 2$, $\sigma(R_{\max}(p^a)) = \sigma(p^{a-1}) \ne \sigma(p^a)/\mathrm{gpf}(\sigma(p^a))$, because the ratio of consecutive sigma values is not an integer.
+For $\omega(n) \ge 2$, let $q = \mathrm{gpf}(n) \ge 3$. If $v_q(n) \ge 2$, $\sigma(R_{\max}(n)) = \sigma(n) \cdot \frac{\sigma(q^{a_q-1})}{\sigma(q^{a_q})}$, which is not a multiple of $\sigma(n)$. If $v_q(n) = 1$, $\sigma(R_{\max}(n)) = \sigma(n)/(q+1)$, requiring $\mathrm{gpf}(\sigma(n)) = q + 1$. But $q+1$ is even and $\ge 4$, so it cannot be a prime factor of $\sigma(n)$.
+**$R_{\max}$ and $S$ commute exactly when $n = 2$.** $\blacksquare$
+
+### Lemma C15 (Greatest-prime return vs prime-plus neighborhood)
+$R_{\max}$ and $N_+$ commute if and only if $n = 2$.
+The proof follows the structure of Lemma C13: for $\omega(n) \ge 2$, let $q = \mathrm{gpf}(n) \ge 3$. If $v_q(n) = 1$, commutation requires $\mathrm{gpf}(N_+(n)) = q+1$, which is even and $\ge 4$, a contradiction since the greatest prime factor must be prime.
+**$R_{\max}$ and $N_+$ commute exactly when $n = 2$.** $\blacksquare$
+
 ## Verification Status
 
 Every locus above is checked empirically to $n = 20000$ with zero mismatches,
 and the test suite pins samples of each (including the Corollary 7.1 locus
 recovery $\{p^{2^m - 1}\}$ as a catalog calibration). The catalog report
-annotates all 40 proven rows; the remaining 65 pairs form the open queue.
+annotates all 43 proven rows; the remaining 62 pairs form the open queue.

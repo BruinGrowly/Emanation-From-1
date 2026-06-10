@@ -217,6 +217,9 @@ PROVEN_STATUS: dict[frozenset[str], str] = {
     frozenset({"G_3", "N+"}): "Lemma C11 (never)",
     frozenset({"G_2", "B"}): "Lemma C12 (locus: 2 ∤ n)",
     frozenset({"G_3", "B"}): "Lemma C12 (never for p >= 3)",
+    frozenset({"R_min", "N+"}): "Lemma C13 (locus: n = 2)",
+    frozenset({"R_max", "S"}): "Lemma C14 (locus: n = 2)",
+    frozenset({"R_max", "N+"}): "Lemma C15 (locus: n = 2)",
 }
 
 

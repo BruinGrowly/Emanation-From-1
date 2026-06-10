@@ -35,7 +35,7 @@
 | sparse | 48 |
 | dense | 37 |
 
-Proven rows: `40/105` (Theorems 4-14 and Catalog Lemmas C1-C7); the remaining `65` are empirical.
+Proven rows: `43/105` (Theorems 4-14 and Catalog Lemmas C1-C7); the remaining `62` are empirical.
 
 ## Full Catalog
 
@@ -55,9 +55,9 @@ commuting count at quarter checkpoints of the range.
 | R_3 / G_2 | always | Lemma C3 (always) | 9999 | 1.0000 | 2 | 10000 | - | 2499 -> 4999 -> 7499 -> 9999 |
 | R_3 / Q | always | Lemma C8 (always) | 9999 | 1.0000 | 2 | 10000 | - | 2499 -> 4999 -> 7499 -> 9999 |
 | G_2 / G_3 | always | Lemma C1 (always) | 9999 | 1.0000 | 2 | 10000 | - | 2499 -> 4999 -> 7499 -> 9999 |
-| R_min / N+ | finite? | empirical | 1 | 0.0001 | 2 | 2 | 3 | 1 -> 1 -> 1 -> 1 |
-| R_max / S | finite? | empirical | 1 | 0.0001 | 2 | 2 | 3 | 1 -> 1 -> 1 -> 1 |
-| R_max / N+ | finite? | empirical | 1 | 0.0001 | 2 | 2 | 3 | 1 -> 1 -> 1 -> 1 |
+| R_min / N+ | finite? | Lemma C13 (locus: n = 2) | 1 | 0.0001 | 2 | 2 | 3 | 1 -> 1 -> 1 -> 1 |
+| R_max / S | finite? | Lemma C14 (locus: n = 2) | 1 | 0.0001 | 2 | 2 | 3 | 1 -> 1 -> 1 -> 1 |
+| R_max / N+ | finite? | Lemma C15 (locus: n = 2) | 1 | 0.0001 | 2 | 2 | 3 | 1 -> 1 -> 1 -> 1 |
 | T / S | finite? | empirical | 6 | 0.0006 | 9 | 3872 | 2 | 5 -> 6 -> 6 -> 6 |
 | G_2 / S | never | Lemma C11 (never) | 0 | 0.0000 | - | - | 2 | 0 -> 0 -> 0 -> 0 |
 | G_2 / N- | never | Lemma C11 (never) | 0 | 0.0000 | - | - | 2 | 0 -> 0 -> 0 -> 0 |
@@ -160,9 +160,6 @@ candidate for the next exact identity or locus characterization.
 
 | pair | class | status | commuting n | density | first | last | first violation | count trend |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| R_min / N+ | finite? | empirical | 1 | 0.0001 | 2 | 2 | 3 | 1 -> 1 -> 1 -> 1 |
-| R_max / S | finite? | empirical | 1 | 0.0001 | 2 | 2 | 3 | 1 -> 1 -> 1 -> 1 |
-| R_max / N+ | finite? | empirical | 1 | 0.0001 | 2 | 2 | 3 | 1 -> 1 -> 1 -> 1 |
 | T / S | finite? | empirical | 6 | 0.0006 | 9 | 3872 | 2 | 5 -> 6 -> 6 -> 6 |
 | S / N- | sparse | empirical | 17 | 0.0017 | 224 | 9092 | 2 | 6 -> 11 -> 13 -> 17 |
 | B / T | sparse | empirical | 24 | 0.0024 | 2 | 9240 | 3 | 17 -> 20 -> 23 -> 24 |
