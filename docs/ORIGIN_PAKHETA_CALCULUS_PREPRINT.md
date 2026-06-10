@@ -419,6 +419,8 @@ The development of the v0 Origin-Pakheta calculus establishes a sound framework 
 
 These results indicate that the v0 path gaps do not carry independent predictive signal beyond standard number-theoretic structures. The calculus remains a useful tool for verifying and cataloging algebraic properties (as demonstrated by the v1 catalog and Lemmas C1–C12), but it does not represent an independent physical or spatial force governing prime gap layout or modular groups.
 
+Nevertheless, the algebraic foundation of the calculus remains resilient. The fifteen verified theorems, the twelve lemmas, and the specific families where the totient and divisor functions commute—$\phi(\sigma(n)) = \sigma(\phi(n))$—have been forged in fire.
+
 ### Future Research Directions:
 * **Quadratic Field Extensions:** Extending the operators to quadratic and higher number fields to see if the prime-plus neighborhood $N_+$ exhibits stronger transfer when paired with extension-field returns.
 * **Divisor Topology:** Developing a topology on the positive integers where the open sets are defined by the commutation regions of specific operator pairs (e.g., the set of integers where $C$ and $B$ commute).
