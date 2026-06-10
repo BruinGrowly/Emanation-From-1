@@ -18,6 +18,7 @@ from experiments.origin_modular_overlap_knockout import (  # noqa: E402
     kernel_overlap,
     odd_squarefree_identity_check,
     overlap_knockout_dataset,
+    power_kernel_overlap,
     two_adic_defect,
 )
 
@@ -34,6 +35,7 @@ class OverlapKnockoutTests(unittest.TestCase):
             "log_lambda_over_phi",
             "kernel_overlap",
             "two_adic_defect",
+            "power_kernel_overlap",
         }
         self.assertEqual(set(dataset[0]), expected_keys)
 
@@ -49,6 +51,21 @@ class OverlapKnockoutTests(unittest.TestCase):
         self.assertEqual(two_adic_defect(12), 0.0)
         self.assertAlmostEqual(two_adic_defect(24), log(2.0))
         self.assertEqual(two_adic_defect(15), 0.0)
+
+    def test_power_kernel_overlap_examples(self) -> None:
+        # n = 20 = 2^2 * 5: the 2-power channel overlaps v_2(5-1) = 2,
+        # truncated by a - 1 = 1
+        self.assertAlmostEqual(power_kernel_overlap(20), log(2.0))
+        # n = 12 = 2^2 * 3: v_2(3-1) = 1, a - 1 = 1
+        self.assertAlmostEqual(power_kernel_overlap(12), log(2.0))
+        # n = 63 = 3^2 * 7: v_3(7-1) = 1, a - 1 = 1
+        self.assertAlmostEqual(power_kernel_overlap(63), log(3.0))
+        # n = 18 = 2 * 3^2: v_3(2-1) = 0, no overlap
+        self.assertEqual(power_kernel_overlap(18), 0.0)
+        # n = 45 = 3^2 * 5: v_3(5-1) = 0, no overlap
+        self.assertEqual(power_kernel_overlap(45), 0.0)
+        # squarefree n has no power channels
+        self.assertEqual(power_kernel_overlap(30), 0.0)
 
     def test_odd_squarefree_identity_is_exact(self) -> None:
         odd_squarefree, matches = odd_squarefree_identity_check(1000)
