@@ -9,9 +9,12 @@ from typing import Callable, Iterable
 
 from .number_theory import (
     carmichael_lambda,
+    dedekind_psi,
     divisor_count,
+    divisor_sigma,
     euler_totient,
     factor_counter,
+    greatest_prime_factor,
     is_prime,
     radical,
 )
@@ -386,6 +389,36 @@ def compression_euler_totient_gap_factor(n: int) -> Fraction:
     rad_n = radical(n)
     phi_rad = euler_totient(rad_n)
     return Fraction(rad_phi, phi_rad)
+
+
+def return_max_context(n: int) -> int:
+    """Return one greatest-prime layer toward 1."""
+    if n < 1:
+        raise ValueError("return context is defined for positive integers")
+    if n == 1:
+        return 1
+    return n // greatest_prime_factor(n)
+
+
+def powerful_quotient_context(n: int) -> int:
+    """Return n / rad(n), the repeated-layer part of the field."""
+    if n < 1:
+        raise ValueError("powerful quotient context is defined for positive integers")
+    return n // radical(n)
+
+
+def divisor_sigma_context(n: int) -> int:
+    """Return the divisor sum sigma(n)."""
+    if n < 1:
+        raise ValueError("divisor sigma context is defined for positive integers")
+    return divisor_sigma(n)
+
+
+def dedekind_psi_context(n: int) -> int:
+    """Return the Dedekind psi of n."""
+    if n < 1:
+        raise ValueError("Dedekind psi context is defined for positive integers")
+    return dedekind_psi(n)
 
 
 def prime_minus_neighborhood_context(n: int) -> int:

@@ -193,6 +193,35 @@ def divisor_count(n: int) -> int:
     return total
 
 
+def divisor_sigma(n: int) -> int:
+    """Return the sum of positive divisors of n."""
+    if n < 1:
+        raise ValueError("divisor_sigma is defined for positive integers")
+
+    total = 1
+    for prime, exponent in factor_counter(n).items():
+        total *= (prime ** (exponent + 1) - 1) // (prime - 1)
+    return total
+
+
+def dedekind_psi(n: int) -> int:
+    """Return the Dedekind psi of n: n * prod_{p|n}(1 + 1/p)."""
+    if n < 1:
+        raise ValueError("dedekind_psi is defined for positive integers")
+
+    total = 1
+    for prime, exponent in factor_counter(n).items():
+        total *= prime ** (exponent - 1) * (prime + 1)
+    return total
+
+
+def greatest_prime_factor(n: int) -> int:
+    """Return the greatest prime factor of n."""
+    if n < 2:
+        raise ValueError("greatest prime factor requires n >= 2")
+    return max(factor_counter(n))
+
+
 def modular_idempotent_count(n: int) -> int:
     """Return the number of solutions to x**2 == x mod n."""
     if n < 1:
